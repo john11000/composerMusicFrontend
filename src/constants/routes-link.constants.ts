@@ -1,0 +1,21 @@
+const LAYOUT = '/admin';
+
+export const ROUTE_LINK_REGISTER = '/register';
+export const ROUTE_LINK_RESET_PASSWORD = '/change-password';
+export const ROUTE_LINK_CHANGE_PASSWORD = '/reset-password';
+export const ROUTE_LINK_LOGIN = '/login';
+export const ROUTER_LINK_DASHBOARD = `${LAYOUT}`;
+export const ROUTER_LINK_ORDERS = `${LAYOUT}/orders`;
+export const ROUTER_LINK_PRODUCTS = `${LAYOUT}/products`;
+export const ROUTER_LINK_ADD_PRODUCT = `${LAYOUT}/products/create`;
+export const ROUTER_LINK_USERS = `${LAYOUT}/users`;
+export const ROUTER_LINK_GROUPS = `${LAYOUT}/groups`;
+export const ROUTER_LINK_REFERENCES = `${LAYOUT}/references`;
+export const ROUTER_LINK_SERVICES = `${LAYOUT}/services`;
+export const ROUTER_LINK_CUSTOMERS = `${LAYOUT}/customers`;
+export const ROUTER_LINK_DISTRIBUTOR = `${LAYOUT}/distributor`;
+export const ROUTER_LINK_INVOICES = `${LAYOUT}/invoices`;
+export const ROUTER_LINK_FAULT_CAUSAL = `${LAYOUT}/fault-causal`;
+export const ROUTER_LINK_SERVICE_ORDERS = `${LAYOUT}/service-orders`;
+export const ROUTER_LINK_REPORTS = `${LAYOUT}/reports`;
+export const ROUTER_LINK_SETTING = `${LAYOUT}/setting`;
