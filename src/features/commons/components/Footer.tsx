@@ -10,7 +10,7 @@ const Footer: React.FC<Partial<props>> = ({ py = 2, position = 'absolute', botto
   return (
     <Box sx={{ py: py, position: position, bottom: bottom, textAlign: 'center', width: '100%', margin: 'auto' }}>
       <Typography align="center" variant="body2" color="textSecondary">
-        &copy; {new Date().getFullYear()} Grupo IB S.A.S.
+        &copy; {new Date().getFullYear()} composer music
       </Typography>
     </Box>
   );
