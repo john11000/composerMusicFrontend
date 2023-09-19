@@ -40,7 +40,7 @@ export default function ResetPasswordForm() {
               variant="outlined"
               required
               fullWidth
-              label="Email"
+              label="Digite el correo electrónico"
               autoComplete="email"
               {...register('email', {
                 required: { value: true, message: 'Campo requerido' },

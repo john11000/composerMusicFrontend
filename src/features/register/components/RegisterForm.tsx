@@ -1,6 +1,5 @@
-import { ROUTE_LINK_REGISTER, ROUTE_LINK_RESET_PASSWORD } from '@/constants/routes-link.constants';
+import { ROUTE_LINK_LOGIN, ROUTE_LINK_RESET_PASSWORD } from '@/constants/routes-link.constants';
 import { Link } from '@/features/commons';
-import Footer from '@/features/commons/components/Footer';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -25,7 +24,7 @@ interface Props {
   loading: boolean;
 }
 
-export default function LoginForm({ onSubmit, loading }: Props) {
+export default function RegisterForm({ onSubmit, loading }: Props) {
   const {
     register,
     handleSubmit,
@@ -42,6 +41,24 @@ export default function LoginForm({ onSubmit, loading }: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Grid container justifyContent="center" spacing={2}>
+      <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            label="Nombre completo"
+            autoComplete="email"
+            {...register('email', {
+              required: { value: true, message: 'Campo requerido' },
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Email no válido.',
+              },
+            })}
+            error={Boolean(errors.email?.message)}
+            helperText={errors.email?.message}
+          />
+        </Grid>
         <Grid item xs={12}>
           <TextField
             variant="outlined"
@@ -88,14 +105,14 @@ export default function LoginForm({ onSubmit, loading }: Props) {
         <Grid item xs={12}>
           <Typography sx={{
             textAlign: 'center',
-          }}><Link href={ROUTE_LINK_REGISTER}>No tengo una cuenta, registrarme</Link></Typography>
+          }}><Link href={ROUTE_LINK_LOGIN}>Ya tengo una cuenta, Iniciar sesión</Link></Typography>
         </Grid>
 
         <Grid item xs={12}>
           <LoadingButton sx={{
               marginTop: '50px',
             }} type="submit" fullWidth variant="contained" color="primary" loading={loading}>
-            <span >Ingresar</span>
+            <span >Registrarse</span>
           </LoadingButton>
         </Grid>
         <Grid item xs={12}>
