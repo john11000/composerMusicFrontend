@@ -32,7 +32,7 @@ export default function ReferencesTable({
   };
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder: "Buscar referencia por nombre de referencia",
+    searchPlaceholder: "Buscar melodia",
   };
 
   const handleClickEditReferences = (dataTable: MUIDataTableMeta<unknown>) => {
@@ -45,7 +45,7 @@ export default function ReferencesTable({
       value: groupToEdit?.abbreviation || "",
     };
     setIsEdit(true);
-    setTitleReferenceDialog("Editar referencia");
+    setTitleReferenceDialog("Editar melodia");
     handleEditReference(references[dataTable.rowIndex]);
     openEditReferenceDialog();
   };
@@ -54,7 +54,7 @@ export default function ReferencesTable({
     { name: "id", options: { display: false } },
     {
       name: "referenceCode",
-      label: "Código referencia",
+      label: "Código",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
@@ -73,7 +73,7 @@ export default function ReferencesTable({
     { name: "referenceDescription", label: "Descripción" },
     {
       name: "groupId",
-      label: "Grupo",
+      label: "Estado",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
@@ -84,7 +84,7 @@ export default function ReferencesTable({
         },
       },
     },
-    { name: "warrantyDays", label: "Garantía" },
+    { name: "warrantyDays", label: "Opciones" },
   ];
 
   return (
@@ -96,7 +96,7 @@ export default function ReferencesTable({
             <CircularProgress size={20} />
           </Typography>
         ) : (
-          "Lista de referencias"
+          "Lista de melodias"
         )
       }
       data={references}

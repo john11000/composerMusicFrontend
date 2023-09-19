@@ -3,20 +3,21 @@ import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setAppBarTitle } from "@/redux/slices/app.slice";
-import { TITLE_MODULE_REPORTS } from "@/constants/title.constants";
-import ReportsContainer from "@/features/reports/containers/ReportsContainer";
+import ReferencesContainer from "@/features/reference/containers/ReferencesContainer";
+import { TITLE_MODULE_TRANSCRIPT_MELODY } from "@/constants/title.constants";
 
-export default function ServicesPage() {
+export default function TranscriptPage() {
   const dispatcher = useDispatch();
+
   useEffect(() => {
-    dispatcher(setAppBarTitle(TITLE_MODULE_REPORTS));
+    dispatcher(setAppBarTitle(TITLE_MODULE_TRANSCRIPT_MELODY));
   }, [dispatcher]);
 
   return (
     <AdminLayout>
       <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <ReportsContainer />
+          <ReferencesContainer />
         </Grid>
       </Grid>
     </AdminLayout>

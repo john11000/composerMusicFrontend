@@ -3,24 +3,21 @@ import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setAppBarTitle } from "@/redux/slices/app.slice";
-import InvoicesContainer from "@/features/invoices/containers/InvoicesContainer";
-import { TITLE_MODULE_INVOICES } from "@/constants/title.constants";
-import { CustomersProvider } from "@/features/customers/context/Customers.context";
+import ReferencesContainer from "@/features/reference/containers/ReferencesContainer";
+import { TITLE_MODULE_LIST_MELODY } from "@/constants/title.constants";
 
-export default function InvoicesPage() {
+export default function ListPage() {
   const dispatcher = useDispatch();
 
   useEffect(() => {
-    dispatcher(setAppBarTitle(TITLE_MODULE_INVOICES));
+    dispatcher(setAppBarTitle(TITLE_MODULE_LIST_MELODY));
   }, [dispatcher]);
 
   return (
     <AdminLayout>
       <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <CustomersProvider>
-            <InvoicesContainer />
-          </CustomersProvider>
+          <ReferencesContainer />
         </Grid>
       </Grid>
     </AdminLayout>
