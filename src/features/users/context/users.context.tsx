@@ -1,6 +1,6 @@
-import { createContext, useState, useContext } from 'react';
-import { IUsersContext, IUser } from '../models/users.type';
-import { PropsProvider } from '@/models/context.type';
+import { createContext, useState, useContext } from "react";
+import { IUsersContext, IUser } from "../models/users.type";
+import { PropsProvider } from "@/models/context.type";
 
 export const UsersContext = createContext<IUsersContext | undefined>(undefined);
 
@@ -8,7 +8,8 @@ export const UsersProvider = ({ children }: PropsProvider) => {
   const [userToEdit, setUserToEdit] = useState<IUser | undefined>();
   const [openEditUserDialogState, setopenEditUserDialogState] = useState(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [titleUserDialog, setTitleUserDialog] = useState<string>('Crear Usuario');
+  const [titleUserDialog, setTitleUserDialog] =
+    useState<string>("Crear Usuario");
   const [users, setUsers] = useState<IUser[]>([]);
   const openEditUserDialog = () => {
     setopenEditUserDialogState(true);
@@ -43,7 +44,7 @@ export const useUsersContext = (): IUsersContext => {
   const context = useContext(UsersContext);
 
   if (context === undefined) {
-    throw new Error('UsersContext debe usarse dentro de UsersProvider');
+    throw new Error("UsersContext debe usarse dentro de UsersProvider");
   }
 
   return context;

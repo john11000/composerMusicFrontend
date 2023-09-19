@@ -1,6 +1,6 @@
-import { URL_API_FAULT_CAUSAL } from '@/constants/url-apis.constants';
-import useFetch from '@/hooks/useFetch';
-import { IFaultCausals } from '../models/FaultCausals.type';
+import { URL_API_FAULT_CAUSAL } from "@/constants/url-apis.constants";
+import useFetch from "@/hooks/useFetch";
+import { IFaultCausals } from "../models/FaultCausals.type";
 
 export default function useGetFaultCausals() {
   const { request, loading } = useFetch();

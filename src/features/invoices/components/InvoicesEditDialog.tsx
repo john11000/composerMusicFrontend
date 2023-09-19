@@ -1,14 +1,14 @@
-import { toastsManager } from '@/utilities';
-import { LoadingButton } from '@mui/lab';
-import { Dialog, DialogContent, DialogActions, Button } from '@mui/material';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useEffect, useState } from 'react';
-import { useInvoicesContext } from '../context/Invoices.context';
-import useCreateInvoice from '../hooks/useCreateInvoices';
-import useUpdateInvoice from '../hooks/useUpdateInvoices';
-import { CreateinvoiceContainer } from '../containers/CreateinvoiceContainer';
-import { useCustomersContext } from '@/features/customers/context/Customers.context';
-import usePostFile from '../hooks/usePostFile';
+import { toastsManager } from "@/utilities";
+import { LoadingButton } from "@mui/lab";
+import { Dialog, DialogContent, DialogActions, Button } from "@mui/material";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useEffect, useState } from "react";
+import { useInvoicesContext } from "../context/Invoices.context";
+import useCreateInvoice from "../hooks/useCreateInvoices";
+import useUpdateInvoice from "../hooks/useUpdateInvoices";
+import { CreateinvoiceContainer } from "../containers/CreateinvoiceContainer";
+import { useCustomersContext } from "@/features/customers/context/Customers.context";
+import usePostFile from "../hooks/usePostFile";
 
 export default function InvoicesEditDialog() {
   const { invoiceToEdit, getInvoices } = useInvoicesContext();
@@ -42,7 +42,7 @@ export default function InvoicesEditDialog() {
     if (invoiceToEdit) {
       try {
         let res,
-          text = 'actualizada';
+          text = "actualizada";
         const newInvoice = {
           ...invoiceToEdit,
           id: invoiceToEdit?.id ?? 0,
@@ -51,15 +51,22 @@ export default function InvoicesEditDialog() {
         if (isEdit) {
           res = await updateInvoice(newInvoice);
         } else {
-          text = 'creada';
+          text = "creada";
           res = await createInvoice(newInvoice);
         }
         if (res.data) {
           if (invoiceToEdit.file) {
-            const file = new File([invoiceToEdit.file], invoiceToEdit.file?.name, { lastModified: Date.now() });
+            const file = new File(
+              [invoiceToEdit.file],
+              invoiceToEdit.file?.name,
+              { lastModified: Date.now() }
+            );
             await postFileInvoiceFromApi(file, res.data as { id: number });
           }
-          toastsManager.showToast('success', 'Factura ' + text + ' correctamente');
+          toastsManager.showToast(
+            "success",
+            "Factura " + text + " correctamente"
+          );
           if (isFromExternal) {
             openCreateServiceOrder(newInvoice.userId.toString());
           }
@@ -81,7 +88,12 @@ export default function InvoicesEditDialog() {
   }, [openEditInvoiceDialogState]);
 
   return (
-    <Dialog open={openEditInvoiceDialogState} onClose={handleCancel} fullWidth maxWidth="xl">
+    <Dialog
+      open={openEditInvoiceDialogState}
+      onClose={handleCancel}
+      fullWidth
+      maxWidth="xl"
+    >
       <DialogTitle>{titleInvoiceDialog}</DialogTitle>
       <DialogContent>
         <CreateinvoiceContainer

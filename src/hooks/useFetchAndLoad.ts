@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AxiosCall } from '@/models';
-import { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
+import { AxiosCall } from "@/models";
+import { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
 
 const useFetchAndLoad = () => {
   const [loading, setLoading] = useState(false);

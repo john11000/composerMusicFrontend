@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { setAppBarTitle } from '@/redux/slices/app.slice';
-import useGetDistributors from '@/features/distributor/hooks/useGetdDistributors';
-import { DistributorsProvider } from '@/features/distributor/context/Distributors.context';
-import DistributorsSettings from '@/features/distributor/components/DistributorsSettings';
-import DistributorsTable from '@/features/distributor/components/DistributorsTable';
-import DistributorsEditDialog from '@/features/distributor/components/DistributorsEditDialog';
-import { IDistributors } from '@/features/distributor/models/Distributors.type';
+import React, { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setAppBarTitle } from "@/redux/slices/app.slice";
+import useGetDistributors from "@/features/distributor/hooks/useGetdDistributors";
+import { DistributorsProvider } from "@/features/distributor/context/Distributors.context";
+import DistributorsSettings from "@/features/distributor/components/DistributorsSettings";
+import DistributorsTable from "@/features/distributor/components/DistributorsTable";
+import DistributorsEditDialog from "@/features/distributor/components/DistributorsEditDialog";
+import { IDistributors } from "@/features/distributor/models/Distributors.type";
 
 const DistributorsContainer: React.FC = () => {
-  const { getDistributors: getDistributorsFromApi, loading } = useGetDistributors();
+  const { getDistributors: getDistributorsFromApi, loading } =
+    useGetDistributors();
   const [distributors, setDistributors] = useState<IDistributors[]>([]);
   const dispatcher = useDispatch();
 
@@ -27,7 +28,7 @@ const DistributorsContainer: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatcher(setAppBarTitle('Distribuidores'));
+    dispatcher(setAppBarTitle("Distribuidores"));
     getDistributors();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatcher]);

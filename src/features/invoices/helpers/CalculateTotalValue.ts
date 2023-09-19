@@ -1,4 +1,4 @@
-import { InvoiceItems } from '../models/Invoices.type';
+import { InvoiceItems } from "../models/Invoices.type";
 
 const calculateTotalValue = (items: InvoiceItems[]) => {
   let totalValue = 0;

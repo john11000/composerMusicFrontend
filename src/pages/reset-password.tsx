@@ -1,7 +1,7 @@
-import ChangePasswordForm from '@/features/change-password/ChangePasswordForm';
-import ChangePasswordTitle from '@/features/change-password/ChangePasswordTitle';
-import MainLayout from '@/features/commons/main-layout/MainLayout';
-import { Container, Box } from '@mui/material';
+import ChangePasswordForm from "@/features/change-password/ChangePasswordForm";
+import ChangePasswordTitle from "@/features/change-password/ChangePasswordTitle";
+import MainLayout from "@/features/commons/main-layout/MainLayout";
+import { Container, Box } from "@mui/material";
 
 export default function ResetPasswordPage() {
   return (

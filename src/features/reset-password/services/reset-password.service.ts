@@ -1,7 +1,7 @@
-import { URL_API_BASE } from '@/constants/url-apis.constants';
-import axios, { AxiosError } from 'axios';
-import { ResetPasswordState } from '../models/reset-password.types';
-import { HttpResponseError } from '@/models/http.type';
+import { URL_API_BASE } from "@/constants/url-apis.constants";
+import axios, { AxiosError } from "axios";
+import { ResetPasswordState } from "../models/reset-password.types";
+import { HttpResponseError } from "@/models/http.type";
 
 const url = `${URL_API_BASE}/auth/forgot-password`;
 
@@ -22,10 +22,10 @@ export const resetPasswordService = async (data: ResetPasswordState) => {
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
       // console.log('error.request', error.request);
-      throw new Error('Error al conectar con el servidor.');
+      throw new Error("Error al conectar con el servidor.");
     } else {
       // Something happened in setting up the request that triggered an Error
-      throw new Error('Error no esperado.');
+      throw new Error("Error no esperado.");
     }
   }
 };

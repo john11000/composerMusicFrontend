@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from "react";
 
 export interface IReportsFormState {
   dateInit: string;
@@ -23,5 +23,5 @@ export interface IReportsContext {
 }
 
 export enum TypeReport {
-  'Ordenes de servicios generadas' = 'órdenes de servicios generadas',
+  "Ordenes de servicios generadas" = "órdenes de servicios generadas",
 }

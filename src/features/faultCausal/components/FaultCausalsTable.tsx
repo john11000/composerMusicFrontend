@@ -1,8 +1,11 @@
-import MUIDataTable, { MUIDataTableColumnDef, MUIDataTableOptions } from 'mui-datatables';
-import { Typography, CircularProgress, Tooltip } from '@mui/material';
-import { useFaultCausalsContext } from '../context/FaultCausals.context';
-import { IFaultCausals } from '../models/FaultCausals.type';
-import { MUIDataTableDefaultOptions } from '@/constants/muidatatable.constants';
+import MUIDataTable, {
+  MUIDataTableColumnDef,
+  MUIDataTableOptions,
+} from "mui-datatables";
+import { Typography, CircularProgress, Tooltip } from "@mui/material";
+import { useFaultCausalsContext } from "../context/FaultCausals.context";
+import { IFaultCausals } from "../models/FaultCausals.type";
+import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
 
 interface Props {
   faultCausals: IFaultCausals[];
@@ -10,8 +13,12 @@ interface Props {
 }
 
 export default function FaultCausalsTable({ faultCausals, loading }: Props) {
-  const { setFaultCausalToEdit, openEditFaultCausalDialog, setTitleFaultCausalDialog, setIsEdit } =
-    useFaultCausalsContext();
+  const {
+    setFaultCausalToEdit,
+    openEditFaultCausalDialog,
+    setTitleFaultCausalDialog,
+    setIsEdit,
+  } = useFaultCausalsContext();
 
   const handleEditFaultCausal = (faultCausals: IFaultCausals) => {
     setFaultCausalToEdit(faultCausals);
@@ -19,26 +26,30 @@ export default function FaultCausalsTable({ faultCausals, loading }: Props) {
 
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder: 'Buscar falla por código de la falla',
+    searchPlaceholder: "Buscar falla por código de la falla",
   };
   //eslint-disable-next-line
   const handleEditClick = (dataTable: any) => {
     setIsEdit(true);
-    setTitleFaultCausalDialog('Editar Fallas y causales');
+    setTitleFaultCausalDialog("Editar Fallas y causales");
     handleEditFaultCausal(faultCausals[dataTable.rowIndex]);
     openEditFaultCausalDialog();
   };
   const columns: MUIDataTableColumnDef[] = [
-    { name: 'id', options: { display: false } },
+    { name: "id", options: { display: false } },
     {
-      name: 'errorCode',
-      label: 'Código',
+      name: "errorCode",
+      label: "Código",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
             <Tooltip title="Editar">
               <Typography
-                sx={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+                sx={{
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  color: "blue",
+                }}
                 onClick={() => handleEditClick(dataTable)}
               >{`${dataTable.rowData[1]}`}</Typography>
             </Tooltip>
@@ -46,8 +57,8 @@ export default function FaultCausalsTable({ faultCausals, loading }: Props) {
         },
       },
     },
-    { name: 'description', label: 'Descripción de la falla.' },
-    { name: 'cause', label: 'Causal de la falla.' },
+    { name: "description", label: "Descripción de la falla." },
+    { name: "cause", label: "Causal de la falla." },
   ];
 
   return (
@@ -59,7 +70,7 @@ export default function FaultCausalsTable({ faultCausals, loading }: Props) {
             <CircularProgress size={20} />
           </Typography>
         ) : (
-          'Lista de Fallas y causales'
+          "Lista de Fallas y causales"
         )
       }
       data={faultCausals}

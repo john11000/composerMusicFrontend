@@ -1,8 +1,8 @@
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
-import { IUser } from '@/features/users/models/users.type';
-import { Grid, Container, TextField, Autocomplete } from '@mui/material';
-import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
+import { IUser } from "@/features/users/models/users.type";
+import { Grid, Container, TextField, Autocomplete } from "@mui/material";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
 
 type props = {
   users: IUser[];
@@ -11,8 +11,8 @@ export const ServiceOrdersAsignTecnicForm = ({ users }: props) => {
   const { control } = useForm();
   return (
     <Container>
-      <Grid container spacing={2} sx={{ marginTop: '25px' }}>
-        <Grid item xs={6} sx={{ marginX: 'auto' }}>
+      <Grid container spacing={2} sx={{ marginTop: "25px" }}>
+        <Grid item xs={6} sx={{ marginX: "auto" }}>
           <Controller
             name="drpSelectCustomer"
             control={control}
@@ -26,7 +26,10 @@ export const ServiceOrdersAsignTecnicForm = ({ users }: props) => {
                     return {
                       id: index,
                       value: tecnic.id.toString(),
-                      label: tecnic?.identificationNumber?.toString() + ' - ' + tecnic?.firstName,
+                      label:
+                        tecnic?.identificationNumber?.toString() +
+                        " - " +
+                        tecnic?.firstName,
                     };
                   })}
                 onChange={(_, newValue) => {

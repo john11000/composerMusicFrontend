@@ -1,8 +1,14 @@
-import { ICustomers } from '@/features/customers/models/Customers.type';
-import { IFaultCausals } from '@/features/faultCausal/models/FaultCausals.type';
-import { IFiltersFormStateInvoices, InvoiceItems } from '@/features/invoices/models/Invoices.type';
-import { IObjecDrp, IReferences } from '@/features/reference/models/References.type';
-import { Dispatch, SetStateAction } from 'react';
+import { ICustomers } from "@/features/customers/models/Customers.type";
+import { IFaultCausals } from "@/features/faultCausal/models/FaultCausals.type";
+import {
+  IFiltersFormStateInvoices,
+  InvoiceItems,
+} from "@/features/invoices/models/Invoices.type";
+import {
+  IObjecDrp,
+  IReferences,
+} from "@/features/reference/models/References.type";
+import { Dispatch, SetStateAction } from "react";
 
 export interface POSTServiceOrders {
   customerId: number;
@@ -72,18 +78,18 @@ export interface IFiltersFormState extends IFiltersFormStateInvoices {
 }
 
 export enum ActionEnum {
-  VER = 'VER',
-  ASIGNAR_TECNICO = 'ASIGNAR_TECNICO',
-  ANULAR = 'ANULAR',
-  CERRAR = 'CERRAR',
-  DESBLOQUEAR = 'DESBLOQUEAR',
+  VER = "VER",
+  ASIGNAR_TECNICO = "ASIGNAR_TECNICO",
+  ANULAR = "ANULAR",
+  CERRAR = "CERRAR",
+  DESBLOQUEAR = "DESBLOQUEAR",
 }
 
 export enum ServicesOrderStateEnum {
-  TODAS = 'TODAS',
-  ABIERTAS = 'ABIERTAS',
-  CERRADAS = 'CERRADAS',
-  ANULADAS = 'ANULADAS',
-  ASIGNADAS = 'ASIGNADAS',
-  BLOQUEADAS = 'BLOQUEADAS',
+  TODAS = "TODAS",
+  ABIERTAS = "ABIERTAS",
+  CERRADAS = "CERRADAS",
+  ANULADAS = "ANULADAS",
+  ASIGNADAS = "ASIGNADAS",
+  BLOQUEADAS = "BLOQUEADAS",
 }

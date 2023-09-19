@@ -1,10 +1,10 @@
-import { AdminLayout } from '@/features/commons';
-import React, { useEffect } from 'react';
-import { Grid } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { setAppBarTitle } from '@/redux/slices/app.slice';
-import GroupsContainer from '@/features/groups/containers/GroupsContainer';
-import { TITLE_MODULE_GROUPS } from '@/constants/title.constants';
+import { AdminLayout } from "@/features/commons";
+import React, { useEffect } from "react";
+import { Grid } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setAppBarTitle } from "@/redux/slices/app.slice";
+import GroupsContainer from "@/features/groups/containers/GroupsContainer";
+import { TITLE_MODULE_GROUPS } from "@/constants/title.constants";
 
 export default function GroupsPage() {
   const dispatcher = useDispatch();

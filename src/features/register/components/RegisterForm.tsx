@@ -1,7 +1,10 @@
-import { ROUTE_LINK_LOGIN, ROUTE_LINK_RESET_PASSWORD } from '@/constants/routes-link.constants';
-import { Link } from '@/features/commons';
-import { VisibilityOff, Visibility } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
+import {
+  ROUTE_LINK_LOGIN,
+  ROUTE_LINK_RESET_PASSWORD,
+} from "@/constants/routes-link.constants";
+import { Link } from "@/features/commons";
+import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   FormControl,
   FormHelperText,
@@ -12,10 +15,10 @@ import {
   OutlinedInput,
   TextField,
   Typography,
-} from '@mui/material';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { LoginFormState } from '../models/login.type';
+} from "@mui/material";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { LoginFormState } from "../models/login.type";
 // import { ROUTE_LINK_RESET_PASSWORD } from '@/constants/routes-link.constants';
 // import Link from '@/features/commons/Link';
 
@@ -34,25 +37,27 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Grid container justifyContent="center" spacing={2}>
-      <Grid item xs={12}>
+        <Grid item xs={12}>
           <TextField
             variant="outlined"
             required
             fullWidth
             label="Nombre completo"
             autoComplete="email"
-            {...register('email', {
-              required: { value: true, message: 'Campo requerido' },
+            {...register("email", {
+              required: { value: true, message: "Campo requerido" },
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Email no válido.',
+                message: "Email no válido.",
               },
             })}
             error={Boolean(errors.email?.message)}
@@ -66,11 +71,11 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
             fullWidth
             label="Correo electrónico"
             autoComplete="email"
-            {...register('email', {
-              required: { value: true, message: 'Campo requerido' },
+            {...register("email", {
+              required: { value: true, message: "Campo requerido" },
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Email no válido.',
+                message: "Email no válido.",
               },
             })}
             error={Boolean(errors.email?.message)}
@@ -78,10 +83,17 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl variant="outlined" fullWidth error={Boolean(errors.password?.message)} required>
-            <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
+          <FormControl
+            variant="outlined"
+            fullWidth
+            error={Boolean(errors.password?.message)}
+            required
+          >
+            <InputLabel htmlFor="outlined-adornment-password">
+              Contraseña
+            </InputLabel>
             <OutlinedInput
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -95,32 +107,49 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
                 </InputAdornment>
               }
               label="Contraseña"
-              {...register('password', {
-                required: { value: true, message: 'Campo requerido' },
+              {...register("password", {
+                required: { value: true, message: "Campo requerido" },
               })}
             />
             <FormHelperText error>{errors.password?.message}</FormHelperText>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Typography sx={{
-            textAlign: 'center',
-          }}><Link href={ROUTE_LINK_LOGIN}>Ya tengo una cuenta, Iniciar sesión</Link></Typography>
+          <Typography
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <Link href={ROUTE_LINK_LOGIN}>
+              Ya tengo una cuenta, Iniciar sesión
+            </Link>
+          </Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <LoadingButton sx={{
-              marginTop: '50px',
-            }} type="submit" fullWidth variant="contained" color="primary" loading={loading}>
-            <span >Registrarse</span>
+          <LoadingButton
+            sx={{
+              marginTop: "50px",
+            }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            loading={loading}
+          >
+            <span>Registrarse</span>
           </LoadingButton>
         </Grid>
         <Grid item xs={12}>
-        <Typography sx={{
-            textAlign: 'center',
-          }}>
-          <Link href={ROUTE_LINK_RESET_PASSWORD} textAlign="center">¿Olvidó la contraseña contraseña?</Link>
-        </Typography>
+          <Typography
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <Link href={ROUTE_LINK_RESET_PASSWORD} textAlign="center">
+              ¿Olvidó la contraseña contraseña?
+            </Link>
+          </Typography>
         </Grid>
       </Grid>
     </form>

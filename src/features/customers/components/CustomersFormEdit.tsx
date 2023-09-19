@@ -1,10 +1,27 @@
-import { Autocomplete, AutocompleteRenderInputParams, FormControl, Grid, TextField } from '@mui/material';
-import { Container } from '@mui/system';
-import React, { useEffect } from 'react';
-import { Control, Controller, FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { useCustomersContext } from '../context/Customers.context';
-import { City, ICustomers, IDepartments } from '../models/Customers.type';
-import { FIELD_EMAIL_MESSAGE, FIELD_REQUIRED_MESSAGE, FIELD_TELEFONO_MESSAGE } from '@/constants/app.constants';
+import {
+  Autocomplete,
+  AutocompleteRenderInputParams,
+  FormControl,
+  Grid,
+  TextField,
+} from "@mui/material";
+import { Container } from "@mui/system";
+import React, { useEffect } from "react";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
+import { useCustomersContext } from "../context/Customers.context";
+import { City, ICustomers, IDepartments } from "../models/Customers.type";
+import {
+  FIELD_EMAIL_MESSAGE,
+  FIELD_REQUIRED_MESSAGE,
+  FIELD_TELEFONO_MESSAGE,
+} from "@/constants/app.constants";
 
 type Props = {
   register: UseFormRegister<ICustomers>;
@@ -15,15 +32,22 @@ type Props = {
   setValue: UseFormSetValue<ICustomers>;
 };
 
-const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, departaments, setValue }) => {
+const CustomersFormEdit: React.FC<Props> = ({
+  register,
+  errors,
+  watch,
+  control,
+  departaments,
+  setValue,
+}) => {
   const { isEdit, customerToEdit } = useCustomersContext();
-  const watchDepartament = watch('departamentDrp');
-  const watchCityDrp = watch('cityDrp');
+  const watchDepartament = watch("departamentDrp");
+  const watchCityDrp = watch("cityDrp");
 
   useEffect(() => {
     if (customerToEdit?.departamentDrp && customerToEdit?.cityDrp) {
-      setValue('cityDrp', customerToEdit.cityDrp);
-      setValue('departamentDrp', customerToEdit.departamentDrp);
+      setValue("cityDrp", customerToEdit.cityDrp);
+      setValue("departamentDrp", customerToEdit.departamentDrp);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerToEdit]);
@@ -31,9 +55,11 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
   useEffect(() => {
     if (
       watchDepartament === null ||
-      (watchDepartament && watchCityDrp && watchDepartament?.value !== watchCityDrp?.departmentId)
+      (watchDepartament &&
+        watchCityDrp &&
+        watchDepartament?.value !== watchCityDrp?.departmentId)
     ) {
-      setValue('cityDrp', null);
+      setValue("cityDrp", null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchDepartament, watchCityDrp]);
@@ -48,11 +74,14 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               type="number"
               error={!!errors.identificationNumber}
               defaultValue={customerToEdit?.identificationNumber}
-              helperText={errors.identificationNumber?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.identificationNumber?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               label="NIT"
               size="small"
-              {...register('identificationNumber', { required: true })}
+              {...register("identificationNumber", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -67,7 +96,7 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               label="Correo"
               variant="outlined"
               size="small"
-              {...register('email', {
+              {...register("email", {
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: FIELD_EMAIL_MESSAGE,
@@ -83,11 +112,13 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               required
               error={!!errors.firstName}
               defaultValue={customerToEdit?.firstName}
-              helperText={errors.firstName?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.firstName?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               label="Nombres"
               size="small"
-              {...register('firstName', { required: true })}
+              {...register("firstName", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -98,11 +129,13 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               required
               error={!!errors.lastName}
               defaultValue={customerToEdit?.lastName}
-              helperText={errors.lastName?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.lastName?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               label="Apellidos"
               size="small"
-              {...register('lastName', { required: true })}
+              {...register("lastName", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -115,13 +148,15 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <Autocomplete
                 fullWidth
-                sx={{ position: 'relative', zIndex: 2 }}
+                sx={{ position: "relative", zIndex: 2 }}
                 defaultValue={customerToEdit?.departamentDrp}
-                options={departaments.map((depart: IDepartments, index: number) => ({
-                  id: index,
-                  value: depart.id,
-                  label: depart.name,
-                }))}
+                options={departaments.map(
+                  (depart: IDepartments, index: number) => ({
+                    id: index,
+                    value: depart.id,
+                    label: depart.name,
+                  })
+                )}
                 onChange={(_, newValue) => {
                   onChange(newValue);
                 }}
@@ -149,9 +184,11 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <Autocomplete
                 fullWidth
-                sx={{ position: 'relative', zIndex: 2 }}
+                sx={{ position: "relative", zIndex: 2 }}
                 defaultValue={customerToEdit?.cityDrp}
-                options={(departaments[watchDepartament?.id || 0]?.cities || []).map((city: City) => ({
+                options={(
+                  departaments[watchDepartament?.id || 0]?.cities || []
+                ).map((city: City) => ({
                   id: city.id,
                   value: city.codeCity,
                   label: city.name,
@@ -182,11 +219,13 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               required
               error={!!errors.address}
               defaultValue={customerToEdit?.address}
-              helperText={errors.address?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.address?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
               label="Dirección"
               variant="outlined"
               size="small"
-              {...register('address', { required: true })}
+              {...register("address", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -196,11 +235,14 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               required
               error={!!errors.neighborhood}
               defaultValue={customerToEdit?.neighborhood}
-              helperText={errors.neighborhood?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.neighborhood?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               label="Barrio"
               variant="outlined"
               size="small"
-              {...register('neighborhood', { required: true })}
+              {...register("neighborhood", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -209,11 +251,14 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
             <TextField
               error={!!errors.addressDescription}
               defaultValue={customerToEdit?.addressDescription}
-              helperText={errors.addressDescription?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.addressDescription?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               label="Guía-Ubicación"
               variant="outlined"
               size="small"
-              {...register('addressDescription')}
+              {...register("addressDescription")}
             />
           </FormControl>
         </Grid>
@@ -228,7 +273,7 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               label="Teléfono principal"
               variant="outlined"
               size="small"
-              {...register('phone', {
+              {...register("phone", {
                 required: true,
                 pattern: {
                   value: /^[0-9+]+$/i,
@@ -248,7 +293,7 @@ const CustomersFormEdit: React.FC<Props> = ({ register, errors, watch, control, 
               label="Teléfono opcional"
               variant="outlined"
               size="small"
-              {...register('optionalPhone', {
+              {...register("optionalPhone", {
                 pattern: {
                   value: /^[0-9+]+$/,
                   message: FIELD_TELEFONO_MESSAGE,

@@ -1,18 +1,30 @@
-import { FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-import { Search } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import ToastsManager from '@/utilities/toasts.manager';
-import useFilterServiceOrders from '../hooks/useFilterServiceOrders';
-import { IFiltersFormState, ServicesOrderStateEnum } from '../models/ServiceOrders.type';
-import { useForm } from 'react-hook-form';
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
+import {
+  FormControl,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import { Search } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import ToastsManager from "@/utilities/toasts.manager";
+import useFilterServiceOrders from "../hooks/useFilterServiceOrders";
+import {
+  IFiltersFormState,
+  ServicesOrderStateEnum,
+} from "../models/ServiceOrders.type";
+import { useForm } from "react-hook-form";
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
 type Props = {
   // onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
 export default function ServiceOrdersFilters({}: Props) {
-  const { findServiceOrders: findServiceOrdersFromApi, loading } = useFilterServiceOrders();
+  const { findServiceOrders: findServiceOrdersFromApi, loading } =
+    useFilterServiceOrders();
   const {
     register,
     handleSubmit,
@@ -24,7 +36,10 @@ export default function ServiceOrdersFilters({}: Props) {
       const res = await findServiceOrdersFromApi(data);
       if (res.data) {
       } else {
-        ToastsManager.showToast('error', 'No se ha encontrado Ordenes de servicio con los filtros seleccionados');
+        ToastsManager.showToast(
+          "error",
+          "No se ha encontrado Ordenes de servicio con los filtros seleccionados"
+        );
       }
     }
     reset();
@@ -40,10 +55,10 @@ export default function ServiceOrdersFilters({}: Props) {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('identificationNumber')}
+              {...register("identificationNumber")}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -53,10 +68,10 @@ export default function ServiceOrdersFilters({}: Props) {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('address')}
+              {...register("address")}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -66,10 +81,10 @@ export default function ServiceOrdersFilters({}: Props) {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('referenceDescription')}
+              {...register("referenceDescription")}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -79,22 +94,36 @@ export default function ServiceOrdersFilters({}: Props) {
                 labelId="state-select-label"
                 id="state-simple-select"
                 label="Buscar por Estado"
-                {...register('state', { required: FIELD_REQUIRED_MESSAGE })}
+                {...register("state", { required: FIELD_REQUIRED_MESSAGE })}
                 error={!!errors.state}
                 style={{
-                  background: 'white',
-                  backgroundSize: 'cover',
+                  background: "white",
+                  backgroundSize: "cover",
                 }}
                 size="small"
               >
-                <MenuItem value={ServicesOrderStateEnum.TODAS}>{ServicesOrderStateEnum.TODAS}</MenuItem>
-                <MenuItem value={ServicesOrderStateEnum.ABIERTAS}>{ServicesOrderStateEnum.ABIERTAS}</MenuItem>
-                <MenuItem value={ServicesOrderStateEnum.ASIGNADAS}>{ServicesOrderStateEnum.ASIGNADAS}</MenuItem>
-                <MenuItem value={ServicesOrderStateEnum.BLOQUEADAS}>{ServicesOrderStateEnum.BLOQUEADAS}</MenuItem>
-                <MenuItem value={ServicesOrderStateEnum.CERRADAS}>{ServicesOrderStateEnum.CERRADAS}</MenuItem>
-                <MenuItem value={ServicesOrderStateEnum.ANULADAS}>{ServicesOrderStateEnum.ANULADAS}</MenuItem>
+                <MenuItem value={ServicesOrderStateEnum.TODAS}>
+                  {ServicesOrderStateEnum.TODAS}
+                </MenuItem>
+                <MenuItem value={ServicesOrderStateEnum.ABIERTAS}>
+                  {ServicesOrderStateEnum.ABIERTAS}
+                </MenuItem>
+                <MenuItem value={ServicesOrderStateEnum.ASIGNADAS}>
+                  {ServicesOrderStateEnum.ASIGNADAS}
+                </MenuItem>
+                <MenuItem value={ServicesOrderStateEnum.BLOQUEADAS}>
+                  {ServicesOrderStateEnum.BLOQUEADAS}
+                </MenuItem>
+                <MenuItem value={ServicesOrderStateEnum.CERRADAS}>
+                  {ServicesOrderStateEnum.CERRADAS}
+                </MenuItem>
+                <MenuItem value={ServicesOrderStateEnum.ANULADAS}>
+                  {ServicesOrderStateEnum.ANULADAS}
+                </MenuItem>
               </Select>
-              <FormHelperText error={!!errors.state}>{errors.state?.message}</FormHelperText>
+              <FormHelperText error={!!errors.state}>
+                {errors.state?.message}
+              </FormHelperText>
             </FormControl>
           </Grid>
 

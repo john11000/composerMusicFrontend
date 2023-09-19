@@ -1,10 +1,10 @@
-import { FormControl, Grid, TextField } from '@mui/material';
-import { Container } from '@mui/system';
-import React from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { useServicesContext } from '../context/Services.context';
-import { IServices } from '../models/Services.type';
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
+import { FormControl, Grid, TextField } from "@mui/material";
+import { Container } from "@mui/system";
+import React from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { useServicesContext } from "../context/Services.context";
+import { IServices } from "../models/Services.type";
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
 
 type props = {
   register: UseFormRegister<IServices>;
@@ -22,11 +22,13 @@ export const ServicesFormEdit: React.FC<props> = ({ register, errors }) => {
               required
               error={!!errors.name}
               defaultValue={serviceToEdit?.name}
-              helperText={errors.name?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.name?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
               label="Código servicio"
               variant="outlined"
               size="small"
-              {...register('name', { required: true })}
+              {...register("name", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -37,11 +39,14 @@ export const ServicesFormEdit: React.FC<props> = ({ register, errors }) => {
               required
               error={!!errors.description}
               defaultValue={serviceToEdit?.description}
-              helperText={errors.description?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.description?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               size="small"
               label="Descripción del servicio"
-              {...register('description', { required: true })}
+              {...register("description", { required: true })}
             />
           </FormControl>
         </Grid>

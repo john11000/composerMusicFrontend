@@ -1,12 +1,18 @@
-import MUIDataTable, { MUIDataTableColumnDef, MUIDataTableOptions } from 'mui-datatables';
-import { MUIDataTableDefaultOptions } from '@/constants/muidatatable.constants';
-import { Iinvoices, InvoiceItems } from '@/features/invoices/models/Invoices.type';
-import { Checkbox, TextField, Tooltip, Typography } from '@mui/material';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { City, IDepartments } from '@/features/customers/models/Customers.type';
-import useGetDepartaments from '@/hooks/useGetCities';
-import { warrantyDays } from '../helper/warrantyDaysRemaining';
+import MUIDataTable, {
+  MUIDataTableColumnDef,
+  MUIDataTableOptions,
+} from "mui-datatables";
+import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
+import {
+  Iinvoices,
+  InvoiceItems,
+} from "@/features/invoices/models/Invoices.type";
+import { Checkbox, TextField, Tooltip, Typography } from "@mui/material";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { City, IDepartments } from "@/features/customers/models/Customers.type";
+import useGetDepartaments from "@/hooks/useGetCities";
+import { warrantyDays } from "../helper/warrantyDaysRemaining";
 interface Props {
   isDetails?: boolean;
   setIsEditReference?: (isEditReference: boolean) => void;
@@ -53,26 +59,26 @@ export default function ServiceInvoicesReferencesTableEditDialog({
 
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder: 'Buscar por número de referencia',
+    searchPlaceholder: "Buscar por número de referencia",
     textLabels: {
       body: {
-        noMatch: 'El cliente seleccionado no tiene facturas asociadas.',
-        toolTip: 'Ordenar',
+        noMatch: "El cliente seleccionado no tiene facturas asociadas.",
+        toolTip: "Ordenar",
       },
       pagination: {
-        next: 'Página siguiente',
-        previous: 'Página anterior',
-        rowsPerPage: 'filas por página:',
-        displayRows: 'de',
+        next: "Página siguiente",
+        previous: "Página anterior",
+        rowsPerPage: "filas por página:",
+        displayRows: "de",
       },
       toolbar: {
-        search: 'Buscar',
-        downloadCsv: 'Descargar CSV',
+        search: "Buscar",
+        downloadCsv: "Descargar CSV",
       },
       selectedRows: {
-        text: 'Fila(s) seleccionadas',
-        delete: 'Eliminar',
-        deleteAria: 'Eliminar filas seleccionadas',
+        text: "Fila(s) seleccionadas",
+        delete: "Eliminar",
+        deleteAria: "Eliminar filas seleccionadas",
       },
     },
   };
@@ -94,99 +100,129 @@ export default function ServiceInvoicesReferencesTableEditDialog({
     }
   };
 
-  const handleContact = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const updatedSelectedReferences = selectedReferences.map((selectedReference) => {
-      if (selectedReference.id === invoicesItems[index].id) {
-        selectedReference.contact = e.target.value;
+  const handleContact = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const updatedSelectedReferences = selectedReferences.map(
+      (selectedReference) => {
+        if (selectedReference.id === invoicesItems[index].id) {
+          selectedReference.contact = e.target.value;
+        }
+        return selectedReference;
       }
-      return selectedReference;
-    });
+    );
     setSelectedReferences(updatedSelectedReferences);
   };
 
-  const handleOptPhone = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const updatedSelectedReferences = selectedReferences.map((selectedReference) => {
-      if (selectedReference.id === invoicesItems[index].id) {
-        selectedReference.optionalPhone = e.target.value;
+  const handleOptPhone = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const updatedSelectedReferences = selectedReferences.map(
+      (selectedReference) => {
+        if (selectedReference.id === invoicesItems[index].id) {
+          selectedReference.optionalPhone = e.target.value;
+        }
+        return selectedReference;
       }
-      return selectedReference;
-    });
+    );
     setSelectedReferences(updatedSelectedReferences);
   };
 
   const columns: MUIDataTableColumnDef[] = [
-    { name: 'id', options: { display: false } },
-    { name: 'invoiceId', options: { display: false } },
-    { name: 'referenceCode', options: { display: false } },
+    { name: "id", options: { display: false } },
+    { name: "invoiceId", options: { display: false } },
+    { name: "referenceCode", options: { display: false } },
     {
-      name: 'invoiceNumber',
-      label: 'Número de factura',
+      name: "invoiceNumber",
+      label: "Número de factura",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
-            <Typography sx={{ fontSize: '14px' }}>
-              {invoices.find((invoice) => invoice.id === dataTable.rowData[1])?.invoiceNumber}
+            <Typography sx={{ fontSize: "14px" }}>
+              {
+                invoices.find((invoice) => invoice.id === dataTable.rowData[1])
+                  ?.invoiceNumber
+              }
             </Typography>
           );
         },
       },
     },
     {
-      name: 'referenceDescription',
-      label: 'Descripción de referencia',
+      name: "referenceDescription",
+      label: "Descripción de referencia",
       options: {
         customBodyRender: (_, dataTable) => {
-          return <Typography sx={{ fontSize: '14px' }}>{`${dataTable.rowData[2]} ${dataTable.rowData[4]}`}</Typography>;
+          return (
+            <Typography
+              sx={{ fontSize: "14px" }}
+            >{`${dataTable.rowData[2]} ${dataTable.rowData[4]}`}</Typography>
+          );
         },
       },
     },
     {
-      name: 'address',
-      label: 'Dirección',
+      name: "address",
+      label: "Dirección",
     },
     {
-      name: 'cityId',
-      label: 'Ciudad',
+      name: "cityId",
+      label: "Ciudad",
       options: {
         customBodyRender: (_, dataTable) => {
-          const currentCity = cities.find((city) => city.id === dataTable.rowData[6])?.name;
-          return <Typography sx={{ fontSize: '14px' }}>{currentCity}</Typography>;
+          const currentCity = cities.find(
+            (city) => city.id === dataTable.rowData[6]
+          )?.name;
+          return (
+            <Typography sx={{ fontSize: "14px" }}>{currentCity}</Typography>
+          );
         },
       },
     },
     {
-      name: 'Distribuidor',
-      label: 'Distribuidor',
+      name: "Distribuidor",
+      label: "Distribuidor",
       options: {
         customBodyRender: (_, dataTable) => {
           const isDistributor =
-            invoices.find((invoice) => invoice.id === dataTable.rowData[1])?.placeOfPurchase == 'distribuidor'
+            invoices.find((invoice) => invoice.id === dataTable.rowData[1])
+              ?.placeOfPurchase == "distribuidor"
               ? true
               : false;
-          let placeOfPurchase = '';
+          let placeOfPurchase = "";
           if (isDistributor) {
             placeOfPurchase =
-              invoices.filter((invoice) => invoice.id === dataTable.rowData[1])[0].distributor?.name ?? '';
+              invoices.filter(
+                (invoice) => invoice.id === dataTable.rowData[1]
+              )[0].distributor?.name ?? "";
           } else {
-            placeOfPurchase = 'CLASIC';
+            placeOfPurchase = "CLASIC";
           }
-          return <Typography sx={{ fontSize: '14px' }}>{placeOfPurchase}</Typography>;
+          return (
+            <Typography sx={{ fontSize: "14px" }}>{placeOfPurchase}</Typography>
+          );
         },
       },
     },
     {
-      name: 'contact',
-      label: 'Contacto',
+      name: "contact",
+      label: "Contacto",
       options: {
         customBodyRender: (_, dataTable) => {
           const switchState = switchStates[dataTable.rowIndex] || false;
 
           if (!switchState) {
-            return <Typography sx={{ fontSize: '14px' }}>{dataTable.rowData[8]}</Typography>; // Ocultar el campo si el interruptor no está activado
+            return (
+              <Typography sx={{ fontSize: "14px" }}>
+                {dataTable.rowData[8]}
+              </Typography>
+            ); // Ocultar el campo si el interruptor no está activado
           }
 
           return (
-            <Tooltip style={{ fontSize: '14px' }} title="Digite un contacto">
+            <Tooltip style={{ fontSize: "14px" }} title="Digite un contacto">
               <TextField
                 size="small"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,13 +237,17 @@ export default function ServiceInvoicesReferencesTableEditDialog({
     },
 
     {
-      name: 'optionalPhone',
-      label: 'Teléfono opcional',
+      name: "optionalPhone",
+      label: "Teléfono opcional",
       options: {
         customBodyRender: (_, dataTable) => {
           const switchState = switchStates[dataTable.rowIndex] || false;
           if (!switchState) {
-            return <Typography sx={{ fontSize: '14px' }}>{dataTable.rowData[9]}</Typography>; // Ocultar el campo si el interruptor no está activado
+            return (
+              <Typography sx={{ fontSize: "14px" }}>
+                {dataTable.rowData[9]}
+              </Typography>
+            ); // Ocultar el campo si el interruptor no está activado
           }
 
           return (
@@ -225,28 +265,40 @@ export default function ServiceInvoicesReferencesTableEditDialog({
       },
     },
     {
-      name: 'quantity',
-      label: 'Cantidad',
+      name: "quantity",
+      label: "Cantidad",
     },
     {
-      name: 'warrantyDays',
-      label: 'Garantia',
+      name: "warrantyDays",
+      label: "Garantia",
       options: {
         customBodyRender: (_, dataTable) => {
-          const dateofPurchase = invoices.filter((invoice) => invoice.id === dataTable.rowData[1])[0]?.dateOfPurchase;
-          const daysWarranty = warrantyDays(dateofPurchase, dataTable.rowData[11]);
-          return <Typography sx={{ fontSize: '14px' }}>{daysWarranty} días</Typography>;
+          const dateofPurchase = invoices.filter(
+            (invoice) => invoice.id === dataTable.rowData[1]
+          )[0]?.dateOfPurchase;
+          const daysWarranty = warrantyDays(
+            dateofPurchase,
+            dataTable.rowData[11]
+          );
+          return (
+            <Typography sx={{ fontSize: "14px" }}>
+              {daysWarranty} días
+            </Typography>
+          );
         },
       },
     },
     {
-      name: '',
-      label: 'Seleccionar',
+      name: "",
+      label: "Seleccionar",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
             <span>
-              <Checkbox defaultChecked={false} onChange={() => handleSwitchChange(dataTable.rowIndex)}></Checkbox>
+              <Checkbox
+                defaultChecked={false}
+                onChange={() => handleSwitchChange(dataTable.rowIndex)}
+              ></Checkbox>
             </span>
           );
         },

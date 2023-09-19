@@ -1,9 +1,9 @@
-const LAYOUT = '/admin';
+const LAYOUT = "/admin";
 
-export const ROUTE_LINK_REGISTER = '/register';
-export const ROUTE_LINK_RESET_PASSWORD = '/change-password';
-export const ROUTE_LINK_CHANGE_PASSWORD = '/reset-password';
-export const ROUTE_LINK_LOGIN = '/login';
+export const ROUTE_LINK_REGISTER = "/register";
+export const ROUTE_LINK_RESET_PASSWORD = "/change-password";
+export const ROUTE_LINK_CHANGE_PASSWORD = "/reset-password";
+export const ROUTE_LINK_LOGIN = "/login";
 export const ROUTER_LINK_DASHBOARD = `${LAYOUT}`;
 export const ROUTER_LINK_ORDERS = `${LAYOUT}/orders`;
 export const ROUTER_LINK_PRODUCTS = `${LAYOUT}/products`;

@@ -1,12 +1,12 @@
-import { URL_API_GROUPS } from '@/constants/url-apis.constants';
-import useFetch from '@/hooks/useFetch';
-import { IGroups } from '../models/Groups.type';
+import { URL_API_GROUPS } from "@/constants/url-apis.constants";
+import useFetch from "@/hooks/useFetch";
+import { IGroups } from "../models/Groups.type";
 
 export default function useCreateGroup() {
   const { request, loading } = useFetch();
 
   const createGroup = (data: IGroups) => {
-    return request({ method: 'POST', url: URL_API_GROUPS, data });
+    return request({ method: "POST", url: URL_API_GROUPS, data });
   };
 
   return {

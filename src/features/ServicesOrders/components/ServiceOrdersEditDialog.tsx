@@ -1,23 +1,23 @@
-import { toastsManager } from '@/utilities';
-import { LoadingButton } from '@mui/lab';
-import { Dialog, DialogContent, DialogActions, Button } from '@mui/material';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useServiceOrdersContext } from '../context/ServiceOrders.context';
-import { ServiceOrdersFormEdit } from './ServiceOrdersFormEdit';
-import { IServiceOrders } from '../models/ServiceOrders.type';
-import { ICustomers } from '@/features/customers/models/Customers.type';
-import { IServices } from '@/features/Services/models/Services.type';
-import { IUser } from '@/features/users/models/users.type';
-import useUpdateCustomer from '@/features/customers/hooks/useUpdateCustomers';
-import { useCustomersContext } from '@/features/customers/context/Customers.context';
-import { InvoiceItems } from '@/features/invoices/models/Invoices.type';
-import { useInvoicesContext } from '@/features/invoices/context/Invoices.context';
-import useCreateServiceOrder from '../hooks/useCreateServiceOrders';
-import { CreateNewServiceOrderDto } from '../helper/createServiceOrderAdapter';
-import useUpdateInvoice from '@/features/invoices/hooks/useUpdateInvoices';
-import { AxiosResponse } from 'axios';
+import { toastsManager } from "@/utilities";
+import { LoadingButton } from "@mui/lab";
+import { Dialog, DialogContent, DialogActions, Button } from "@mui/material";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useServiceOrdersContext } from "../context/ServiceOrders.context";
+import { ServiceOrdersFormEdit } from "./ServiceOrdersFormEdit";
+import { IServiceOrders } from "../models/ServiceOrders.type";
+import { ICustomers } from "@/features/customers/models/Customers.type";
+import { IServices } from "@/features/Services/models/Services.type";
+import { IUser } from "@/features/users/models/users.type";
+import useUpdateCustomer from "@/features/customers/hooks/useUpdateCustomers";
+import { useCustomersContext } from "@/features/customers/context/Customers.context";
+import { InvoiceItems } from "@/features/invoices/models/Invoices.type";
+import { useInvoicesContext } from "@/features/invoices/context/Invoices.context";
+import useCreateServiceOrder from "../hooks/useCreateServiceOrders";
+import { CreateNewServiceOrderDto } from "../helper/createServiceOrderAdapter";
+import useUpdateInvoice from "@/features/invoices/hooks/useUpdateInvoices";
+import { AxiosResponse } from "axios";
 
 interface Props {
   getServiceOrders: () => void;
@@ -28,18 +28,30 @@ interface Props {
   users: IUser[];
 }
 
-export default function ServiceOrdersEditDialog({ getServiceOrders, customers, getCustomers, services, users }: Props) {
-  const { openEditServiceOrderDialogState, closeEditServiceOrderDialog, titleServiceOrderDialog } =
-    useServiceOrdersContext();
+export default function ServiceOrdersEditDialog({
+  getServiceOrders,
+  customers,
+  getCustomers,
+  services,
+  users,
+}: Props) {
+  const {
+    openEditServiceOrderDialogState,
+    closeEditServiceOrderDialog,
+    titleServiceOrderDialog,
+  } = useServiceOrdersContext();
   // const { serviceOrderToEdit } = useServiceOrdersContext();
-  const { createServiceOrder, loading: loadingCreate } = useCreateServiceOrder();
+  const { createServiceOrder, loading: loadingCreate } =
+    useCreateServiceOrder();
   // const { updateServiceOrder, loading } = useUpdateServiceOrder();
   const { customerIdentification, invoices } = useInvoicesContext();
   const { closeEditCustomerDialog, setCustomerToEdit } = useCustomersContext();
   const { updateCustomer } = useUpdateCustomer();
   const { updateInvoice } = useUpdateInvoice();
 
-  const [selectedReferences, setSelectedReferences] = useState<InvoiceItems[]>([]);
+  const [selectedReferences, setSelectedReferences] = useState<InvoiceItems[]>(
+    []
+  );
   const {
     reset,
     handleSubmit,
@@ -53,8 +65,10 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
   const onSubmit = async (data: IServiceOrders) => {
     if (selectedReferences.length !== 0) {
       try {
-        const text = 'creado';
-        const res = await createServiceOrder(CreateNewServiceOrderDto(data, selectedReferences));
+        const text = "creado";
+        const res = await createServiceOrder(
+          CreateNewServiceOrderDto(data, selectedReferences)
+        );
         const customerData = {
           id: data.id,
           firstName: data.firstName,
@@ -62,8 +76,8 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
           address: data.address,
           neighborhood: data.neighborhood,
           phone: data.phone,
-          optionalPhone: data.optionalPhone ?? '',
-          addressDescription: data.addressDescription ?? '',
+          optionalPhone: data.optionalPhone ?? "",
+          addressDescription: data.addressDescription ?? "",
           // Hasta aqui van los datos del formulario
           cityId: data.cityId.toString(),
           departmentId: data.departmentId,
@@ -74,10 +88,14 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
         const queries: Promise<AxiosResponse<unknown, any>>[] = [];
 
         selectedReferences.map((reference) => {
-          const invoiceFromReference = invoices.filter((invoice) => invoice.id === reference.invoiceId);
+          const invoiceFromReference = invoices.filter(
+            (invoice) => invoice.id === reference.invoiceId
+          );
           const newInvoice = {
             ...invoiceFromReference[0],
-            inoviceItems: selectedReferences.filter((invoice) => invoice.invoiceId === reference.invoiceId),
+            inoviceItems: selectedReferences.filter(
+              (invoice) => invoice.invoiceId === reference.invoiceId
+            ),
           };
 
           queries.push(updateInvoice(newInvoice));
@@ -88,16 +106,22 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
         if (res.data) {
           closeEditServiceOrderDialog();
           closeEditCustomerDialog();
-          toastsManager.showToast('success', 'Ordenes de servicio ' + text + ' correctamente');
+          toastsManager.showToast(
+            "success",
+            "Ordenes de servicio " + text + " correctamente"
+          );
           getCustomers();
         } else {
-          toastsManager.showToast('error', 'Respuesta inesperada');
+          toastsManager.showToast("error", "Respuesta inesperada");
         }
       } catch (error) {
         console.error(error);
       }
     } else {
-      toastsManager.showToast('warning', 'Debe seleccionar al menos una referencia para crear la orden de servicio');
+      toastsManager.showToast(
+        "warning",
+        "Debe seleccionar al menos una referencia para crear la orden de servicio"
+      );
     }
   };
 
@@ -106,22 +130,24 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
   }, []);
 
   useEffect(() => {
-    const customerSelected = customers.find((customer) => customer.id.toString() === customerIdentification);
+    const customerSelected = customers.find(
+      (customer) => customer.id.toString() === customerIdentification
+    );
     if (customerSelected) {
       setCustomerToEdit(customerSelected);
-      setValue('identificationNumber', customerSelected.identificationNumber);
-      setValue('firstName', customerSelected.firstName);
-      setValue('lastName', customerSelected.lastName);
-      setValue('address', customerSelected.address);
-      setValue('phone', customerSelected.phone);
-      setValue('departmentId', customerSelected.departmentId.toString());
-      setValue('cityId', customerSelected.cityId);
-      setValue('email', customerSelected.email);
-      setValue('optionalPhone', customerSelected.optionalPhone);
-      setValue('neighborhood', customerSelected.neighborhood);
-      setValue('addressDescription', customerSelected.addressDescription);
-      setValue('id', customerSelected.id);
-      setValue('id', customerSelected.id);
+      setValue("identificationNumber", customerSelected.identificationNumber);
+      setValue("firstName", customerSelected.firstName);
+      setValue("lastName", customerSelected.lastName);
+      setValue("address", customerSelected.address);
+      setValue("phone", customerSelected.phone);
+      setValue("departmentId", customerSelected.departmentId.toString());
+      setValue("cityId", customerSelected.cityId);
+      setValue("email", customerSelected.email);
+      setValue("optionalPhone", customerSelected.optionalPhone);
+      setValue("neighborhood", customerSelected.neighborhood);
+      setValue("addressDescription", customerSelected.addressDescription);
+      setValue("id", customerSelected.id);
+      setValue("id", customerSelected.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerIdentification]);
@@ -135,7 +161,7 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
 
   return (
     <Dialog
-      sx={{ overflowY: 'hidden' }}
+      sx={{ overflowY: "hidden" }}
       open={openEditServiceOrderDialogState}
       onClose={closeEditServiceOrderDialog}
       maxWidth="xl"
@@ -143,7 +169,7 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
     >
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>{titleServiceOrderDialog}</DialogTitle>
-        <DialogContent sx={{ width: '100%' }}>
+        <DialogContent sx={{ width: "100%" }}>
           <ServiceOrdersFormEdit
             register={register}
             errors={errors}
@@ -160,10 +186,18 @@ export default function ServiceOrdersEditDialog({ getServiceOrders, customers, g
           ></ServiceOrdersFormEdit>
         </DialogContent>
         <DialogActions>
-          <LoadingButton variant="contained" loading={loadingCreate} type="submit">
+          <LoadingButton
+            variant="contained"
+            loading={loadingCreate}
+            type="submit"
+          >
             Generar orden de servicio
           </LoadingButton>
-          <Button variant="contained" color="inherit" onClick={closeEditServiceOrderDialog}>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={closeEditServiceOrderDialog}
+          >
             Cancelar
           </Button>
         </DialogActions>

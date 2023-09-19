@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import useGetFaultCausals from '@/features/faultCausal/hooks/useGetFaultCausals';
-import { IFaultCausals } from '@/features/faultCausal/models/FaultCausals.type';
-import { FaultCausalsProvider } from '@/features/faultCausal/context/FaultCausals.context';
-import FaultCausalsSettings from '@/features/faultCausal/components/FaultCausalsSettings';
-import FaultCausalsTable from '@/features/faultCausal/components/FaultCausalsTable';
-import FaultCausalsEditDialog from '@/features/faultCausal/components/FaultCausalsEditDialog';
+import React, { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+import useGetFaultCausals from "@/features/faultCausal/hooks/useGetFaultCausals";
+import { IFaultCausals } from "@/features/faultCausal/models/FaultCausals.type";
+import { FaultCausalsProvider } from "@/features/faultCausal/context/FaultCausals.context";
+import FaultCausalsSettings from "@/features/faultCausal/components/FaultCausalsSettings";
+import FaultCausalsTable from "@/features/faultCausal/components/FaultCausalsTable";
+import FaultCausalsEditDialog from "@/features/faultCausal/components/FaultCausalsEditDialog";
 
 const FaultCausalsContainer: React.FC = () => {
-  const { getFaultCausals: getFaultCausalsFromApi, loading } = useGetFaultCausals();
+  const { getFaultCausals: getFaultCausalsFromApi, loading } =
+    useGetFaultCausals();
 
   const [faultCausals, setFaultCausals] = useState<IFaultCausals[]>([]);
 

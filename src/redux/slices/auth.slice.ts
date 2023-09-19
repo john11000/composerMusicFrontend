@@ -1,8 +1,8 @@
-import { AuthEmptyState, AuthSession } from '@/models/auth.type';
-import { createSlice } from '@reduxjs/toolkit';
+import { AuthEmptyState, AuthSession } from "@/models/auth.type";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: AuthEmptyState,
   reducers: {
     setCredentials: (state, action: { payload: AuthSession; type: string }) => {
@@ -13,7 +13,10 @@ export const authSlice = createSlice({
       return newCredentials;
     },
     setAsConfigurationCompleted: (state) => {
-      const newState = { ...state, user: { ...state.user, isConfigurationComplete: true } };
+      const newState = {
+        ...state,
+        user: { ...state.user, isConfigurationComplete: true },
+      };
       return newState;
     },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -21,6 +24,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, resetCredentials, setAsConfigurationCompleted } = authSlice.actions;
+export const { setCredentials, resetCredentials, setAsConfigurationCompleted } =
+  authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,6 +1,9 @@
-import { IDistributors } from '@/features/distributor/models/Distributors.type';
-import { IObjecDrp, IReferences } from '@/features/reference/models/References.type';
-import { Dispatch, SetStateAction } from 'react';
+import { IDistributors } from "@/features/distributor/models/Distributors.type";
+import {
+  IObjecDrp,
+  IReferences,
+} from "@/features/reference/models/References.type";
+import { Dispatch, SetStateAction } from "react";
 
 export interface IinvoicesContext {
   invoiceToEdit: Iinvoices | undefined;
@@ -98,6 +101,6 @@ export interface IFiltersFormStateInvoices {
 }
 
 export enum EnumPlaceOfPurchase {
-  'CLASIC' = 'CLASIC',
-  'DISTRIBUIDOR' = 'distribuidor',
+  "CLASIC" = "CLASIC",
+  "DISTRIBUIDOR" = "distribuidor",
 }

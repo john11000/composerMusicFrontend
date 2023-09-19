@@ -1,17 +1,20 @@
-import { Container, Box } from '@mui/material';
-import MainLayout from '@/features/commons/main-layout/MainLayout';
-import { LoginFormState, LoginResponse } from '@/features/login/models/login.type';
-import useFetchAndLoad from '@/hooks/useFetchAndLoad';
-import { doLogin } from '@/features/login/services/login.service';
-import ToastsManager from '@/utilities/toasts.manager';
-import { AuthSession } from '@/models';
-import { setCredentials } from '@/redux/slices/auth.slice';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
-import { ROUTER_LINK_DASHBOARD } from '@/constants/routes-link.constants';
-import { AxiosError, isAxiosError } from 'axios';
-import RegisterForm from '@/features/register/components/RegisterForm';
-import RegisterFormHeader from '@/features/register/components/RegisterFormHeader';
+import { Container, Box } from "@mui/material";
+import MainLayout from "@/features/commons/main-layout/MainLayout";
+import {
+  LoginFormState,
+  LoginResponse,
+} from "@/features/login/models/login.type";
+import useFetchAndLoad from "@/hooks/useFetchAndLoad";
+import { doLogin } from "@/features/login/services/login.service";
+import ToastsManager from "@/utilities/toasts.manager";
+import { AuthSession } from "@/models";
+import { setCredentials } from "@/redux/slices/auth.slice";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { ROUTER_LINK_DASHBOARD } from "@/constants/routes-link.constants";
+import { AxiosError, isAxiosError } from "axios";
+import RegisterForm from "@/features/register/components/RegisterForm";
+import RegisterFormHeader from "@/features/register/components/RegisterFormHeader";
 
 export default function RegisterPage() {
   const { loading, callEndpoint } = useFetchAndLoad();
@@ -43,17 +46,23 @@ export default function RegisterPage() {
 
         if (err.response) {
           if (err.response.status === 400) {
-            ToastsManager.showToast('error', err.response.data.message);
+            ToastsManager.showToast("error", err.response.data.message);
           } else {
-            ToastsManager.showToast('error', 'Ocurrió un error, contacte con soporte');
+            ToastsManager.showToast(
+              "error",
+              "Ocurrió un error, contacte con soporte"
+            );
           }
         } else if (err.request) {
-          ToastsManager.showToast('error', 'Error al conectar con el servidor.');
+          ToastsManager.showToast(
+            "error",
+            "Error al conectar con el servidor."
+          );
         } else {
-          ToastsManager.showToast('error', err.message);
+          ToastsManager.showToast("error", err.message);
         }
       } else {
-        ToastsManager.showToast('error', error?.message);
+        ToastsManager.showToast("error", error?.message);
       }
     }
   };

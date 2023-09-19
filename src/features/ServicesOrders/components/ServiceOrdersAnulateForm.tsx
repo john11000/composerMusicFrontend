@@ -1,5 +1,5 @@
-import { Grid, Container, TextField } from '@mui/material';
-import React from 'react';
+import { Grid, Container, TextField } from "@mui/material";
+import React from "react";
 
 export const ServiceOrdersAnulateForm = () => {
   return (
@@ -12,31 +12,71 @@ export const ServiceOrdersAnulateForm = () => {
           <TextField disabled label="Tipo de servicio" fullWidth size="small" />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Fecha de la orden del servicio" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Fecha de la orden del servicio"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
           <TextField disabled label="NIT del cliente" fullWidth size="small" />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Nombre del cliente" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Nombre del cliente"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Dirección de la referencia" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Dirección de la referencia"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Barrio de la referencia" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Barrio de la referencia"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Ciudad de la referencia" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Ciudad de la referencia"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Teléfono del cliente" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Teléfono del cliente"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Código de la referencia" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Código de la referencia"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField disabled label="Descripción de la referencia" fullWidth size="small" />
+          <TextField
+            disabled
+            label="Descripción de la referencia"
+            fullWidth
+            size="small"
+          />
         </Grid>
         <Grid item xs={12} md={3}>
           <TextField disabled label="Distribuidor" fullWidth size="small" />
@@ -48,7 +88,14 @@ export const ServiceOrdersAnulateForm = () => {
           <TextField disabled label="Falla reportada" fullWidth size="small" />
         </Grid>
         <Grid item xs={12}>
-          <TextField label="Observaciones adicionales" fullWidth multiline rows={4} required size="small" />
+          <TextField
+            label="Observaciones adicionales"
+            fullWidth
+            multiline
+            rows={4}
+            required
+            size="small"
+          />
         </Grid>
       </Grid>
     </Container>

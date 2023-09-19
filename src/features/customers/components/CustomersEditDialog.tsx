@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Dialog, DialogContent, DialogActions, Button } from '@mui/material';
-import DialogTitle from '@mui/material/DialogTitle';
-import { LoadingButton } from '@mui/lab';
-import { useCustomersContext } from '../context/Customers.context';
-import { ICustomers, IDepartments } from '../models/Customers.type';
-import { toastsManager } from '@/utilities';
-import useUpdateCustomer from '../hooks/useUpdateCustomers';
-import useCreateCustomer from '../hooks/useCreateCustomers';
-import CustomersFormEdit from './CustomersFormEdit';
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Dialog, DialogContent, DialogActions, Button } from "@mui/material";
+import DialogTitle from "@mui/material/DialogTitle";
+import { LoadingButton } from "@mui/lab";
+import { useCustomersContext } from "../context/Customers.context";
+import { ICustomers, IDepartments } from "../models/Customers.type";
+import { toastsManager } from "@/utilities";
+import useUpdateCustomer from "../hooks/useUpdateCustomers";
+import useCreateCustomer from "../hooks/useCreateCustomers";
+import CustomersFormEdit from "./CustomersFormEdit";
 
 interface Props {
   getCustomers: () => Promise<void>;
@@ -16,10 +16,19 @@ interface Props {
   customers: ICustomers[];
 }
 
-const CustomersEditDialog = ({ getCustomers, departaments, customers }: Props) => {
-  const { customerToEdit, setCustomerToEdit, setOpenModalCreateInvoice } = useCustomersContext();
+const CustomersEditDialog = ({
+  getCustomers,
+  departaments,
+  customers,
+}: Props) => {
+  const { customerToEdit, setCustomerToEdit, setOpenModalCreateInvoice } =
+    useCustomersContext();
   const { updateCustomer, loading: updateLoading } = useUpdateCustomer();
-  const { openEditCustomerDialogState, closeEditCustomerDialog, titleCustomerDialog } = useCustomersContext();
+  const {
+    openEditCustomerDialogState,
+    closeEditCustomerDialog,
+    titleCustomerDialog,
+  } = useCustomersContext();
   const { createCustomer, loading: createLoading } = useCreateCustomer();
 
   const {
@@ -35,7 +44,7 @@ const CustomersEditDialog = ({ getCustomers, departaments, customers }: Props) =
   const handleOnSave = async (data: ICustomers) => {
     try {
       const isEditMode = customerToEdit?.id !== undefined;
-      const text = isEditMode ? 'Actualizado' : 'Creado';
+      const text = isEditMode ? "Actualizado" : "Creado";
 
       const customerData = {
         id: isEditMode ? customerToEdit?.id : 0,
@@ -52,16 +61,18 @@ const CustomersEditDialog = ({ getCustomers, departaments, customers }: Props) =
         departmentId: data.departamentDrp?.value.toString(),
       };
 
-      const res = isEditMode ? await updateCustomer(customerData) : await createCustomer(customerData);
+      const res = isEditMode
+        ? await updateCustomer(customerData)
+        : await createCustomer(customerData);
 
       if (res.data) {
         closeEditCustomerDialog();
-        toastsManager.showToast('success', `Cliente ${text} correctamente`);
+        toastsManager.showToast("success", `Cliente ${text} correctamente`);
         await getCustomers();
         setCustomerToEdit(customerData);
         setOpenModalCreateInvoice && setOpenModalCreateInvoice(true);
       } else {
-        toastsManager.showToast('error', 'Respuesta inesperada');
+        toastsManager.showToast("error", "Respuesta inesperada");
       }
     } catch (error) {
       console.error(error);
@@ -70,7 +81,8 @@ const CustomersEditDialog = ({ getCustomers, departaments, customers }: Props) =
 
   useEffect(() => {
     const findId = customers?.find(
-      (customer) => customer.identificationNumber === customerToEdit?.identificationNumber
+      (customer) =>
+        customer.identificationNumber === customerToEdit?.identificationNumber
     );
     setCustomerToEdit(findId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,7 +96,12 @@ const CustomersEditDialog = ({ getCustomers, departaments, customers }: Props) =
   }, [openEditCustomerDialogState]);
 
   return (
-    <Dialog open={openEditCustomerDialogState} onClose={closeEditCustomerDialog} fullWidth maxWidth="md">
+    <Dialog
+      open={openEditCustomerDialogState}
+      onClose={closeEditCustomerDialog}
+      fullWidth
+      maxWidth="md"
+    >
       <form noValidate onSubmit={handleSubmit(handleOnSave)}>
         <DialogTitle>{titleCustomerDialog}</DialogTitle>
         <DialogContent>
@@ -98,10 +115,18 @@ const CustomersEditDialog = ({ getCustomers, departaments, customers }: Props) =
           />
         </DialogContent>
         <DialogActions>
-          <LoadingButton variant="contained" loading={updateLoading || createLoading} type="submit">
+          <LoadingButton
+            variant="contained"
+            loading={updateLoading || createLoading}
+            type="submit"
+          >
             Guardar
           </LoadingButton>
-          <Button variant="contained" color="inherit" onClick={closeEditCustomerDialog}>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={closeEditCustomerDialog}
+          >
             Cancelar
           </Button>
         </DialogActions>

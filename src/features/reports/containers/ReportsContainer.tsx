@@ -1,5 +1,5 @@
-import { ReportsProvider } from '../context/Reports.context';
-import ReportsFilters from '../components/ReportsFilters';
+import { ReportsProvider } from "../context/Reports.context";
+import ReportsFilters from "../components/ReportsFilters";
 
 const ReportsContainer = () => {
   return (

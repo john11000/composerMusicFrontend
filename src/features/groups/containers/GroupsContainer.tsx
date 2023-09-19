@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import GroupsTable from '@/features/groups/components/GroupsTable';
-import { IGroups } from '@/features/groups/models/Groups.type';
-import useGetGroups from '@/features/groups/hooks/useGetGroups';
-import { GroupsProvider } from '@/features/groups/context/Groups.context';
-import GroupsSettings from '@/features/groups/components/GroupsSettings';
-import GroupsEditDialog from '@/features/groups/components/GroupsEditDialog';
+import React, { useEffect, useState } from "react";
+import GroupsTable from "@/features/groups/components/GroupsTable";
+import { IGroups } from "@/features/groups/models/Groups.type";
+import useGetGroups from "@/features/groups/hooks/useGetGroups";
+import { GroupsProvider } from "@/features/groups/context/Groups.context";
+import GroupsSettings from "@/features/groups/components/GroupsSettings";
+import GroupsEditDialog from "@/features/groups/components/GroupsEditDialog";
 
 const GroupsContainer = () => {
   const { getGroups: getGroupsFromApi, loading } = useGetGroups();

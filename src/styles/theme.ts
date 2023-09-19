@@ -1,28 +1,28 @@
-import { Roboto } from 'next/font/google';
-import { createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import { Roboto } from "next/font/google";
+import { createTheme } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 
 export const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Arial', 'sans-serif'],
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
 });
 
 // Create a theme instance.
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#008800',
+      main: "#008800",
     },
     secondary: {
-      main: '#19857b',
+      main: "#19857b",
     },
     error: {
       main: red.A400,
     },
     info: {
-      main: '#6631CC',
+      main: "#6631CC",
     },
   },
   typography: {
@@ -32,8 +32,8 @@ const theme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          '&.Mui-selected': {
-            backgroundColor: '#dddddd',
+          "&.Mui-selected": {
+            backgroundColor: "#dddddd",
           },
         },
       },

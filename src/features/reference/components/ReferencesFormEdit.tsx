@@ -1,6 +1,6 @@
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
-import useGetGroups from '@/features/groups/hooks/useGetGroups';
-import { IGroups } from '@/features/groups/models/Groups.type';
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
+import useGetGroups from "@/features/groups/hooks/useGetGroups";
+import { IGroups } from "@/features/groups/models/Groups.type";
 import {
   Autocomplete,
   AutocompleteRenderInputParams,
@@ -10,12 +10,18 @@ import {
   FormHelperText,
   Grid,
   TextField,
-} from '@mui/material';
-import { Container } from '@mui/system';
-import React, { useEffect, useState } from 'react';
-import { Control, Controller, FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { useReferencesContext } from '../context/References.context';
-import { IReferences } from '../models/References.type';
+} from "@mui/material";
+import { Container } from "@mui/system";
+import React, { useEffect, useState } from "react";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
+import { useReferencesContext } from "../context/References.context";
+import { IReferences } from "../models/References.type";
 
 type props = {
   register: UseFormRegister<IReferences>;
@@ -27,7 +33,12 @@ interface options {
   label: string;
   id: number;
 }
-export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control, setValue }) => {
+export const ReferencesFormEdit: React.FC<props> = ({
+  register,
+  errors,
+  control,
+  setValue,
+}) => {
   const { getGroups: getGroupsFromApi } = useGetGroups();
   const { isEdit, referenceToEdit } = useReferencesContext();
   const [groups, setGroups] = useState<IGroups[]>([]);
@@ -45,7 +56,7 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
 
   useEffect(() => {
     if (referenceToEdit?.groupReference) {
-      setValue('groupReference', referenceToEdit.groupReference);
+      setValue("groupReference", referenceToEdit.groupReference);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [referenceToEdit]);
@@ -64,11 +75,14 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
               required
               error={!!errors.referenceCode}
               defaultValue={referenceToEdit?.referenceCode}
-              helperText={errors.referenceCode?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.referenceCode?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               size="small"
               label="Código de referencia"
-              {...register('referenceCode', { required: true })}
+              {...register("referenceCode", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -80,16 +94,18 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
             rules={{ required: FIELD_REQUIRED_MESSAGE }}
             render={({ field: { onChange, value }, fieldState: { error } }) => {
               // Ordenar el arreglo de grupos alfabéticamente
-              const sortedGroups = groups.sort((element1, element2) => element1.name.localeCompare(element2.name));
+              const sortedGroups = groups.sort((element1, element2) =>
+                element1.name.localeCompare(element2.name)
+              );
               return (
                 <Autocomplete
                   disablePortal
                   fullWidth
                   clearOnEscape
-                  sx={{ position: 'relative', zIndex: 2 }}
+                  sx={{ position: "relative", zIndex: 2 }}
                   defaultValue={referenceToEdit?.groupReference}
                   options={sortedGroups.map<options>((group: IGroups) => ({
-                    label: group.name + ' - ' + group.abbreviation,
+                    label: group.name + " - " + group.abbreviation,
                     id: group.id,
                     value: group.id,
                   }))}
@@ -119,13 +135,16 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
               required
               error={!!errors.warrantyDays}
               defaultValue={referenceToEdit?.warrantyDays}
-              helperText={errors.warrantyDays?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.warrantyDays?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               label="Garantía(dias)"
               variant="outlined"
               size="small"
               type="number"
-              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-              {...register('warrantyDays', { required: true })}
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              {...register("warrantyDays", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -136,12 +155,15 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
               required
               error={!!errors.publicPrice}
               defaultValue={referenceToEdit?.publicPrice}
-              helperText={errors.publicPrice?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.publicPrice?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               label="Precio de la referencia"
               variant="outlined"
               size="small"
               type="number"
-              {...register('publicPrice', { required: true })}
+              {...register("publicPrice", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -152,11 +174,14 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
               type="number"
               error={!!errors.internalCost}
               defaultValue={referenceToEdit?.internalCost}
-              helperText={errors.internalCost?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.internalCost?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               size="small"
               label="Costo de la referencia"
-              {...register('internalCost')}
+              {...register("internalCost")}
             />
           </FormControl>
         </Grid>
@@ -164,7 +189,12 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
         <Grid item xs={12} md={6} justifyContent="center">
           <FormControl fullWidth error={!!errors.isVigent}>
             <FormControlLabel
-              control={<Checkbox defaultChecked={referenceToEdit?.isVigent} {...register('isVigent')} />}
+              control={
+                <Checkbox
+                  defaultChecked={referenceToEdit?.isVigent}
+                  {...register("isVigent")}
+                />
+              }
               label="Vigente"
             />
             <FormHelperText error>{errors.isVigent?.message}</FormHelperText>
@@ -179,11 +209,14 @@ export const ReferencesFormEdit: React.FC<props> = ({ register, errors, control,
               required
               error={!!errors.referenceDescription}
               defaultValue={referenceToEdit?.referenceDescription}
-              helperText={errors.referenceDescription?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.referenceDescription?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               label="Descripción de referencia"
               variant="outlined"
               size="small"
-              {...register('referenceDescription', { required: true })}
+              {...register("referenceDescription", { required: true })}
             />
           </FormControl>
         </Grid>

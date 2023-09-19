@@ -1,14 +1,18 @@
-import MUIDataTable, { MUIDataTableColumnDef, MUIDataTableMeta, MUIDataTableOptions } from 'mui-datatables';
-import { Typography, CircularProgress } from '@mui/material';
-import { useServiceOrdersContext } from '../context/ServiceOrders.context';
-import { IServiceOrders } from '../models/ServiceOrders.type';
-import { MUIDataTableDefaultOptions } from '@/constants/muidatatable.constants';
-import useGetRol from '@/hooks/useGetRol';
-import { RolesEnum } from '@/models/roles.enum';
-import { Container } from '@mui/system';
-import ServiceOrdersTableMenu from './ServiceOrdersTableMenu';
-import { useState } from 'react';
-import { LoadingButton } from '@mui/lab';
+import MUIDataTable, {
+  MUIDataTableColumnDef,
+  MUIDataTableMeta,
+  MUIDataTableOptions,
+} from "mui-datatables";
+import { Typography, CircularProgress } from "@mui/material";
+import { useServiceOrdersContext } from "../context/ServiceOrders.context";
+import { IServiceOrders } from "../models/ServiceOrders.type";
+import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
+import useGetRol from "@/hooks/useGetRol";
+import { RolesEnum } from "@/models/roles.enum";
+import { Container } from "@mui/system";
+import ServiceOrdersTableMenu from "./ServiceOrdersTableMenu";
+import { useState } from "react";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
   serviceOrders: IServiceOrders[];
@@ -23,20 +27,29 @@ export default function ServiceOrdersTable({ serviceOrders, loading }: Props) {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
 
   const rol = useGetRol();
-  const { setServiceOrderToEdit, openEditServiceOrderDialog, setTitleServiceOrderDialog, setIsEdit } =
-    useServiceOrdersContext();
+  const {
+    setServiceOrderToEdit,
+    openEditServiceOrderDialog,
+    setTitleServiceOrderDialog,
+    setIsEdit,
+  } = useServiceOrdersContext();
   const handleEditServiceOrder = (serviceOrders: IServiceOrders) => {
     setServiceOrderToEdit(serviceOrders);
   };
 
-  const handleClickEditServiceOrders = (dataTable: MUIDataTableMeta<unknown>) => {
+  const handleClickEditServiceOrders = (
+    dataTable: MUIDataTableMeta<unknown>
+  ) => {
     setIsEdit(true);
-    setTitleServiceOrderDialog('Editar orden de servicio');
+    setTitleServiceOrderDialog("Editar orden de servicio");
     handleEditServiceOrder(serviceOrders[dataTable.rowIndex]);
     openEditServiceOrderDialog();
   };
 
-  const handleChangeCheck = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number) => {
+  const handleChangeCheck = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    rowIndex: number
+  ) => {
     const newCheckedItems = { ...checkedItems };
     newCheckedItems[rowIndex] = e.target.checked;
     setCheckedItems(newCheckedItems);
@@ -46,29 +59,35 @@ export default function ServiceOrdersTable({ serviceOrders, loading }: Props) {
   };
 
   const handleAsignarCliente = () => {
-    console.error('Asignar cliente');
+    console.error("Asignar cliente");
   };
 
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder: 'Buscar Ordenes de servicios',
+    searchPlaceholder: "Buscar Ordenes de servicios",
   };
   const columns: MUIDataTableColumnDef[] = [
-    { name: 'id', options: { display: false } },
+    { name: "id", options: { display: false } },
     {
-      name: '',
+      name: "",
       options: {
         display: rol === RolesEnum.TECNICO ? false : true,
         customBodyRenderLite: (dataIndex) => {
           const isChecked = checkedItems[dataIndex] || false;
 
-          return <input type="checkbox" checked={isChecked} onChange={(e) => handleChangeCheck(e, dataIndex)} />;
+          return (
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={(e) => handleChangeCheck(e, dataIndex)}
+            />
+          );
         },
       },
     },
     {
-      name: 'abbreviation',
-      label: 'NIT',
+      name: "abbreviation",
+      label: "NIT",
       options: {
         customBodyRender: (_, dataTable) => {
           if (rol === RolesEnum.TECNICO) {
@@ -76,7 +95,11 @@ export default function ServiceOrdersTable({ serviceOrders, loading }: Props) {
           } else {
             return (
               <Typography
-                sx={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+                sx={{
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  color: "blue",
+                }}
                 onClick={() => handleClickEditServiceOrders(dataTable)}
               >{`${dataTable.rowData[1]}`}</Typography>
             );
@@ -85,20 +108,20 @@ export default function ServiceOrdersTable({ serviceOrders, loading }: Props) {
       },
     },
     {
-      name: 'name',
-      label: 'Nombre',
+      name: "name",
+      label: "Nombre",
     },
     {
-      name: 'name',
-      label: 'Tipo de servicio',
+      name: "name",
+      label: "Tipo de servicio",
     },
     {
-      name: 'name',
-      label: 'Falla reportada',
+      name: "name",
+      label: "Falla reportada",
     },
     {
-      name: 'name',
-      label: 'Técnico asignado',
+      name: "name",
+      label: "Técnico asignado",
       options: {
         display: rol === RolesEnum.TECNICO ? false : true,
         customBodyRender: (tecnicoAsignado) => {
@@ -110,25 +133,27 @@ export default function ServiceOrdersTable({ serviceOrders, loading }: Props) {
       },
     },
     {
-      name: 'name',
-      label: 'Fecha del servicio',
+      name: "name",
+      label: "Fecha del servicio",
     },
     {
-      name: 'name',
-      label: 'Fecha de cierre del servicio',
+      name: "name",
+      label: "Fecha de cierre del servicio",
     },
     {
-      name: 'name',
-      label: 'Estado de la orden',
+      name: "name",
+      label: "Estado de la orden",
     },
     {
-      name: '',
-      label: 'Opciones',
+      name: "",
+      label: "Opciones",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
             <Container>
-              <ServiceOrdersTableMenu seviceOrder={serviceOrders[dataTable.rowIndex]} />
+              <ServiceOrdersTableMenu
+                seviceOrder={serviceOrders[dataTable.rowIndex]}
+              />
             </Container>
           );
         },
@@ -140,7 +165,7 @@ export default function ServiceOrdersTable({ serviceOrders, loading }: Props) {
     <div>
       {isCheckboxSelected && (
         <LoadingButton
-          sx={{ position: 'relative', zIndex: '10', left: '78%', top: '49px' }}
+          sx={{ position: "relative", zIndex: "10", left: "78%", top: "49px" }}
           variant="contained"
           color="primary"
           onClick={handleAsignarCliente}
@@ -157,7 +182,7 @@ export default function ServiceOrdersTable({ serviceOrders, loading }: Props) {
               <CircularProgress size={20} />
             </Typography>
           ) : (
-            'Lista de Ordenes de Servicios'
+            "Lista de Ordenes de Servicios"
           )
         }
         data={[{}]}

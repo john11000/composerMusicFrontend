@@ -1,11 +1,11 @@
-import { LoadingButton } from '@mui/lab';
-import { Grid, TextField } from '@mui/material';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { ResetPasswordState } from './models/reset-password.types';
-import { useState } from 'react';
-import { resetPasswordService } from './services/reset-password.service';
-import ToastsManager from '@/utilities/toasts.manager';
+import { LoadingButton } from "@mui/lab";
+import { Grid, TextField } from "@mui/material";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { ResetPasswordState } from "./models/reset-password.types";
+import { useState } from "react";
+import { resetPasswordService } from "./services/reset-password.service";
+import ToastsManager from "@/utilities/toasts.manager";
 
 export default function ResetPasswordForm() {
   const [loading, setLoading] = useState(false);
@@ -21,12 +21,15 @@ export default function ResetPasswordForm() {
     setLoading(true);
     try {
       await resetPasswordService(data);
-      ToastsManager.showToast('success', 'Revisa tu correo y sigue las instrucciones');
+      ToastsManager.showToast(
+        "success",
+        "Revisa tu correo y sigue las instrucciones"
+      );
       reset();
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const err = error as any;
-      ToastsManager.showToast('error', err.message);
+      ToastsManager.showToast("error", err.message);
     }
     setLoading(false);
   };
@@ -42,11 +45,11 @@ export default function ResetPasswordForm() {
               fullWidth
               label="Digite el correo electrónico"
               autoComplete="email"
-              {...register('email', {
-                required: { value: true, message: 'Campo requerido' },
+              {...register("email", {
+                required: { value: true, message: "Campo requerido" },
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Email no válido.',
+                  message: "Email no válido.",
                 },
               })}
               error={Boolean(errors.email?.message)}
@@ -54,7 +57,13 @@ export default function ResetPasswordForm() {
             />
           </Grid>
           <Grid item xs={12}>
-            <LoadingButton type="submit" fullWidth variant="contained" color="primary" loading={loading}>
+            <LoadingButton
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              loading={loading}
+            >
               <span>Enviar enlace de recuperación</span>
             </LoadingButton>
           </Grid>

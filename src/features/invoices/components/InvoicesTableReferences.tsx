@@ -1,13 +1,16 @@
-import MUIDataTable, { MUIDataTableColumnDef, MUIDataTableOptions } from 'mui-datatables';
-import { MUIDataTableDefaultOptions } from '@/constants/muidatatable.constants';
-import { InvoiceItems } from '../models/Invoices.type';
-import { Delete, Edit } from '@mui/icons-material';
-import { Tooltip } from '@material-ui/core';
-import { UseFormSetValue } from 'react-hook-form';
-import { desestructuAddress, formatAddress } from '../helpers/formatAddress';
-import useGetDepartaments from '@/hooks/useGetCities';
-import { useEffect, useState } from 'react';
-import { IDepartments } from '@/features/customers/models/Customers.type';
+import MUIDataTable, {
+  MUIDataTableColumnDef,
+  MUIDataTableOptions,
+} from "mui-datatables";
+import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
+import { InvoiceItems } from "../models/Invoices.type";
+import { Delete, Edit } from "@mui/icons-material";
+import { Tooltip } from "@material-ui/core";
+import { UseFormSetValue } from "react-hook-form";
+import { desestructuAddress, formatAddress } from "../helpers/formatAddress";
+import useGetDepartaments from "@/hooks/useGetCities";
+import { useEffect, useState } from "react";
+import { IDepartments } from "@/features/customers/models/Customers.type";
 
 interface Props {
   invoicesItem: InvoiceItems[];
@@ -51,7 +54,10 @@ export default function InvoicesTableReferences({
       label:
         invoicesItem[id]?.auxDrp?.label ??
         `${invoicesItem[id]?.product.referenceCode} - ${invoicesItem[id]?.product.referenceDescription}`,
-      value: invoicesItem[id]?.auxDrp?.value ?? invoicesItem[id]?.productId.toString() ?? '',
+      value:
+        invoicesItem[id]?.auxDrp?.value ??
+        invoicesItem[id]?.productId.toString() ??
+        "",
     };
 
     const codeCityToFind = invoicesItem[id]?.cityId;
@@ -64,53 +70,64 @@ export default function InvoicesTableReferences({
 
     const departamentDrp = {
       id: departmentIndex ?? 0,
-      label: selectedDepartment?.name ?? '',
-      value: selectedDepartment?.id.toString() ?? '',
+      label: selectedDepartment?.name ?? "",
+      value: selectedDepartment?.id.toString() ?? "",
     };
 
-    const selectedCity = selectedDepartment?.cities.find((city) => city.id === invoicesItem[id]?.cityId);
+    const selectedCity = selectedDepartment?.cities.find(
+      (city) => city.id === invoicesItem[id]?.cityId
+    );
     const cityDrp = {
       id: 0,
-      value: selectedCity?.id.toString() ?? '',
-      label: selectedCity?.name ?? '',
+      value: selectedCity?.id.toString() ?? "",
+      label: selectedCity?.name ?? "",
     };
 
     setTimeout(() => {
-      setValue('cityDrp', cityDrp);
+      setValue("cityDrp", cityDrp);
     }, 500);
 
-    setValue('id', invoicesItem[id]?.id ?? 0);
-    setValue('auxDrp', auxDrp);
-    setValue('referenceDescription', invoicesItem[id]?.referenceDescription ?? '');
-    setValue('serial', invoicesItem[id]?.serial ?? '');
-    setValue('quantity', invoicesItem[id]?.quantity ?? 0);
-    setValue('unitValue', invoicesItem[id]?.unitValue ?? 0);
-    setValue('warrantyDays', invoicesItem[id]?.warrantyDays ?? 0);
-    setValue('isActive', invoicesItem[id]?.isActive);
-    setValue('address', invoicesItem[id]?.address ?? '');
-    setValue('location', invoicesItem[id]?.location ?? '');
-    setValue('neighborhood', invoicesItem[id]?.neighborhood ?? '');
-    setValue('optionalPhone', invoicesItem[id]?.optionalPhone ?? '');
-    setValue('departamentDrp', departamentDrp);
-    setValue('principalPhone', invoicesItem[id]?.principalPhone ?? '');
-    setValue('contact', invoicesItem[id]?.contact ?? '');
-    setValue('typeLocation', invoicesItem[id]?.typeLocation ?? '');
-    setValue('locationNumber', invoicesItem[id]?.locationNumber ?? '');
-    setValue('numberLocation', invoicesItem[id]?.numberLocation ?? '');
-    setValue('secondNumberLocation', invoicesItem[id]?.secondNumberLocation ?? '');
+    setValue("id", invoicesItem[id]?.id ?? 0);
+    setValue("auxDrp", auxDrp);
+    setValue(
+      "referenceDescription",
+      invoicesItem[id]?.referenceDescription ?? ""
+    );
+    setValue("serial", invoicesItem[id]?.serial ?? "");
+    setValue("quantity", invoicesItem[id]?.quantity ?? 0);
+    setValue("unitValue", invoicesItem[id]?.unitValue ?? 0);
+    setValue("warrantyDays", invoicesItem[id]?.warrantyDays ?? 0);
+    setValue("isActive", invoicesItem[id]?.isActive);
+    setValue("address", invoicesItem[id]?.address ?? "");
+    setValue("location", invoicesItem[id]?.location ?? "");
+    setValue("neighborhood", invoicesItem[id]?.neighborhood ?? "");
+    setValue("optionalPhone", invoicesItem[id]?.optionalPhone ?? "");
+    setValue("departamentDrp", departamentDrp);
+    setValue("principalPhone", invoicesItem[id]?.principalPhone ?? "");
+    setValue("contact", invoicesItem[id]?.contact ?? "");
+    setValue("typeLocation", invoicesItem[id]?.typeLocation ?? "");
+    setValue("locationNumber", invoicesItem[id]?.locationNumber ?? "");
+    setValue("numberLocation", invoicesItem[id]?.numberLocation ?? "");
+    setValue(
+      "secondNumberLocation",
+      invoicesItem[id]?.secondNumberLocation ?? ""
+    );
 
     if (
-      invoicesItem[id]?.address !== '' &&
+      invoicesItem[id]?.address !== "" &&
       invoicesItem[id]?.address !== undefined &&
       invoicesItem[id]?.address !== null
     ) {
-      const { typeLocation, locationNumber, numberLocation, secondNumberLocation } = desestructuAddress(
-        invoicesItem[id]?.address
-      );
-      setValue('typeLocation', typeLocation);
-      setValue('locationNumber', locationNumber);
-      setValue('numberLocation', numberLocation);
-      setValue('secondNumberLocation', secondNumberLocation);
+      const {
+        typeLocation,
+        locationNumber,
+        numberLocation,
+        secondNumberLocation,
+      } = desestructuAddress(invoicesItem[id]?.address);
+      setValue("typeLocation", typeLocation);
+      setValue("locationNumber", locationNumber);
+      setValue("numberLocation", numberLocation);
+      setValue("secondNumberLocation", secondNumberLocation);
     }
     setIsEditReference && setIsEditReference(true);
     deleteItem(id);
@@ -126,36 +143,40 @@ export default function InvoicesTableReferences({
 
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder: 'Buscar referencia por nombre de referencia',
+    searchPlaceholder: "Buscar referencia por nombre de referencia",
   };
 
   const columns: MUIDataTableColumnDef[] = [
-    { name: 'id', options: { display: false } },
+    { name: "id", options: { display: false } },
     {
-      name: 'referenceCode',
-      label: 'Código de referencia',
+      name: "referenceCode",
+      label: "Código de referencia",
     },
     {
-      name: 'referenceDescription',
-      label: 'Descripción',
+      name: "referenceDescription",
+      label: "Descripción",
       options: {
         customBodyRender: (_, dataTable) => {
-          return <span>{invoicesItem[dataTable.rowIndex]?.referenceDescription}</span>;
+          return (
+            <span>
+              {invoicesItem[dataTable.rowIndex]?.referenceDescription}
+            </span>
+          );
         },
       },
     },
     {
-      name: 'isActive',
-      label: 'Vigente',
+      name: "isActive",
+      label: "Vigente",
       options: {
         customBodyRender: (value) => {
-          return <span>{value ? 'Si' : 'No'}</span>;
+          return <span>{value ? "Si" : "No"}</span>;
         },
       },
     },
     {
-      name: 'serial',
-      label: 'Serial',
+      name: "serial",
+      label: "Serial",
     },
     // { name: 'quantity', label: 'Cantidad' },
     // { name: 'unitValue', label: 'Valor unidad' },
@@ -169,8 +190,8 @@ export default function InvoicesTableReferences({
     //   },
     // },
     {
-      name: 'warrantyDays',
-      label: 'Garantía',
+      name: "warrantyDays",
+      label: "Garantía",
       options: {
         customBodyRender: (_, dataTable) => {
           return <span>{invoicesItem[dataTable.rowIndex]?.warrantyDays}</span>;
@@ -178,8 +199,8 @@ export default function InvoicesTableReferences({
       },
     },
     {
-      name: 'contactNumber',
-      label: 'Contacto',
+      name: "contactNumber",
+      label: "Contacto",
       options: {
         customBodyRender: (_, dataTable) => {
           return <span>{invoicesItem[dataTable.rowIndex]?.contact}</span>;
@@ -187,29 +208,35 @@ export default function InvoicesTableReferences({
       },
     },
     {
-      name: 'address',
-      label: 'Dirección  ',
+      name: "address",
+      label: "Dirección  ",
       options: {
         customBodyRender: (address, dataTable) => {
-          if (address !== '') return <span>{address}</span>;
+          if (address !== "") return <span>{address}</span>;
           return <span>{formatAddress(invoicesItem[dataTable.rowIndex])}</span>;
         },
       },
     },
     {
-      name: 'Opciones',
-      label: 'Opciones',
+      name: "Opciones",
+      label: "Opciones",
       options: {
         display: !isDetails,
         customBodyRender: (_, dataTable) => {
           return (
             <span>
               <Tooltip title="Editar">
-                <Edit sx={{ cursor: 'pointer' }} onClick={() => editItem(dataTable.rowIndex)} />
+                <Edit
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => editItem(dataTable.rowIndex)}
+                />
               </Tooltip>
 
               <Tooltip title="Eliminar">
-                <Delete sx={{ cursor: 'pointer' }} onClick={() => deleteItem(dataTable.rowIndex)} />
+                <Delete
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => deleteItem(dataTable.rowIndex)}
+                />
               </Tooltip>
             </span>
           );
@@ -219,6 +246,11 @@ export default function InvoicesTableReferences({
   ];
 
   return (
-    <MUIDataTable title="Lista de referencias" data={invoicesItem} columns={columns} options={options}></MUIDataTable>
+    <MUIDataTable
+      title="Lista de referencias"
+      data={invoicesItem}
+      columns={columns}
+      options={options}
+    ></MUIDataTable>
   );
 }

@@ -1,11 +1,11 @@
-import { Grid, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-import { Search } from '@mui/icons-material';
-import { IFiltersFormStateInvoices, Iinvoices } from '../models/Invoices.type';
-import useFilterInvoices from '../hooks/useFilterInvoices';
-import { LoadingButton } from '@mui/lab';
-import ToastsManager from '@/utilities/toasts.manager';
-import { useForm } from 'react-hook-form';
+import { Grid, TextField } from "@mui/material";
+import { Box } from "@mui/system";
+import { Search } from "@mui/icons-material";
+import { IFiltersFormStateInvoices, Iinvoices } from "../models/Invoices.type";
+import useFilterInvoices from "../hooks/useFilterInvoices";
+import { LoadingButton } from "@mui/lab";
+import ToastsManager from "@/utilities/toasts.manager";
+import { useForm } from "react-hook-form";
 type Props = {
   setInvoices: React.Dispatch<React.SetStateAction<Iinvoices[]>>;
   getInvoices: () => void;
@@ -14,17 +14,25 @@ type Props = {
 export default function InvoicesFilters({ setInvoices, getInvoices }: Props) {
   const { findInvoices: findInvoicesFromApi, loading } = useFilterInvoices();
 
-  const { register, handleSubmit, reset } = useForm<IFiltersFormStateInvoices>();
+  const { register, handleSubmit, reset } =
+    useForm<IFiltersFormStateInvoices>();
   const onSubmit = async (data: IFiltersFormStateInvoices) => {
     if (data) {
-      if (data.identificationNumber || data.referenceDescription || (data.address && data.address !== '')) {
+      if (
+        data.identificationNumber ||
+        data.referenceDescription ||
+        (data.address && data.address !== "")
+      ) {
         const res = await findInvoicesFromApi(data);
         if (res.data) {
           setInvoices(res.data);
-          ToastsManager.showToast('success', 'Filtros aplicados correctamente');
+          ToastsManager.showToast("success", "Filtros aplicados correctamente");
           return;
         } else {
-          ToastsManager.showToast('error', 'No se ha encontrado facturas con los filtros seleccionados');
+          ToastsManager.showToast(
+            "error",
+            "No se ha encontrado facturas con los filtros seleccionados"
+          );
           return;
         }
       }
@@ -43,10 +51,10 @@ export default function InvoicesFilters({ setInvoices, getInvoices }: Props) {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('identificationNumber')}
+              {...register("identificationNumber")}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -56,10 +64,10 @@ export default function InvoicesFilters({ setInvoices, getInvoices }: Props) {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('referenceDescription')}
+              {...register("referenceDescription")}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -69,10 +77,10 @@ export default function InvoicesFilters({ setInvoices, getInvoices }: Props) {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('address')}
+              {...register("address")}
             />
           </Grid>
           <Grid item xs={12} sm={3}>

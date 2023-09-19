@@ -1,5 +1,5 @@
-import { IObjecDrp } from '@/features/reference/models/References.type';
-import { Dispatch, SetStateAction } from 'react';
+import { IObjecDrp } from "@/features/reference/models/References.type";
+import { Dispatch, SetStateAction } from "react";
 
 export interface ojectDrp {
   id: number;

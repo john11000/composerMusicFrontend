@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from "react";
 
 export interface IUser {
   id: number;
@@ -25,4 +25,9 @@ export interface IUsersContext {
   setUsers: Dispatch<SetStateAction<IUser[]>>;
 }
 
-export const roles: string[] = ['Administrador', 'Auxiliar', 'Técnico', 'Cliente'];
+export const roles: string[] = [
+  "Administrador",
+  "Auxiliar",
+  "Técnico",
+  "Cliente",
+];

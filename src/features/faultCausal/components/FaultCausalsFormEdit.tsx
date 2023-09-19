@@ -1,10 +1,10 @@
-import { FormControl, Grid, TextField } from '@mui/material';
-import { Container } from '@mui/system';
-import React from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { useFaultCausalsContext } from '../context/FaultCausals.context';
-import { IFaultCausals } from '../models/FaultCausals.type';
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
+import { FormControl, Grid, TextField } from "@mui/material";
+import { Container } from "@mui/system";
+import React from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { useFaultCausalsContext } from "../context/FaultCausals.context";
+import { IFaultCausals } from "../models/FaultCausals.type";
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
 
 type props = {
   register: UseFormRegister<IFaultCausals>;
@@ -21,12 +21,14 @@ export const FaultCausalsFormEdit: React.FC<props> = ({ register, errors }) => {
             <TextField
               error={!!errors.errorCode}
               defaultValue={faultCausalToEdit?.errorCode}
-              helperText={errors.errorCode?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.errorCode?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               size="small"
               label="Código de la falla."
               disabled={isEdit}
-              {...register('errorCode', { required: !isEdit ? true : false })}
+              {...register("errorCode", { required: !isEdit ? true : false })}
             />
           </FormControl>
         </Grid>
@@ -36,11 +38,13 @@ export const FaultCausalsFormEdit: React.FC<props> = ({ register, errors }) => {
               required
               error={!!errors.cause}
               defaultValue={faultCausalToEdit?.cause}
-              helperText={errors.cause?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.cause?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
               label="Causal de la falla."
               variant="outlined"
               size="small"
-              {...register('cause', { required: true })}
+              {...register("cause", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -50,11 +54,14 @@ export const FaultCausalsFormEdit: React.FC<props> = ({ register, errors }) => {
               required
               error={!!errors.description}
               defaultValue={faultCausalToEdit?.description}
-              helperText={errors.description?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.description?.type === "required" &&
+                FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               size="small"
               label="Descripción de la falla."
-              {...register('description', { required: true })}
+              {...register("description", { required: true })}
             />
           </FormControl>
         </Grid>

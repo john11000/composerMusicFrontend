@@ -1,20 +1,24 @@
-import { Add } from '@mui/icons-material';
-import { Button, Tooltip } from '@mui/material';
-import { Box } from '@mui/system';
-import { useDistributorsContext } from '../context/Distributors.context';
+import { Add } from "@mui/icons-material";
+import { Button, Tooltip } from "@mui/material";
+import { Box } from "@mui/system";
+import { useDistributorsContext } from "../context/Distributors.context";
 
 type Props = {
   // onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
 export default function DistributorsSettings({}: Props) {
-  const { openEditDistributorDialog, setTitleDistributorDialog, setIsEdit, setDistributorToEdit } =
-    useDistributorsContext();
+  const {
+    openEditDistributorDialog,
+    setTitleDistributorDialog,
+    setIsEdit,
+    setDistributorToEdit,
+  } = useDistributorsContext();
 
   const HandleClickButton = () => {
     setDistributorToEdit(undefined);
     setIsEdit(false);
-    setTitleDistributorDialog('Crear Distribuidores');
+    setTitleDistributorDialog("Crear Distribuidores");
     openEditDistributorDialog();
   };
   return (

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import ReferencesTable from '@/features/reference/components/ReferencesTable';
-import ReferencesEditDialog from '@/features/reference/components/ReferencesEditDialog';
-import useGetReferences from '@/features/reference/hooks/useGetReferences';
-import { IReferences } from '@/features/reference/models/References.type';
-import { ReferencesProvider } from '@/features/reference/context/References.context';
-import ReferencesSettings from '@/features/reference/components/ReferencesSettings';
-import useGetGroups from '@/features/groups/hooks/useGetGroups';
-import { IGroups } from '@/features/groups/models/Groups.type';
+import React, { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+import ReferencesTable from "@/features/reference/components/ReferencesTable";
+import ReferencesEditDialog from "@/features/reference/components/ReferencesEditDialog";
+import useGetReferences from "@/features/reference/hooks/useGetReferences";
+import { IReferences } from "@/features/reference/models/References.type";
+import { ReferencesProvider } from "@/features/reference/context/References.context";
+import ReferencesSettings from "@/features/reference/components/ReferencesSettings";
+import useGetGroups from "@/features/groups/hooks/useGetGroups";
+import { IGroups } from "@/features/groups/models/Groups.type";
 
 const ReferencesContainer = () => {
   const { getReferences: getReferencesFromApi, loading } = useGetReferences();
@@ -51,7 +51,11 @@ const ReferencesContainer = () => {
       <ReferencesSettings />
       <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <ReferencesTable references={references} loading={loading} groups={groups} />
+          <ReferencesTable
+            references={references}
+            loading={loading}
+            groups={groups}
+          />
         </Grid>
       </Grid>
       <ReferencesEditDialog getReferences={getReferences} />

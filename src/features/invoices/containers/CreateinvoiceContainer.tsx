@@ -1,28 +1,37 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { InvoicesEditDialogCustumer } from '../components/InvoicesEditDialogCustomer';
-import { useForm } from 'react-hook-form';
-import { Iinvoices, User } from '../models/Invoices.type';
-import { InvoicesFormEdit } from '../components/InvoicesFormEdit';
-import { InvoicesEditDialogReferences } from '../components/InvoicesEditDialogReferences';
-import { useInvoicesContext } from '../context/Invoices.context';
-import { useEffect } from 'react';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { InvoicesEditDialogCustumer } from "../components/InvoicesEditDialogCustomer";
+import { useForm } from "react-hook-form";
+import { Iinvoices, User } from "../models/Invoices.type";
+import { InvoicesFormEdit } from "../components/InvoicesFormEdit";
+import { InvoicesEditDialogReferences } from "../components/InvoicesEditDialogReferences";
+import { useInvoicesContext } from "../context/Invoices.context";
+import { useEffect } from "react";
 
-const steps = ['Información del cliente', 'Información básica de la factura', 'Referencias de la factura'];
+const steps = [
+  "Información del cliente",
+  "Información básica de la factura",
+  "Referencias de la factura",
+];
 type props = {
   setActiveButton?: React.Dispatch<React.SetStateAction<boolean>>;
   openEditInvoiceDialogState: boolean;
 };
-export const CreateinvoiceContainer: React.FC<props> = ({ setActiveButton, openEditInvoiceDialogState }) => {
+export const CreateinvoiceContainer: React.FC<props> = ({
+  setActiveButton,
+  openEditInvoiceDialogState,
+}) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const { setInvoiceToEdit, isEdit, invoiceToEdit } = useInvoicesContext();
-  const [StepChange, setStepChange] = React.useState<number | undefined>(undefined);
+  const [StepChange, setStepChange] = React.useState<number | undefined>(
+    undefined
+  );
   const [completed, setCompleted] = React.useState<boolean>(false);
 
   const {
@@ -57,7 +66,7 @@ export const CreateinvoiceContainer: React.FC<props> = ({ setActiveButton, openE
       setActiveButton && isEdit && setActiveButton(true);
       setInvoiceToEdit({
         ...invoiceToEdit,
-        userId: parseInt(data?.drpSelectCustomer?.value || '0') || 0,
+        userId: parseInt(data?.drpSelectCustomer?.value || "0") || 0,
       });
     }
     validateIsStepChange();
@@ -69,8 +78,10 @@ export const CreateinvoiceContainer: React.FC<props> = ({ setActiveButton, openE
       setInvoiceToEdit({
         ...invoiceToEdit,
         ...data,
-        dateOfPurchase: data?.dateOfPurchase ? new Date(data?.dateOfPurchase).toISOString() : new Date().toISOString(),
-        distributorId: parseInt(data?.auxDrpDistributor?.value || '0') || 0,
+        dateOfPurchase: data?.dateOfPurchase
+          ? new Date(data?.dateOfPurchase).toISOString()
+          : new Date().toISOString(),
+        distributorId: parseInt(data?.auxDrpDistributor?.value || "0") || 0,
       });
     }
     validateIsStepChange();
@@ -162,7 +173,7 @@ export const CreateinvoiceContainer: React.FC<props> = ({ setActiveButton, openE
   }, [openEditInvoiceDialogState]);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       <Stepper activeStep={activeStep} alternativeLabel nonLinear>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
@@ -170,13 +181,20 @@ export const CreateinvoiceContainer: React.FC<props> = ({ setActiveButton, openE
             optional?: React.ReactNode;
           } = {};
           if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Opcional</Typography>;
+            labelProps.optional = (
+              <Typography variant="caption">Opcional</Typography>
+            );
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
           return (
-            <Step key={label} {...stepProps} sx={{ cursor: 'pointer' }} onClick={handleStep(index)}>
+            <Step
+              key={label}
+              {...stepProps}
+              sx={{ cursor: "pointer" }}
+              onClick={handleStep(index)}
+            >
               <StepLabel {...labelProps}>{label}</StepLabel>
             </Step>
           );
@@ -185,27 +203,46 @@ export const CreateinvoiceContainer: React.FC<props> = ({ setActiveButton, openE
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            Todos los datos han sido completados, de en guardar para almacenar la factura.
+            Todos los datos han sido completados, de en guardar para almacenar
+            la factura.
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            <Box sx={{ flex: "1 1 auto" }} />
             <Button onClick={handleReset}>Volver a iniciar</Button>
           </Box>
         </React.Fragment>
       ) : (
         <React.Fragment>
           {activeStep === 0 && (
-            <InvoicesEditDialogCustumer control={controlCustomer} watch={watchCustomer} setValue={setValueCustomer} />
+            <InvoicesEditDialogCustumer
+              control={controlCustomer}
+              watch={watchCustomer}
+              setValue={setValueCustomer}
+            />
           )}
           {activeStep === 1 && (
-            <InvoicesFormEdit register={register} errors={errors} setValue={setValue} watch={watch} control={control} />
+            <InvoicesFormEdit
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
+              control={control}
+            />
           )}
-          {activeStep === 2 && <InvoicesEditDialogReferences getValues={getValues} />}
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Button color="inherit" variant="contained" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
+          {activeStep === 2 && (
+            <InvoicesEditDialogReferences getValues={getValues} />
+          )}
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            <Button
+              color="inherit"
+              variant="contained"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
               Atras
             </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
+            <Box sx={{ flex: "1 1 auto" }} />
             {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Saltar
@@ -213,7 +250,7 @@ export const CreateinvoiceContainer: React.FC<props> = ({ setActiveButton, openE
             )}
             {activeStep !== steps.length - 1 && (
               <Button variant="contained" onClick={() => validate()}>
-                {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
+                {activeStep === steps.length - 1 ? "Finalizar" : "Siguiente"}
               </Button>
             )}
           </Box>

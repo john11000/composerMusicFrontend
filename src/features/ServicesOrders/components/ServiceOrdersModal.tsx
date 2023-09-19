@@ -1,17 +1,23 @@
 // import { toastsManager } from '@/utilities';
-import { LoadingButton } from '@mui/lab';
-import { Dialog, DialogContent, DialogActions, Button, Box } from '@mui/material';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useServiceOrdersContext } from '../context/ServiceOrders.context';
+import { LoadingButton } from "@mui/lab";
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Button,
+  Box,
+} from "@mui/material";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useServiceOrdersContext } from "../context/ServiceOrders.context";
 // import useCreateServiceOrder from '../hooks/useCreateServiceOrders';
 // import useUpdateServiceOrder from '../hooks/useUpdateServiceOrders';
-import { ActionEnum, IServiceOrders } from '../models/ServiceOrders.type';
-import { ServiceOrdersClose } from './ServiceOrdersClose';
-import { ServiceOrdersAsignTecnicForm } from './ServiceOrdersAsignTecnicForm';
-import { ServiceOrdersAnulateForm } from './ServiceOrdersAnulateForm';
-import { IUser } from '@/features/users/models/users.type';
+import { ActionEnum, IServiceOrders } from "../models/ServiceOrders.type";
+import { ServiceOrdersClose } from "./ServiceOrdersClose";
+import { ServiceOrdersAsignTecnicForm } from "./ServiceOrdersAsignTecnicForm";
+import { ServiceOrdersAnulateForm } from "./ServiceOrdersAnulateForm";
+import { IUser } from "@/features/users/models/users.type";
 
 type props = {
   users: IUser[];
@@ -19,8 +25,12 @@ type props = {
 export default function ServiceOrdersModal({ users }: props) {
   // const { serviceOrderToEdit } = useServiceOrdersContext();
   // const { updateServiceOrder, loading } = useUpdateServiceOrder();
-  const { openCloseServiceOrderDialogState, closeCloseServiceOrderDialog, titleServiceOrderDialog, action } =
-    useServiceOrdersContext();
+  const {
+    openCloseServiceOrderDialogState,
+    closeCloseServiceOrderDialog,
+    titleServiceOrderDialog,
+    action,
+  } = useServiceOrdersContext();
   // const { createServiceOrder, loading: loadingCreate } = useCreateServiceOrder();
   const { reset, handleSubmit } = useForm<IServiceOrders>();
 
@@ -77,7 +87,12 @@ export default function ServiceOrdersModal({ users }: props) {
 
   return (
     <Box>
-      <Dialog open={openCloseServiceOrderDialogState} onClose={closeCloseServiceOrderDialog} fullWidth maxWidth="lg">
+      <Dialog
+        open={openCloseServiceOrderDialogState}
+        onClose={closeCloseServiceOrderDialog}
+        fullWidth
+        maxWidth="lg"
+      >
         <form noValidate onSubmit={handleSubmit(handleOnSave)}>
           <DialogTitle>{titleServiceOrderDialog}</DialogTitle>
           <DialogContent>
@@ -87,9 +102,13 @@ export default function ServiceOrdersModal({ users }: props) {
             {/* <LoadingButton variant="contained" loading={loading || loadingCreate} type="submit">
              */}
             <LoadingButton variant="contained" type="submit">
-              {action.replace && action.replace('_', ' ')}
+              {action.replace && action.replace("_", " ")}
             </LoadingButton>
-            <Button variant="contained" color="inherit" onClick={closeCloseServiceOrderDialog}>
+            <Button
+              variant="contained"
+              color="inherit"
+              onClick={closeCloseServiceOrderDialog}
+            >
               Cancelar
             </Button>
           </DialogActions>

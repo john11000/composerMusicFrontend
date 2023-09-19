@@ -1,30 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid } from '@mui/material';
-import ServiceOrdersTable from '@/features/ServicesOrders/components/ServiceOrdersTable';
-import ServiceOrdersEditDialog from '@/features/ServicesOrders/components/ServiceOrdersEditDialog';
-import ServiceOrdersFilters from '@/features/ServicesOrders/components/ServiceOrdersFilters';
-import useGetServiceOrders from '@/features/ServicesOrders/hooks/useGetServiceOrders';
-import { IServiceOrders } from '@/features/ServicesOrders/models/ServiceOrders.type';
-import ServiceOrdersSettings from '@/features/ServicesOrders/components/ServiceOrdersSettings';
-import useGetRol from '@/hooks/useGetRol';
-import { RolesEnum } from '@/models/roles.enum';
-import { ICustomers, IDepartments } from '@/features/customers/models/Customers.type';
-import CustomersEditDialog from '@/features/customers/components/CustomersEditDialog';
-import useGetCustomers from '@/features/customers/hooks/useGetCustomers';
-import useGetDepartaments from '@/hooks/useGetCities';
-import { IServices } from '@/features/Services/models/Services.type';
-import useGetServices from '@/features/Services/hooks/useGetServices';
-import { IUser } from '@/features/users/models/users.type';
-import useGetUsers from '@/features/users/hooks/useGetUsers';
-import ServiceOrdersModal from '../components/ServiceOrdersModal';
-import CreateInvoicesFromOrder from '../components/CreateInvoicesFromOrder';
-import InvoicesEditDialog from '@/features/invoices/components/InvoicesEditDialog';
-import CustomersDialogCreateServiceOrder from '../components/CreateServiceOrder';
-import DistributorsEditDialog from '@/features/distributor/components/DistributorsEditDialog';
+import React, { useEffect, useState } from "react";
+import { Box, Grid } from "@mui/material";
+import ServiceOrdersTable from "@/features/ServicesOrders/components/ServiceOrdersTable";
+import ServiceOrdersEditDialog from "@/features/ServicesOrders/components/ServiceOrdersEditDialog";
+import ServiceOrdersFilters from "@/features/ServicesOrders/components/ServiceOrdersFilters";
+import useGetServiceOrders from "@/features/ServicesOrders/hooks/useGetServiceOrders";
+import { IServiceOrders } from "@/features/ServicesOrders/models/ServiceOrders.type";
+import ServiceOrdersSettings from "@/features/ServicesOrders/components/ServiceOrdersSettings";
+import useGetRol from "@/hooks/useGetRol";
+import { RolesEnum } from "@/models/roles.enum";
+import {
+  ICustomers,
+  IDepartments,
+} from "@/features/customers/models/Customers.type";
+import CustomersEditDialog from "@/features/customers/components/CustomersEditDialog";
+import useGetCustomers from "@/features/customers/hooks/useGetCustomers";
+import useGetDepartaments from "@/hooks/useGetCities";
+import { IServices } from "@/features/Services/models/Services.type";
+import useGetServices from "@/features/Services/hooks/useGetServices";
+import { IUser } from "@/features/users/models/users.type";
+import useGetUsers from "@/features/users/hooks/useGetUsers";
+import ServiceOrdersModal from "../components/ServiceOrdersModal";
+import CreateInvoicesFromOrder from "../components/CreateInvoicesFromOrder";
+import InvoicesEditDialog from "@/features/invoices/components/InvoicesEditDialog";
+import CustomersDialogCreateServiceOrder from "../components/CreateServiceOrder";
+import DistributorsEditDialog from "@/features/distributor/components/DistributorsEditDialog";
 
 const ServicesOrdersContainer = () => {
   const role = useGetRol();
-  const { getServiceOrders: getServiceOrdersFromApi, loading } = useGetServiceOrders();
+  const { getServiceOrders: getServiceOrdersFromApi, loading } =
+    useGetServiceOrders();
   const { getCustomers: getcustomersFromApi } = useGetCustomers();
   const { getDepartaments: getDepartamentsFromApi } = useGetDepartaments();
   const { getServices: getServicesFromApi } = useGetServices();
@@ -104,7 +108,9 @@ const ServicesOrdersContainer = () => {
 
   return (
     <Box>
-      {(role === RolesEnum.ADMINSTRADOR || role === RolesEnum.AUXILIAR) && <ServiceOrdersSettings />}
+      {(role === RolesEnum.ADMINSTRADOR || role === RolesEnum.AUXILIAR) && (
+        <ServiceOrdersSettings />
+      )}
       <ServiceOrdersFilters />
       <Grid container justifyContent="center">
         <Grid item xs={12}>
@@ -114,7 +120,11 @@ const ServicesOrdersContainer = () => {
       <CustomersDialogCreateServiceOrder />
       <InvoicesEditDialog />
       <CreateInvoicesFromOrder />
-      <CustomersEditDialog getCustomers={getCustomers} departaments={departments} customers={customers} />
+      <CustomersEditDialog
+        getCustomers={getCustomers}
+        departaments={departments}
+        customers={customers}
+      />
       <ServiceOrdersEditDialog
         getServiceOrders={getServiceOrders}
         customers={customers}

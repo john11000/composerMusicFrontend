@@ -1,19 +1,35 @@
-import { Autocomplete, FormControl, Grid, TextField, Button } from '@mui/material';
+import {
+  Autocomplete,
+  FormControl,
+  Grid,
+  TextField,
+  Button,
+} from "@mui/material";
 // import { Container } from '@mui/system';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Control, Controller, FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
-import { useCustomersContext } from '@/features/customers/context/Customers.context';
-import { ICustomers } from '@/features/customers/models/Customers.type';
-import { Add } from '@mui/icons-material';
-import ServiceInvoicesReferencesTableEditDialog from './ServiceInvoicesReferencesTableEditDialog';
-import { IServices } from '@/features/Services/models/Services.type';
-import { IUser } from '@/features/users/models/users.type';
-import { IServiceOrders } from '../models/ServiceOrders.type';
-import { Iinvoices, InvoiceItems } from '@/features/invoices/models/Invoices.type';
-import { IFaultCausals } from '@/features/faultCausal/models/FaultCausals.type';
-import useGetFaultCausals from '@/features/faultCausal/hooks/useGetFaultCausals';
-import { useInvoicesContext } from '@/features/invoices/context/Invoices.context';
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
+import { useCustomersContext } from "@/features/customers/context/Customers.context";
+import { ICustomers } from "@/features/customers/models/Customers.type";
+import { Add } from "@mui/icons-material";
+import ServiceInvoicesReferencesTableEditDialog from "./ServiceInvoicesReferencesTableEditDialog";
+import { IServices } from "@/features/Services/models/Services.type";
+import { IUser } from "@/features/users/models/users.type";
+import { IServiceOrders } from "../models/ServiceOrders.type";
+import {
+  Iinvoices,
+  InvoiceItems,
+} from "@/features/invoices/models/Invoices.type";
+import { IFaultCausals } from "@/features/faultCausal/models/FaultCausals.type";
+import useGetFaultCausals from "@/features/faultCausal/hooks/useGetFaultCausals";
+import { useInvoicesContext } from "@/features/invoices/context/Invoices.context";
 
 type props = {
   register: UseFormRegister<IServiceOrders>;
@@ -56,7 +72,12 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
     setIsEdit,
   } = useCustomersContext();
 
-  const { customerIdentification, setCustomerIdentification, getInvoices, invoices } = useInvoicesContext();
+  const {
+    customerIdentification,
+    setCustomerIdentification,
+    getInvoices,
+    invoices,
+  } = useInvoicesContext();
 
   const { getFaultCausals: getFaultCausalsFromApi } = useGetFaultCausals();
 
@@ -74,39 +95,48 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
 
   const createNewCustomer = () => {
     setCustomerToEdit(undefined);
-    setTitleCustomerDialog('Crear cliente');
+    setTitleCustomerDialog("Crear cliente");
     setIsEdit(false);
     setIsFromExternal(true);
     openEditCustomerDialog();
   };
 
-  const watchIdentificationNumber = watch('drpSelectCustomer');
+  const watchIdentificationNumber = watch("drpSelectCustomer");
 
   const filterInvoices = (id: string) => {
-    setFilteredInvoices(invoices.filter((invoice) => invoice.customer?.identificationNumber === id));
+    setFilteredInvoices(
+      invoices.filter(
+        (invoice) => invoice.customer?.identificationNumber === id
+      )
+    );
   };
 
   const setDefaultValues = () => {
     if (customerToEdit || watchIdentificationNumber) {
       if (watchIdentificationNumber) {
         const customerSelected = customers.find(
-          (customer) => customer.id.toString() === watchIdentificationNumber.value || customerIdentification
+          (customer) =>
+            customer.id.toString() === watchIdentificationNumber.value ||
+            customerIdentification
         );
 
         if (customerSelected) {
           setCustomerToEdit(customerSelected);
-          setValue('identificationNumber', customerSelected.identificationNumber);
-          setValue('firstName', customerSelected.firstName);
-          setValue('lastName', customerSelected.lastName);
-          setValue('address', customerSelected.address);
-          setValue('phone', customerSelected.phone);
-          setValue('departmentId', customerSelected.departmentId.toString());
-          setValue('cityId', customerSelected.cityId);
-          setValue('email', customerSelected.email);
-          setValue('optionalPhone', customerSelected.optionalPhone);
-          setValue('neighborhood', customerSelected.neighborhood);
-          setValue('addressDescription', customerSelected.addressDescription);
-          setValue('id', customerSelected.id);
+          setValue(
+            "identificationNumber",
+            customerSelected.identificationNumber
+          );
+          setValue("firstName", customerSelected.firstName);
+          setValue("lastName", customerSelected.lastName);
+          setValue("address", customerSelected.address);
+          setValue("phone", customerSelected.phone);
+          setValue("departmentId", customerSelected.departmentId.toString());
+          setValue("cityId", customerSelected.cityId);
+          setValue("email", customerSelected.email);
+          setValue("optionalPhone", customerSelected.optionalPhone);
+          setValue("neighborhood", customerSelected.neighborhood);
+          setValue("addressDescription", customerSelected.addressDescription);
+          setValue("id", customerSelected.id);
         } else {
           setCustomerToEdit(customerToEdit);
         }
@@ -126,50 +156,56 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
   }, []);
 
   useEffect(() => {
-    const customerSelected = customers.find((customer) => customer.id.toString() === customerIdentification);
-    if (customerIdentification != '') {
+    const customerSelected = customers.find(
+      (customer) => customer.id.toString() === customerIdentification
+    );
+    if (customerIdentification != "") {
       const drpCustomer = {
-        id: customers.findIndex((customer) => customer.id.toString() === customerIdentification),
-        value: customerSelected?.id.toString() ?? '',
-        label: customerSelected?.identificationNumber.toString() ?? '',
+        id: customers.findIndex(
+          (customer) => customer.id.toString() === customerIdentification
+        ),
+        value: customerSelected?.id.toString() ?? "",
+        label: customerSelected?.identificationNumber.toString() ?? "",
       };
-      setValue('drpSelectCustomer', drpCustomer);
+      setValue("drpSelectCustomer", drpCustomer);
       if (customerSelected) {
-        setValue('identificationNumber', customerSelected.identificationNumber);
-        setValue('firstName', customerSelected.firstName);
-        setValue('lastName', customerSelected.lastName);
-        setValue('address', customerSelected.address);
-        setValue('phone', customerSelected.phone);
-        setValue('departmentId', customerSelected.departmentId.toString());
-        setValue('cityId', customerSelected.cityId);
-        setValue('email', customerSelected.email);
-        setValue('optionalPhone', customerSelected.optionalPhone);
-        setValue('neighborhood', customerSelected.neighborhood);
-        setValue('addressDescription', customerSelected.addressDescription);
-        setValue('id', customerSelected.id);
+        setValue("identificationNumber", customerSelected.identificationNumber);
+        setValue("firstName", customerSelected.firstName);
+        setValue("lastName", customerSelected.lastName);
+        setValue("address", customerSelected.address);
+        setValue("phone", customerSelected.phone);
+        setValue("departmentId", customerSelected.departmentId.toString());
+        setValue("cityId", customerSelected.cityId);
+        setValue("email", customerSelected.email);
+        setValue("optionalPhone", customerSelected.optionalPhone);
+        setValue("neighborhood", customerSelected.neighborhood);
+        setValue("addressDescription", customerSelected.addressDescription);
+        setValue("id", customerSelected.id);
       }
-      filterInvoices(customerSelected?.identificationNumber.toString() ?? '');
-      setCustomerIdentification('');
+      filterInvoices(customerSelected?.identificationNumber.toString() ?? "");
+      setCustomerIdentification("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerIdentification]);
 
   useEffect(() => {
     if (customerToEdit != undefined) {
-      filterInvoices(customerToEdit.identificationNumber ?? '');
+      filterInvoices(customerToEdit.identificationNumber ?? "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerToEdit]);
 
   useEffect(() => {
     if (customerToEdit != undefined) {
-      filterInvoices(customerToEdit.identificationNumber ?? '');
+      filterInvoices(customerToEdit.identificationNumber ?? "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invoices]);
 
   useEffect(() => {
-    setInvoiceItems(filteredInvoices.flatMap((invoice) => invoice.invoiceItems));
+    setInvoiceItems(
+      filteredInvoices.flatMap((invoice) => invoice.invoiceItems)
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredInvoices]);
 
@@ -184,7 +220,7 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
   }, [invoiceItems]);
 
   useEffect(() => {
-    if (customerIdentification == '') {
+    if (customerIdentification == "") {
       setDefaultValues();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,13 +236,15 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <Autocomplete
               fullWidth
-              options={customers.map((distributor: ICustomers, index: number) => {
-                return {
-                  id: index,
-                  value: distributor.id.toString(),
-                  label: distributor.identificationNumber.toString(),
-                };
-              })}
+              options={customers.map(
+                (distributor: ICustomers, index: number) => {
+                  return {
+                    id: index,
+                    value: distributor.id.toString(),
+                    label: distributor.identificationNumber.toString(),
+                  };
+                }
+              )}
               onChange={(_, newValue) => {
                 onChange(newValue);
               }}
@@ -226,7 +264,13 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
           )}
         />
         {!watchIdentificationNumber && (
-          <Button variant="contained" startIcon={<Add />} size="small" fullWidth onClick={() => createNewCustomer()}>
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            size="small"
+            fullWidth
+            onClick={() => createNewCustomer()}
+          >
             Crear nuevo cliente
           </Button>
         )}
@@ -243,7 +287,7 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                   shrink: true,
                 }}
                 size="small"
-                {...register('firstName', { required: FIELD_REQUIRED_MESSAGE })}
+                {...register("firstName", { required: FIELD_REQUIRED_MESSAGE })}
               />
             </FormControl>
           </Grid>
@@ -258,7 +302,7 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                   shrink: true,
                 }}
                 size="small"
-                {...register('lastName', { required: FIELD_REQUIRED_MESSAGE })}
+                {...register("lastName", { required: FIELD_REQUIRED_MESSAGE })}
               />
             </FormControl>
           </Grid>
@@ -273,7 +317,7 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
-                {...register('address', { required: FIELD_REQUIRED_MESSAGE })}
+                {...register("address", { required: FIELD_REQUIRED_MESSAGE })}
               />
             </FormControl>
           </Grid>
@@ -288,7 +332,9 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
-                {...register('neighborhood', { required: FIELD_REQUIRED_MESSAGE })}
+                {...register("neighborhood", {
+                  required: FIELD_REQUIRED_MESSAGE,
+                })}
               />
             </FormControl>
           </Grid>
@@ -303,7 +349,7 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
-                {...register('phone', { required: FIELD_REQUIRED_MESSAGE })}
+                {...register("phone", { required: FIELD_REQUIRED_MESSAGE })}
               />
             </FormControl>
           </Grid>
@@ -318,7 +364,7 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
-                {...register('optionalPhone')}
+                {...register("optionalPhone")}
               />
             </FormControl>
           </Grid>
@@ -333,13 +379,13 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
-                {...register('addressDescription')}
+                {...register("addressDescription")}
               />
             </FormControl>
           </Grid>
 
-          <Grid container spacing={2} sx={{ marginY: '25px', margin: 'auto' }}>
-            <Grid item xs={12} sx={{ overflow: 'auto', maxHeight: '500px' }}>
+          <Grid container spacing={2} sx={{ marginY: "25px", margin: "auto" }}>
+            <Grid item xs={12} sx={{ overflow: "auto", maxHeight: "500px" }}>
               <ServiceInvoicesReferencesTableEditDialog
                 invoicesItems={invoiceItems}
                 invoices={filteredInvoices}
@@ -348,22 +394,27 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
               />
             </Grid>
           </Grid>
-          <Grid container spacing={2} sx={{ marginY: '25px', margin: 'auto' }}>
+          <Grid container spacing={2} sx={{ marginY: "25px", margin: "auto" }}>
             <Grid item xs={12} md={3}>
               <Controller
                 name="drpSelectServices"
                 control={control}
                 rules={{ required: FIELD_REQUIRED_MESSAGE }}
-                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
                   <Autocomplete
                     fullWidth
-                    options={services.map((services: IServices, index: number) => {
-                      return {
-                        id: index,
-                        value: services.id.toString(),
-                        label: services.name + ' - ' + services.description,
-                      };
-                    })}
+                    options={services.map(
+                      (services: IServices, index: number) => {
+                        return {
+                          id: index,
+                          value: services.id.toString(),
+                          label: services.name + " - " + services.description,
+                        };
+                      }
+                    )}
                     onChange={(_, newValue) => {
                       onChange(newValue);
                     }}
@@ -388,16 +439,21 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                 name="drpSelectFailure"
                 control={control}
                 rules={{ required: FIELD_REQUIRED_MESSAGE }}
-                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
                   <Autocomplete
                     fullWidth
-                    options={failures.map((failures: IFaultCausals, index: number) => {
-                      return {
-                        id: index,
-                        value: failures.id.toString(),
-                        label: failures.cause + ' - ' + failures.description,
-                      };
-                    })}
+                    options={failures.map(
+                      (failures: IFaultCausals, index: number) => {
+                        return {
+                          id: index,
+                          value: failures.id.toString(),
+                          label: failures.cause + " - " + failures.description,
+                        };
+                      }
+                    )}
                     onChange={(_, newValue) => {
                       onChange(newValue);
                     }}
@@ -440,7 +496,12 @@ export const ServiceOrdersFormEdit: React.FC<props> = ({
                       value={value || null}
                       size="small"
                       renderInput={(params) => (
-                        <TextField variant="outlined" {...params} label="Tecnico asignado" size="small" />
+                        <TextField
+                          variant="outlined"
+                          {...params}
+                          label="Tecnico asignado"
+                          size="small"
+                        />
                       )}
                     />
                   )}

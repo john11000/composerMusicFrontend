@@ -1,18 +1,25 @@
-import { createContext, useState, useContext } from 'react';
-import { IinvoicesContext, Iinvoices } from '../models/Invoices.type';
-import { PropsProvider } from '@/models/context.type';
-import useGetInvoices from '../hooks/useGetInvoices';
+import { createContext, useState, useContext } from "react";
+import { IinvoicesContext, Iinvoices } from "../models/Invoices.type";
+import { PropsProvider } from "@/models/context.type";
+import useGetInvoices from "../hooks/useGetInvoices";
 
-export const InvoicesContext = createContext<IinvoicesContext | undefined>(undefined);
+export const InvoicesContext = createContext<IinvoicesContext | undefined>(
+  undefined
+);
 
 export const InvoicesProvider = ({ children }: PropsProvider) => {
   const [invoiceToEdit, setInvoiceToEdit] = useState<Iinvoices | undefined>();
-  const [openEditInvoiceDialogState, setopenEditInvoiceDialogState] = useState(false);
-  const [openDetailsInvoiceDialogState, setOpenDetailsInvoiceDialog] = useState(false);
-  const [openCreateServiceOrderDialogState, setOpenCreateServiceOrderDialog] = useState(false);
-  const [customerIdentification, setCustomerIdentification] = useState<string>('');
+  const [openEditInvoiceDialogState, setopenEditInvoiceDialogState] =
+    useState(false);
+  const [openDetailsInvoiceDialogState, setOpenDetailsInvoiceDialog] =
+    useState(false);
+  const [openCreateServiceOrderDialogState, setOpenCreateServiceOrderDialog] =
+    useState(false);
+  const [customerIdentification, setCustomerIdentification] =
+    useState<string>("");
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [titleInvoiceDialog, setTitleInvoiceDialog] = useState<string>('Crear Factura');
+  const [titleInvoiceDialog, setTitleInvoiceDialog] =
+    useState<string>("Crear Factura");
   const [invoices, setInvoices] = useState<Iinvoices[]>([]);
   const { getInvoices: getInvoicesFromApi } = useGetInvoices();
 
@@ -77,7 +84,7 @@ export const useInvoicesContext = (): IinvoicesContext => {
   const context = useContext(InvoicesContext);
 
   if (context === undefined) {
-    throw new Error('InvoicesContext debe usarse dentro de InvoicesProvider');
+    throw new Error("InvoicesContext debe usarse dentro de InvoicesProvider");
   }
 
   return context;

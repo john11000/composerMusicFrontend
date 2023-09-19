@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setAppBarTitle } from '@/redux/slices/app.slice';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setAppBarTitle } from "@/redux/slices/app.slice";
 
-import { AdminLayout } from '@/features/commons';
-import DistributorsContainer from '@/features/distributor/containers/DistributorsContainer';
-import { TITLE_MODULE_DISTRIBUTOR } from '@/constants/title.constants';
+import { AdminLayout } from "@/features/commons";
+import DistributorsContainer from "@/features/distributor/containers/DistributorsContainer";
+import { TITLE_MODULE_DISTRIBUTOR } from "@/constants/title.constants";
 
 const DistributorsPage: React.FC = () => {
   const dispatcher = useDispatch();

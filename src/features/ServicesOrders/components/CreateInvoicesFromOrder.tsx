@@ -1,11 +1,12 @@
-import { Dialog, DialogContent, DialogActions, Button } from '@mui/material';
-import DialogTitle from '@mui/material/DialogTitle';
-import { LoadingButton } from '@mui/lab';
-import { useCustomersContext } from '@/features/customers/context/Customers.context';
-import { useInvoicesContext } from '@/features/invoices/context/Invoices.context';
+import { Dialog, DialogContent, DialogActions, Button } from "@mui/material";
+import DialogTitle from "@mui/material/DialogTitle";
+import { LoadingButton } from "@mui/lab";
+import { useCustomersContext } from "@/features/customers/context/Customers.context";
+import { useInvoicesContext } from "@/features/invoices/context/Invoices.context";
 
 const CustomersDialogCreateInvoice = () => {
-  const { openModalCreateInvoice, setOpenModalCreateInvoice } = useCustomersContext();
+  const { openModalCreateInvoice, setOpenModalCreateInvoice } =
+    useCustomersContext();
   const { openEditInvoiceDialog } = useInvoicesContext();
 
   const closeEditCustomerDialog = () => {
@@ -13,7 +14,12 @@ const CustomersDialogCreateInvoice = () => {
   };
 
   return (
-    <Dialog open={openModalCreateInvoice} onClose={closeEditCustomerDialog} fullWidth maxWidth="md">
+    <Dialog
+      open={openModalCreateInvoice}
+      onClose={closeEditCustomerDialog}
+      fullWidth
+      maxWidth="md"
+    >
       <DialogTitle>¿Desea crear factura al cliente?</DialogTitle>
       <DialogContent></DialogContent>
       <DialogActions>
@@ -27,7 +33,11 @@ const CustomersDialogCreateInvoice = () => {
         >
           Sí
         </LoadingButton>
-        <Button variant="contained" color="inherit" onClick={() => closeEditCustomerDialog()}>
+        <Button
+          variant="contained"
+          color="inherit"
+          onClick={() => closeEditCustomerDialog()}
+        >
           No
         </Button>
       </DialogActions>

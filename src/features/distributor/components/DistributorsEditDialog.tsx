@@ -1,14 +1,20 @@
-import { toastsManager } from '@/utilities';
-import { LoadingButton } from '@mui/lab';
-import { Dialog, DialogContent, DialogActions, Button, Tooltip } from '@mui/material';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDistributorsContext } from '../context/Distributors.context';
-import useUpdateDistributor from '../hooks/useUpdateDistributors';
-import { DistributorsFormEdit } from './DistributorsFormEdit';
-import { IDistributors } from '../models/Distributors.type';
-import useCreateDistributor from '../hooks/useCreateDistributors';
+import { toastsManager } from "@/utilities";
+import { LoadingButton } from "@mui/lab";
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Button,
+  Tooltip,
+} from "@mui/material";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useDistributorsContext } from "../context/Distributors.context";
+import useUpdateDistributor from "../hooks/useUpdateDistributors";
+import { DistributorsFormEdit } from "./DistributorsFormEdit";
+import { IDistributors } from "../models/Distributors.type";
+import useCreateDistributor from "../hooks/useCreateDistributors";
 
 interface Props {
   getDistributors?: () => void;
@@ -17,8 +23,12 @@ interface Props {
 export default function DistributorsEditDialog({ getDistributors }: Props) {
   const { distributorToEdit, setDistributorToEdit } = useDistributorsContext();
   const { updateDistributor, loading } = useUpdateDistributor();
-  const { openEditDistributorDialogState, closeEditDistributorDialog, titleDistributorDialog, isEdit } =
-    useDistributorsContext();
+  const {
+    openEditDistributorDialogState,
+    closeEditDistributorDialog,
+    titleDistributorDialog,
+    isEdit,
+  } = useDistributorsContext();
   const { createDistributor, loading: loadingCreate } = useCreateDistributor();
   const {
     reset,
@@ -30,27 +40,34 @@ export default function DistributorsEditDialog({ getDistributors }: Props) {
   const handleOnSave = async (data: IDistributors) => {
     try {
       let res,
-        text = 'Actualizado';
+        text = "Actualizado";
       if (isEdit) {
         res = await updateDistributor({
           ...data,
           id: distributorToEdit?.id || 0,
         });
       } else {
-        text = 'Creado';
-        const newDistributor = { ...data, phoneNumber: `+57${data.phoneNumber}`, isActive: true };
+        text = "Creado";
+        const newDistributor = {
+          ...data,
+          phoneNumber: `+57${data.phoneNumber}`,
+          isActive: true,
+        };
         res = await createDistributor(newDistributor);
         setDistributorToEdit(newDistributor);
       }
 
       if (res.data) {
         closeEditDistributorDialog();
-        toastsManager.showToast('success', 'Distribuidor ' + text + ' Correctamente');
+        toastsManager.showToast(
+          "success",
+          "Distribuidor " + text + " Correctamente"
+        );
         if (getDistributors) {
           await getDistributors();
         }
       } else {
-        toastsManager.showToast('error', 'Respuesta no esperada');
+        toastsManager.showToast("error", "Respuesta no esperada");
       }
     } catch (error) {
       console.error(error);
@@ -65,20 +82,36 @@ export default function DistributorsEditDialog({ getDistributors }: Props) {
   }, [openEditDistributorDialogState]);
 
   return (
-    <Dialog open={openEditDistributorDialogState} onClose={closeEditDistributorDialog} fullWidth maxWidth="md">
+    <Dialog
+      open={openEditDistributorDialogState}
+      onClose={closeEditDistributorDialog}
+      fullWidth
+      maxWidth="md"
+    >
       <form noValidate onSubmit={handleSubmit(handleOnSave)}>
         <DialogTitle>{titleDistributorDialog}</DialogTitle>
         <DialogContent>
-          <DistributorsFormEdit register={register} errors={errors}></DistributorsFormEdit>
+          <DistributorsFormEdit
+            register={register}
+            errors={errors}
+          ></DistributorsFormEdit>
         </DialogContent>
         <DialogActions>
           <Tooltip title="Guardar">
-            <LoadingButton variant="contained" loading={loading || loadingCreate} type="submit">
+            <LoadingButton
+              variant="contained"
+              loading={loading || loadingCreate}
+              type="submit"
+            >
               Guardar
             </LoadingButton>
           </Tooltip>
           <Tooltip title="Cancelar">
-            <Button variant="contained" color="inherit" onClick={closeEditDistributorDialog}>
+            <Button
+              variant="contained"
+              color="inherit"
+              onClick={closeEditDistributorDialog}
+            >
               Cancelar
             </Button>
           </Tooltip>

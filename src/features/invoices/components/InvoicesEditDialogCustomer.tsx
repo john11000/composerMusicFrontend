@@ -1,13 +1,24 @@
-import { Autocomplete, Button, FormControl, Grid, TextField } from '@mui/material';
-import { Container } from '@mui/system';
-import React, { useEffect, useState } from 'react';
-import { Control, Controller, UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { User } from '../models/Invoices.type';
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
-import { useCustomersContext } from '@/features/customers/context/Customers.context';
-import { Add } from '@mui/icons-material';
-import useGetCustomers from '@/features/customers/hooks/useGetCustomers';
-import { ICustomers } from '@/features/customers/models/Customers.type';
+import {
+  Autocomplete,
+  Button,
+  FormControl,
+  Grid,
+  TextField,
+} from "@mui/material";
+import { Container } from "@mui/system";
+import React, { useEffect, useState } from "react";
+import {
+  Control,
+  Controller,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
+import { User } from "../models/Invoices.type";
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
+import { useCustomersContext } from "@/features/customers/context/Customers.context";
+import { Add } from "@mui/icons-material";
+import useGetCustomers from "@/features/customers/hooks/useGetCustomers";
+import { ICustomers } from "@/features/customers/models/Customers.type";
 
 type props = {
   control: Control<User>;
@@ -15,7 +26,11 @@ type props = {
   setValue: UseFormSetValue<User>;
 };
 
-export const InvoicesEditDialogCustumer: React.FC<props> = ({ control, watch, setValue }) => {
+export const InvoicesEditDialogCustumer: React.FC<props> = ({
+  control,
+  watch,
+  setValue,
+}) => {
   const {
     customerToEdit,
     setCustomerToEdit,
@@ -47,11 +62,11 @@ export const InvoicesEditDialogCustumer: React.FC<props> = ({ control, watch, se
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const watchIdentificationNumber = watch('drpSelectCustomer');
+  const watchIdentificationNumber = watch("drpSelectCustomer");
 
   const createNewCustomer = () => {
     setCustomerToEdit(undefined);
-    setTitleCustomerDialog('Crear cliente');
+    setTitleCustomerDialog("Crear cliente");
     setIsEdit(false);
     setIsFromExternal(true);
     openEditCustomerDialog();
@@ -66,7 +81,8 @@ export const InvoicesEditDialogCustumer: React.FC<props> = ({ control, watch, se
     if (customerToEdit || watchIdentificationNumber) {
       if (watchIdentificationNumber) {
         const customerSelected = customers.find(
-          (customer) => customer.id.toString() === watchIdentificationNumber.value
+          (customer) =>
+            customer.id.toString() === watchIdentificationNumber.value
         );
         if (customerSelected) {
           setCustomerToEdit(customerSelected);
@@ -79,9 +95,9 @@ export const InvoicesEditDialogCustumer: React.FC<props> = ({ control, watch, se
 
   useEffect(() => {
     if (customerToEdit?.identificationNumber) {
-      setValue('drpSelectCustomer', {
+      setValue("drpSelectCustomer", {
         id: 0,
-        value: customerToEdit?.id?.toString() || '',
+        value: customerToEdit?.id?.toString() || "",
         label: customerToEdit?.identificationNumber.toString(),
       });
       setDefaultValues();
@@ -93,24 +109,35 @@ export const InvoicesEditDialogCustumer: React.FC<props> = ({ control, watch, se
   return (
     <Container>
       <form>
-        <Grid container spacing={2} width="100%" margin="auto" minHeight="200px">
+        <Grid
+          container
+          spacing={2}
+          width="100%"
+          margin="auto"
+          minHeight="200px"
+        >
           <Grid item xs={12} md={4}>
             <Controller
               name="drpSelectCustomer"
               control={control}
               rules={{ required: FIELD_REQUIRED_MESSAGE }}
               defaultValue={customerToEdit?.drpSelectCustomer}
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
                 <Autocomplete
                   fullWidth
                   disabled={!isEditCustomer}
-                  options={customers.map((distributor: ICustomers, index: number) => {
-                    return {
-                      id: index,
-                      value: distributor.id.toString(),
-                      label: distributor.identificationNumber.toString(),
-                    };
-                  })}
+                  options={customers.map(
+                    (distributor: ICustomers, index: number) => {
+                      return {
+                        id: index,
+                        value: distributor.id.toString(),
+                        label: distributor.identificationNumber.toString(),
+                      };
+                    }
+                  )}
                   onChange={(event, newValue) => {
                     onChange(newValue);
                   }}

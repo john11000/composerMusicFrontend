@@ -1,5 +1,5 @@
-import { InvoiceItems } from '../models/Invoices.type';
-import { Iinvoices } from '../models/Invoices.type';
+import { InvoiceItems } from "../models/Invoices.type";
+import { Iinvoices } from "../models/Invoices.type";
 
 const newInvoiceItem = (data: InvoiceItems) => {
   return {
@@ -27,9 +27,9 @@ const AdapterNewInvoice = (data: Iinvoices) => {
   return {
     // id: data.id || 0,
     userId: data.userId || 0,
-    invoiceNumber: data.invoiceNumber || '',
-    dateOfPurchase: new Date(data.dateOfPurchase) || '',
-    placeOfPurchase: data.placeOfPurchase || '',
+    invoiceNumber: data.invoiceNumber || "",
+    dateOfPurchase: new Date(data.dateOfPurchase) || "",
+    placeOfPurchase: data.placeOfPurchase || "",
     distributorId: data.distributorId || undefined,
     // file: data.file || null,
     invoiceItems: newitems || [],

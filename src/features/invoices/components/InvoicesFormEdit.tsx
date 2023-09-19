@@ -8,22 +8,29 @@ import {
   FormHelperText,
   Autocomplete,
   Button,
-} from '@mui/material';
-import { Container } from '@mui/system';
-import React, { useState, useEffect } from 'react';
-import { Control, Controller, FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { useInvoicesContext } from '../context/Invoices.context';
-import { EnumPlaceOfPurchase, Iinvoices } from '../models/Invoices.type';
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
-import { IDistributors } from '@/features/distributor/models/Distributors.type';
-import useGetDistributors from '@/features/distributor/hooks/useGetdDistributors';
-import { MuiFileInput } from 'mui-file-input';
-import { Tooltip, Typography } from '@material-ui/core';
-import { AddCircleOutline } from '@mui/icons-material';
-import { useDistributorsContext } from '@/features/distributor/context/Distributors.context';
-import { formatISO, isBefore, isSameDay, parseISO, startOfDay } from 'date-fns';
-import useGetRol from '@/hooks/useGetRol';
-import { RolesEnum } from '@/models/roles.enum';
+} from "@mui/material";
+import { Container } from "@mui/system";
+import React, { useState, useEffect } from "react";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
+import { useInvoicesContext } from "../context/Invoices.context";
+import { EnumPlaceOfPurchase, Iinvoices } from "../models/Invoices.type";
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
+import { IDistributors } from "@/features/distributor/models/Distributors.type";
+import useGetDistributors from "@/features/distributor/hooks/useGetdDistributors";
+import { MuiFileInput } from "mui-file-input";
+import { Tooltip, Typography } from "@material-ui/core";
+import { AddCircleOutline } from "@mui/icons-material";
+import { useDistributorsContext } from "@/features/distributor/context/Distributors.context";
+import { formatISO, isBefore, isSameDay, parseISO, startOfDay } from "date-fns";
+import useGetRol from "@/hooks/useGetRol";
+import { RolesEnum } from "@/models/roles.enum";
 
 type props = {
   register: UseFormRegister<Iinvoices>;
@@ -33,18 +40,29 @@ type props = {
   setValue: UseFormSetValue<Iinvoices>;
 };
 
-export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, control, setValue: setValueForm }) => {
+export const InvoicesFormEdit: React.FC<props> = ({
+  register,
+  errors,
+  watch,
+  control,
+  setValue: setValueForm,
+}) => {
   const { isEdit, invoiceToEdit } = useInvoicesContext();
   const [Distributors, setDistributors] = useState<IDistributors[]>([]);
   const { getDistributors: getDistributorsFromApi } = useGetDistributors();
-  const { openEditDistributorDialog, setTitleDistributorDialog, setIsEdit, distributorToEdit, setDistributorToEdit } =
-    useDistributorsContext();
+  const {
+    openEditDistributorDialog,
+    setTitleDistributorDialog,
+    setIsEdit,
+    distributorToEdit,
+    setDistributorToEdit,
+  } = useDistributorsContext();
   const today = startOfDay(new Date());
-  const formattedToday = formatISO(today, { representation: 'date' });
+  const formattedToday = formatISO(today, { representation: "date" });
   // const fields = watch();
-  const watchPlaceOfPurchase = watch('placeOfPurchase');
-  const watchAuxDrpDistributor = watch('auxDrpDistributor');
-  const watchdateOfPurchase = watch('dateOfPurchase');
+  const watchPlaceOfPurchase = watch("placeOfPurchase");
+  const watchAuxDrpDistributor = watch("auxDrpDistributor");
+  const watchdateOfPurchase = watch("dateOfPurchase");
 
   const [value, setValue] = useState<File | null>(null);
   const getDistributors = async () => {
@@ -61,13 +79,13 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
   const handleEditDistributorBtn = () => {
     setIsEdit(false);
     setDistributorToEdit(undefined);
-    setTitleDistributorDialog('Crear Distribuidor');
+    setTitleDistributorDialog("Crear Distribuidor");
     openEditDistributorDialog();
   };
 
   useEffect(() => {
     if (distributorToEdit) {
-      setValueForm('auxDrpDistributor', {
+      setValueForm("auxDrpDistributor", {
         id: distributorToEdit.id,
         value: distributorToEdit?.id?.toString(),
         label: distributorToEdit.name,
@@ -85,12 +103,15 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
   const validateDate = (value: string) => {
     const selectedDate = parseISO(value);
     if (isSameDay(selectedDate, today) === false) {
-      const isValid = isBefore(selectedDate, today) || isSameDay(selectedDate, today); // Permitir fechas igual o posteriores al día actual
+      const isValid =
+        isBefore(selectedDate, today) || isSameDay(selectedDate, today); // Permitir fechas igual o posteriores al día actual
       if (!isValid) {
         // const date = value?.substring(0, 10); // Extraer la fecha en formato "YYYY-MM-DD"
-        setValueForm('dateOfPurchase', formattedToday); // Establecer la fecha de compra al día de hoy si no es válida
+        setValueForm("dateOfPurchase", formattedToday); // Establecer la fecha de compra al día de hoy si no es válida
       }
-      return isValid || 'La fecha de compra no puede ser posterior al día de hoy';
+      return (
+        isValid || "La fecha de compra no puede ser posterior al día de hoy"
+      );
     }
   };
 
@@ -102,13 +123,13 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
   useEffect(() => {
     if (invoiceToEdit) {
       const date = invoiceToEdit?.dateOfPurchase?.substring(0, 10); // Extraer la fecha en formato "YYYY-MM-DD"
-      setValueForm('dateOfPurchase', date);
-      setValueForm('placeOfPurchase', invoiceToEdit?.placeOfPurchase);
+      setValueForm("dateOfPurchase", date);
+      setValueForm("placeOfPurchase", invoiceToEdit?.placeOfPurchase);
       if (invoiceToEdit?.distributor) {
-        setValueForm('auxDrpDistributor', {
+        setValueForm("auxDrpDistributor", {
           id: invoiceToEdit?.distributor?.id,
           value: invoiceToEdit?.distributor?.id?.toString(),
-          label: invoiceToEdit?.distributor?.name || '',
+          label: invoiceToEdit?.distributor?.name || "",
         });
       }
     }
@@ -134,18 +155,27 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
   return (
     <Container>
       <form>
-        <Grid container spacing={2} width="100%" margin="auto" minHeight="200px">
+        <Grid
+          container
+          spacing={2}
+          width="100%"
+          margin="auto"
+          minHeight="200px"
+        >
           <Grid item xs={12} md={4}>
             <FormControl fullWidth>
               <TextField
                 required
                 error={!!errors.invoiceNumber}
                 defaultValue={invoiceToEdit?.invoiceNumber}
-                helperText={errors.invoiceNumber?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+                helperText={
+                  errors.invoiceNumber?.type === "required" &&
+                  FIELD_REQUIRED_MESSAGE
+                }
                 variant="outlined"
                 size="small"
                 label="Número de factura"
-                {...register('invoiceNumber', { required: true })}
+                {...register("invoiceNumber", { required: true })}
               />
             </FormControl>
           </Grid>
@@ -159,8 +189,10 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
               size="small"
               error={!!errors.dateOfPurchase}
               defaultValue={invoiceToEdit?.dateOfPurchase}
-              helperText={errors.dateOfPurchase && errors.dateOfPurchase.message}
-              {...register('dateOfPurchase', {
+              helperText={
+                errors.dateOfPurchase && errors.dateOfPurchase.message
+              }
+              {...register("dateOfPurchase", {
                 required: FIELD_REQUIRED_MESSAGE,
                 validate: validateDate,
               })}
@@ -176,11 +208,15 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
               size="small"
               value={value}
               error={!!errors.file}
-              helperText={errors.file?.type === 'required' && FIELD_REQUIRED_MESSAGE}
-              {...register('file', { required: useGetRol() === RolesEnum.ADMINSTRADOR ? false : true })}
+              helperText={
+                errors.file?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
+              {...register("file", {
+                required: useGetRol() === RolesEnum.ADMINSTRADOR ? false : true,
+              })}
               onChange={(newValue) => {
                 if (newValue) {
-                  setValueForm('file', newValue);
+                  setValueForm("file", newValue);
                   setValue(newValue);
                 }
               }}
@@ -190,7 +226,7 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
                 <a
                   href={invoiceToEdit?.receiptUrl}
                   target="_blank"
-                  style={{ color: 'blue', cursor: 'pointer' }}
+                  style={{ color: "blue", cursor: "pointer" }}
                   download
                 >
                   <Typography variant="caption" color="primary">
@@ -204,7 +240,7 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
                   <a
                     href={URL.createObjectURL(value)}
                     download={value.name}
-                    style={{ color: 'blue', cursor: 'pointer' }}
+                    style={{ color: "blue", cursor: "pointer" }}
                   >
                     <Typography variant="caption" color="primary">
                       Descargar - {value.name}
@@ -222,15 +258,18 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
                 label="Lugar de compra"
                 defaultValue={invoiceToEdit?.placeOfPurchase}
                 error={!!errors.placeOfPurchase}
-                {...register('placeOfPurchase', { required: true })}
+                {...register("placeOfPurchase", { required: true })}
               >
-                <MenuItem value={EnumPlaceOfPurchase.CLASIC}>{EnumPlaceOfPurchase.CLASIC}</MenuItem>
+                <MenuItem value={EnumPlaceOfPurchase.CLASIC}>
+                  {EnumPlaceOfPurchase.CLASIC}
+                </MenuItem>
                 <MenuItem value={EnumPlaceOfPurchase.DISTRIBUIDOR}>
                   {EnumPlaceOfPurchase.DISTRIBUIDOR.toLocaleUpperCase()}
                 </MenuItem>
               </Select>
               <FormHelperText error>
-                {errors.placeOfPurchase?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+                {errors.placeOfPurchase?.type === "required" &&
+                  FIELD_REQUIRED_MESSAGE}
               </FormHelperText>
             </FormControl>
           </Grid>
@@ -243,18 +282,21 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
                   rules={{ required: true }}
                   render={({ field: { onChange, value } }) => {
                     // Ordenar el arreglo de opciones alfabéticamente
-                    const sortedOptions = Distributors.sort((element1, element2) =>
-                      element1.name.localeCompare(element2.name)
+                    const sortedOptions = Distributors.sort(
+                      (element1, element2) =>
+                        element1.name.localeCompare(element2.name)
                     );
                     return (
                       <Autocomplete
                         fullWidth
-                        sx={{ position: 'relative', zIndex: 2 }}
-                        options={sortedOptions.map((distributor: IDistributors, index: number) => ({
-                          id: index,
-                          value: distributor.id.toString(),
-                          label: distributor.name.toString(),
-                        }))}
+                        sx={{ position: "relative", zIndex: 2 }}
+                        options={sortedOptions.map(
+                          (distributor: IDistributors, index: number) => ({
+                            id: index,
+                            value: distributor.id.toString(),
+                            label: distributor.name.toString(),
+                          })
+                        )}
                         onChange={(event, newValue) => {
                           onChange(newValue);
                         }}
@@ -263,7 +305,10 @@ export const InvoicesFormEdit: React.FC<props> = ({ register, errors, watch, con
                           <TextField
                             error={!!errors.auxDrpDistributor}
                             variant="outlined"
-                            helperText={errors.auxDrpDistributor?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+                            helperText={
+                              errors.auxDrpDistributor?.type === "required" &&
+                              FIELD_REQUIRED_MESSAGE
+                            }
                             {...params}
                             size="small"
                             label="Distribuidor"

@@ -1,8 +1,12 @@
-import MUIDataTable, { MUIDataTableColumnDef, MUIDataTableMeta, MUIDataTableOptions } from 'mui-datatables';
-import { Typography, CircularProgress, Tooltip } from '@mui/material';
-import { useDistributorsContext } from '../context/Distributors.context';
-import { IDistributors } from '../models/Distributors.type';
-import { MUIDataTableDefaultOptions } from '@/constants/muidatatable.constants';
+import MUIDataTable, {
+  MUIDataTableColumnDef,
+  MUIDataTableMeta,
+  MUIDataTableOptions,
+} from "mui-datatables";
+import { Typography, CircularProgress, Tooltip } from "@mui/material";
+import { useDistributorsContext } from "../context/Distributors.context";
+import { IDistributors } from "../models/Distributors.type";
+import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
 // import { toastsManager } from '@/utilities';
 // import { ChangeEvent } from 'react';
 // import useUpdateDistributor from '../hooks/useUpdateDistributors';
@@ -15,8 +19,12 @@ interface Props {
 }
 
 export default function DistributorsTable({ distributors, loading }: Props) {
-  const { setDistributorToEdit, openEditDistributorDialog, setTitleDistributorDialog, setIsEdit } =
-    useDistributorsContext();
+  const {
+    setDistributorToEdit,
+    openEditDistributorDialog,
+    setTitleDistributorDialog,
+    setIsEdit,
+  } = useDistributorsContext();
   // const { updateDistributor } = useUpdateDistributor();
   // const role = useGetRol();
 
@@ -47,25 +55,29 @@ export default function DistributorsTable({ distributors, loading }: Props) {
   //eslint-disable-next-line
   const handleEditDistributorBtn = (dataTable: MUIDataTableMeta<any>) => {
     setIsEdit(true);
-    setTitleDistributorDialog('Editar Distribuidores');
+    setTitleDistributorDialog("Editar Distribuidores");
     handleEditDistributor(distributors[dataTable.rowIndex]);
     openEditDistributorDialog();
   };
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder: 'Buscar Distribuidor',
+    searchPlaceholder: "Buscar Distribuidor",
   };
   const columns: MUIDataTableColumnDef[] = [
-    { name: 'id', options: { display: false } },
+    { name: "id", options: { display: false } },
     {
-      name: 'name',
-      label: 'Nombre del Distribuidor',
+      name: "name",
+      label: "Nombre del Distribuidor",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
             <Tooltip title="Editar Distribuidor">
               <Typography
-                sx={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+                sx={{
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  color: "blue",
+                }}
                 onClick={() => handleEditDistributorBtn(dataTable)}
               >{`${dataTable.rowData[1]}`}</Typography>
             </Tooltip>
@@ -73,9 +85,9 @@ export default function DistributorsTable({ distributors, loading }: Props) {
         },
       },
     },
-    { name: 'nameOfPersonInCharge', label: 'Nombres del Responsable' },
-    { name: 'lastNameOfPersonInCharge', label: 'Apellidos del Responsable.' },
-    { name: 'documentNumber', label: 'Número de documento' },
+    { name: "nameOfPersonInCharge", label: "Nombres del Responsable" },
+    { name: "lastNameOfPersonInCharge", label: "Apellidos del Responsable." },
+    { name: "documentNumber", label: "Número de documento" },
     // {
     //   name: 'isActive',
     //   label: 'Estado',
@@ -107,7 +119,7 @@ export default function DistributorsTable({ distributors, loading }: Props) {
             <CircularProgress size={20} />
           </Typography>
         ) : (
-          'Lista de Distribuidores'
+          "Lista de Distribuidores"
         )
       }
       data={distributors}

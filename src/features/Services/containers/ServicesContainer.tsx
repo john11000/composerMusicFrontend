@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import ServicesTable from '@/features/Services/components/ServicesTable';
-import ServicesEditDialog from '@/features/Services/components/ServicesEditDialog';
-import useGetServices from '@/features/Services/hooks/useGetServices';
-import { IServices } from '@/features/Services/models/Services.type';
-import { ServicesProvider } from '@/features/Services/context/Services.context';
-import ServicesSettings from '@/features/Services/components/ServicesSettings';
+import React, { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+import ServicesTable from "@/features/Services/components/ServicesTable";
+import ServicesEditDialog from "@/features/Services/components/ServicesEditDialog";
+import useGetServices from "@/features/Services/hooks/useGetServices";
+import { IServices } from "@/features/Services/models/Services.type";
+import { ServicesProvider } from "@/features/Services/context/Services.context";
+import ServicesSettings from "@/features/Services/components/ServicesSettings";
 
 const ServicesContainer = () => {
   const { getServices: getServicesFromApi, loading } = useGetServices();

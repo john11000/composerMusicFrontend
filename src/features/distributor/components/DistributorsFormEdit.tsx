@@ -1,10 +1,13 @@
-import { FormControl, FormHelperText, Grid, TextField } from '@mui/material';
-import { Container } from '@mui/system';
-import React from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { useDistributorsContext } from '../context/Distributors.context';
-import { IDistributors } from '../models/Distributors.type';
-import { FIELD_EMAIL_MESSAGE, FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
+import { FormControl, FormHelperText, Grid, TextField } from "@mui/material";
+import { Container } from "@mui/system";
+import React from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { useDistributorsContext } from "../context/Distributors.context";
+import { IDistributors } from "../models/Distributors.type";
+import {
+  FIELD_EMAIL_MESSAGE,
+  FIELD_REQUIRED_MESSAGE,
+} from "@/constants/app.constants";
 
 type props = {
   register: UseFormRegister<IDistributors>;
@@ -22,11 +25,13 @@ export const DistributorsFormEdit: React.FC<props> = ({ register, errors }) => {
               required
               error={!!errors.name}
               defaultValue={distributorToEdit?.name}
-              helperText={errors.name?.type === 'required' && FIELD_REQUIRED_MESSAGE}
+              helperText={
+                errors.name?.type === "required" && FIELD_REQUIRED_MESSAGE
+              }
               variant="outlined"
               size="small"
               label="Razón social"
-              {...register('name', { required: true })}
+              {...register("name", { required: true })}
             />
           </FormControl>
         </Grid>
@@ -40,7 +45,7 @@ export const DistributorsFormEdit: React.FC<props> = ({ register, errors }) => {
               label="Número de Documento"
               variant="outlined"
               size="small"
-              {...register('documentNumber')}
+              {...register("documentNumber")}
             />
           </FormControl>
         </Grid>
@@ -52,7 +57,7 @@ export const DistributorsFormEdit: React.FC<props> = ({ register, errors }) => {
               label="Nombres del Responsable"
               variant="outlined"
               size="small"
-              {...register('nameOfPersonInCharge')}
+              {...register("nameOfPersonInCharge")}
             />
           </FormControl>
         </Grid>
@@ -64,7 +69,7 @@ export const DistributorsFormEdit: React.FC<props> = ({ register, errors }) => {
               label="Apellidos del responsable"
               variant="outlined"
               size="small"
-              {...register('lastNameOfPersonInCharge')}
+              {...register("lastNameOfPersonInCharge")}
             />
           </FormControl>
         </Grid>
@@ -77,7 +82,7 @@ export const DistributorsFormEdit: React.FC<props> = ({ register, errors }) => {
               label="Correo electrónico"
               variant="outlined"
               size="small"
-              {...register('email', {
+              {...register("email", {
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: FIELD_EMAIL_MESSAGE,
@@ -94,14 +99,18 @@ export const DistributorsFormEdit: React.FC<props> = ({ register, errors }) => {
               label="Número teléfonico"
               variant="outlined"
               size="small"
-              {...register('phoneNumber', {
+              {...register("phoneNumber", {
                 // pattern: {
                 //   value: /^\d{10}$/,
                 //   message: 'El número telefónico debe tener 10 dígitos.',
                 // },
               })}
             />
-            {errors.phoneNumber && <FormHelperText error>{errors.phoneNumber.message}</FormHelperText>}
+            {errors.phoneNumber && (
+              <FormHelperText error>
+                {errors.phoneNumber.message}
+              </FormHelperText>
+            )}
           </FormControl>
         </Grid>
         {isEdit && <Grid item xs={12} md={6}></Grid>}

@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid } from '@mui/material';
-import CustomersTable from '@/features/customers/components/CustomersTable';
-import useGetCustomers from '@/features/customers/hooks/useGetCustomers';
-import useGetDepartments from '@/hooks/useGetCities';
-import CustomersSettings from '@/features/customers/components/CustomersSettings';
-import CustomersEditDialog from '@/features/customers/components/CustomersEditDialog';
-import { ICustomers, IDepartments } from '@/features/customers/models/Customers.type';
-import InvoicesEditDialog from '@/features/invoices/components/InvoicesEditDialog';
-import DistributorsEditDialog from '@/features/distributor/components/DistributorsEditDialog';
-import CustomersDialogCreateInvoice from '../components/CustomersDialogCreateInvoice';
+import React, { useEffect, useState } from "react";
+import { Box, Grid } from "@mui/material";
+import CustomersTable from "@/features/customers/components/CustomersTable";
+import useGetCustomers from "@/features/customers/hooks/useGetCustomers";
+import useGetDepartments from "@/hooks/useGetCities";
+import CustomersSettings from "@/features/customers/components/CustomersSettings";
+import CustomersEditDialog from "@/features/customers/components/CustomersEditDialog";
+import {
+  ICustomers,
+  IDepartments,
+} from "@/features/customers/models/Customers.type";
+import InvoicesEditDialog from "@/features/invoices/components/InvoicesEditDialog";
+import DistributorsEditDialog from "@/features/distributor/components/DistributorsEditDialog";
+import CustomersDialogCreateInvoice from "../components/CustomersDialogCreateInvoice";
 
 const CustomersContainer = () => {
   const { getCustomers: getCustomersFromApi, loading } = useGetCustomers();
@@ -49,10 +52,18 @@ const CustomersContainer = () => {
       <CustomersSettings />
       <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <CustomersTable customers={customers} loading={loading} departaments={departments} />
+          <CustomersTable
+            customers={customers}
+            loading={loading}
+            departaments={departments}
+          />
         </Grid>
       </Grid>
-      <CustomersEditDialog getCustomers={getCustomers} departaments={departments} customers={customers} />
+      <CustomersEditDialog
+        getCustomers={getCustomers}
+        departaments={departments}
+        customers={customers}
+      />
       <CustomersDialogCreateInvoice />
       <InvoicesEditDialog />
       <DistributorsEditDialog />

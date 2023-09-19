@@ -1,8 +1,12 @@
-import MUIDataTable, { MUIDataTableColumnDef, MUIDataTableMeta, MUIDataTableOptions } from 'mui-datatables';
-import { Typography, CircularProgress } from '@mui/material';
-import { useServicesContext } from '../context/Services.context';
-import { IServices } from '../models/Services.type';
-import { MUIDataTableDefaultOptions } from '@/constants/muidatatable.constants';
+import MUIDataTable, {
+  MUIDataTableColumnDef,
+  MUIDataTableMeta,
+  MUIDataTableOptions,
+} from "mui-datatables";
+import { Typography, CircularProgress } from "@mui/material";
+import { useServicesContext } from "../context/Services.context";
+import { IServices } from "../models/Services.type";
+import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
 
 interface Props {
   services: IServices[];
@@ -10,7 +14,12 @@ interface Props {
 }
 
 export default function ServicesTable({ services, loading }: Props) {
-  const { setServiceToEdit, openEditServiceDialog, setTitleServiceDialog, setIsEdit } = useServicesContext();
+  const {
+    setServiceToEdit,
+    openEditServiceDialog,
+    setTitleServiceDialog,
+    setIsEdit,
+  } = useServicesContext();
 
   const handleEditService = (services: IServices) => {
     setServiceToEdit(services);
@@ -18,31 +27,36 @@ export default function ServicesTable({ services, loading }: Props) {
   //eslint-disable-next-line
   const handleClickEditServices = (dataTable: MUIDataTableMeta<any>) => {
     setIsEdit(true);
-    setTitleServiceDialog('Editar Servicio');
+    setTitleServiceDialog("Editar Servicio");
     handleEditService(services[dataTable.rowIndex]);
     openEditServiceDialog();
   };
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder: 'Buscar servicio por nomenclatura o descripción del servicio',
+    searchPlaceholder:
+      "Buscar servicio por nomenclatura o descripción del servicio",
   };
   const columns: MUIDataTableColumnDef[] = [
-    { name: 'id', options: { display: false } },
+    { name: "id", options: { display: false } },
     {
-      name: 'name',
-      label: 'Código servicio',
+      name: "name",
+      label: "Código servicio",
       options: {
         customBodyRender: (_, dataTable) => {
           return (
             <Typography
-              sx={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+              sx={{
+                cursor: "pointer",
+                textDecoration: "underline",
+                color: "blue",
+              }}
               onClick={() => handleClickEditServices(dataTable)}
             >{`${dataTable.rowData[1]}`}</Typography>
           );
         },
       },
     },
-    { name: 'description', label: 'Descripción', options: { display: true } },
+    { name: "description", label: "Descripción", options: { display: true } },
   ];
 
   return (
@@ -54,7 +68,7 @@ export default function ServicesTable({ services, loading }: Props) {
             <CircularProgress size={20} />
           </Typography>
         ) : (
-          'Lista de servicios'
+          "Lista de servicios"
         )
       }
       data={services}

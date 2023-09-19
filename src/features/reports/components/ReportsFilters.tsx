@@ -1,14 +1,22 @@
-import { FormHelperText, Grid, Select, TextField, FormControl, MenuItem, InputLabel } from '@mui/material';
-import { Box } from '@mui/system';
-import { Download } from '@mui/icons-material';
-import { IReportsFormState } from '../models/Reports.type';
-import { LoadingButton } from '@mui/lab';
-import { Controller, useForm } from 'react-hook-form';
-import useGetReports from '../hooks/useGetReports';
-import { FIELD_REQUIRED_MESSAGE } from '@/constants/app.constants';
-import { City, IDepartments } from '@/features/customers/models/Customers.type';
-import { useEffect, useState } from 'react';
-import useGetDepartaments from '@/hooks/useGetCities';
+import {
+  FormHelperText,
+  Grid,
+  Select,
+  TextField,
+  FormControl,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import { Download } from "@mui/icons-material";
+import { IReportsFormState } from "../models/Reports.type";
+import { LoadingButton } from "@mui/lab";
+import { Controller, useForm } from "react-hook-form";
+import useGetReports from "../hooks/useGetReports";
+import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
+import { City, IDepartments } from "@/features/customers/models/Customers.type";
+import { useEffect, useState } from "react";
+import useGetDepartaments from "@/hooks/useGetCities";
 
 export default function ReportsFilters() {
   const { getReportsByFilter, loading } = useGetReports();
@@ -58,19 +66,21 @@ export default function ReportsFilters() {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('dateInit', { required: FIELD_REQUIRED_MESSAGE })}
+              {...register("dateInit", { required: FIELD_REQUIRED_MESSAGE })}
               InputLabelProps={{
                 shrink: true,
               }}
               inputProps={{
-                max: new Date().toISOString().split('T')[0],
+                max: new Date().toISOString().split("T")[0],
               }}
               error={Boolean(errors?.dateInit?.message)}
             />
-            <FormHelperText error={Boolean(errors?.dateInit?.message)}>{errors?.dateInit?.message}</FormHelperText>
+            <FormHelperText error={Boolean(errors?.dateInit?.message)}>
+              {errors?.dateInit?.message}
+            </FormHelperText>
           </Grid>
 
           <Grid item xs={12} sm={2}>
@@ -81,31 +91,36 @@ export default function ReportsFilters() {
               variant="outlined"
               size="small"
               style={{
-                background: 'white',
-                backgroundSize: 'cover',
+                background: "white",
+                backgroundSize: "cover",
               }}
-              {...register('dateFinish', { required: FIELD_REQUIRED_MESSAGE })}
+              {...register("dateFinish", { required: FIELD_REQUIRED_MESSAGE })}
               InputLabelProps={{
                 shrink: true,
               }}
               inputProps={{
-                max: new Date().toISOString().split('T')[0],
+                max: new Date().toISOString().split("T")[0],
               }}
               error={Boolean(errors?.dateFinish?.message)}
             />
-            <FormHelperText error={Boolean(errors?.dateFinish?.message)}>{errors?.dateFinish?.message}</FormHelperText>
+            <FormHelperText error={Boolean(errors?.dateFinish?.message)}>
+              {errors?.dateFinish?.message}
+            </FormHelperText>
           </Grid>
 
           <Grid item xs={12} sm={2}>
             <FormControl fullWidth>
-              <InputLabel error={Boolean(errors?.typeReport?.message)} id="reportTypeId">
+              <InputLabel
+                error={Boolean(errors?.typeReport?.message)}
+                id="reportTypeId"
+              >
                 Tipo de reporte
               </InputLabel>
               <Controller
                 name="typeReport"
                 control={control}
                 rules={{
-                  required: 'Campo requerido',
+                  required: "Campo requerido",
                 }}
                 shouldUnregister={false}
                 render={({ field }) => (
@@ -116,19 +131,25 @@ export default function ReportsFilters() {
                     labelId="reportTypeId"
                     label="Tipo de reporte"
                     size="small"
-                    value={field.value || 'undefined'}
+                    value={field.value || "undefined"}
                     onChange={field.onChange}
                     style={{
-                      background: 'white',
-                      backgroundSize: 'cover',
+                      background: "white",
+                      backgroundSize: "cover",
                     }}
                     // {...register('typeReport', { required: FIELD_REQUIRED_MESSAGE })}
                     error={Boolean(errors?.typeReport?.message)}
                   >
                     <option value="">Seleccione una opción</option>
-                    <option value="1">Reporte órdenes de servicios generadas</option>
-                    <option value="2">Reporte servicios prestados por equipos</option>
-                    <option value="3">Reporte repuestos utilizados en los servicios</option>
+                    <option value="1">
+                      Reporte órdenes de servicios generadas
+                    </option>
+                    <option value="2">
+                      Reporte servicios prestados por equipos
+                    </option>
+                    <option value="3">
+                      Reporte repuestos utilizados en los servicios
+                    </option>
                   </Select>
                 )}
               />
@@ -140,14 +161,17 @@ export default function ReportsFilters() {
 
           <Grid item xs={12} sm={2}>
             <FormControl fullWidth>
-              <InputLabel error={Boolean(errors?.departmentReport?.message)} id="deparmentReportId">
+              <InputLabel
+                error={Boolean(errors?.departmentReport?.message)}
+                id="deparmentReportId"
+              >
                 Departamento
               </InputLabel>
               <Controller
                 name="departmentReport"
                 control={control}
                 rules={{
-                  required: 'Campo requerido',
+                  required: "Campo requerido",
                 }}
                 shouldUnregister={false}
                 render={({ field }) => (
@@ -158,19 +182,19 @@ export default function ReportsFilters() {
                     placeholder="Seleccione un departamento"
                     label="Departamento"
                     labelId="deparmentReportId"
-                    value={field.value || 'undefined'}
+                    value={field.value || "undefined"}
                     onChange={(event) => {
                       const selectedId = parseInt(event.target.value as string);
-                      setValue('departmentReport', selectedId);
+                      setValue("departmentReport", selectedId);
                     }}
                     style={{
-                      background: 'white',
-                      backgroundSize: 'cover',
+                      background: "white",
+                      backgroundSize: "cover",
                     }}
                     MenuProps={{
                       style: {
-                        maxHeight: '300px',
-                        maxWidth: '300px',
+                        maxHeight: "300px",
+                        maxWidth: "300px",
                       },
                     }}
                     error={Boolean(errors.departmentReport?.message)}
@@ -186,47 +210,55 @@ export default function ReportsFilters() {
                   </Select>
                 )}
               />
-              <FormHelperText error>{errors.departmentReport?.message}</FormHelperText>
+              <FormHelperText error>
+                {errors.departmentReport?.message}
+              </FormHelperText>
             </FormControl>
           </Grid>
 
           <Grid item xs={12} sm={2}>
             <FormControl fullWidth>
-              <InputLabel error={Boolean(errors?.cityReport?.message)} id="cityReportId">
+              <InputLabel
+                error={Boolean(errors?.cityReport?.message)}
+                id="cityReportId"
+              >
                 Ciudad
               </InputLabel>
               <Controller
                 name="cityReport"
                 control={control}
                 rules={{
-                  required: 'Campo requerido',
+                  required: "Campo requerido",
                 }}
                 shouldUnregister={false}
                 render={({ field }) => (
                   <Select
-                    value={field.value || 'undefined'}
+                    value={field.value || "undefined"}
                     onChange={field.onChange}
                     error={Boolean(errors.cityReport?.message)}
                     label="Ciudad"
                     labelId="cityReportId"
                     style={{
-                      background: 'white',
-                      backgroundSize: 'cover',
-                      height: '40px',
+                      background: "white",
+                      backgroundSize: "cover",
+                      height: "40px",
                     }}
                     MenuProps={{
                       style: {
-                        maxHeight: '300px',
-                        maxWidth: '300px',
+                        maxHeight: "300px",
+                        maxWidth: "300px",
                       },
                     }}
                   >
                     <MenuItem value="undefined" selected>
                       <span>Seleccione una ciudad</span>
                     </MenuItem>
-                    {getValues('departmentReport')
+                    {getValues("departmentReport")
                       ? departments
-                          .filter((department) => department.id == getValues('departmentReport'))[0]
+                          .filter(
+                            (department) =>
+                              department.id == getValues("departmentReport")
+                          )[0]
                           .cities.map((city: City) => {
                             return (
                               <MenuItem key={city.id} value={city.name}>
@@ -238,7 +270,9 @@ export default function ReportsFilters() {
                   </Select>
                 )}
               />
-              <FormHelperText error>{errors.cityReport?.message}</FormHelperText>
+              <FormHelperText error>
+                {errors.cityReport?.message}
+              </FormHelperText>
             </FormControl>
           </Grid>
 

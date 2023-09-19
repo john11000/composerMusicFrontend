@@ -1,9 +1,9 @@
-import { AppStore } from '@/redux/store';
-import { loadAbort } from '@/utilities';
-import { AxiosRequestConfig } from 'axios';
-import axios from '@/interceptors/axios.interceptor';
-import { useSelector } from 'react-redux';
-import useFetchAndLoad from './useFetchAndLoad';
+import { AppStore } from "@/redux/store";
+import { loadAbort } from "@/utilities";
+import { AxiosRequestConfig } from "axios";
+import axios from "@/interceptors/axios.interceptor";
+import { useSelector } from "react-redux";
+import useFetchAndLoad from "./useFetchAndLoad";
 
 export default function useFetch() {
   const controller = loadAbort();
@@ -12,7 +12,9 @@ export default function useFetch() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const request = <T>(config: AxiosRequestConfig<any>) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${authState.accessToken}`;
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${authState.accessToken}`;
 
     return callEndpoint<T>({
       call: axios<T>({ ...config }),
