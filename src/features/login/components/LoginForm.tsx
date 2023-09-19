@@ -12,6 +12,7 @@ import {
   InputLabel,
   OutlinedInput,
   TextField,
+  Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -46,7 +47,7 @@ export default function LoginForm({ onSubmit, loading }: Props) {
             variant="outlined"
             required
             fullWidth
-            label="Email"
+            label="Correo electrónico"
             autoComplete="email"
             {...register('email', {
               required: { value: true, message: 'Campo requerido' },
@@ -60,7 +61,7 @@ export default function LoginForm({ onSubmit, loading }: Props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl variant="outlined" fullWidth error={Boolean(errors.password?.message)}>
+          <FormControl variant="outlined" fullWidth error={Boolean(errors.password?.message)} required>
             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
             <OutlinedInput
               type={showPassword ? 'text' : 'password'}
@@ -76,7 +77,7 @@ export default function LoginForm({ onSubmit, loading }: Props) {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Contraseña"
               {...register('password', {
                 required: { value: true, message: 'Campo requerido' },
               })}
@@ -85,14 +86,25 @@ export default function LoginForm({ onSubmit, loading }: Props) {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <LoadingButton type="submit" fullWidth variant="contained" color="primary" loading={loading}>
-            <span>Ingresar</span>
+          <Typography sx={{
+            textAlign: 'center',
+          }}><Link href={ROUTE_LINK_RESET_PASSWORD}>No tengo una cuenta, registrarme</Link></Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <LoadingButton sx={{
+              marginTop: '50px',
+            }} type="submit" fullWidth variant="contained" color="primary" loading={loading}>
+            <span >Ingresar</span>
           </LoadingButton>
         </Grid>
         <Grid item xs={12}>
-          <Link href={ROUTE_LINK_RESET_PASSWORD}>Recupera contraseña</Link>
+        <Typography sx={{
+            textAlign: 'center',
+          }}>
+          <Link href={ROUTE_LINK_RESET_PASSWORD} textAlign="center">¿Olvidó la contraseña contraseña?</Link>
+        </Typography>
         </Grid>
-        <Footer></Footer>
       </Grid>
     </form>
   );

@@ -85,8 +85,6 @@ export default function AdminLayout({ children }: Props) {
           </Grid>
           <Copyright sx={{ pt: 4 }} />
         </Box>
-
-        <Footer position="fixed" bottom="10px" />
       </Box>
     </>
   );
