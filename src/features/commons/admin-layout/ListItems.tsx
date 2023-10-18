@@ -2,19 +2,21 @@ import * as React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import GroupIcon from "@mui/icons-material/Group";
 
-import { ROUTER_LINK_USERS, ROUTER_MODULE_GENERATE_MELODY, ROUTER_MODULE_LIST_MELODY, ROUTER_MODULE_RECORD_MELODY, ROUTER_MODULE_TRANSCRIPT_MELODY } from "@/constants/routes-link.constants";
+import {
+  ROUTER_MODULE_GENERATE_MELODY,
+  ROUTER_MODULE_LIST_MELODY,
+  ROUTER_MODULE_TRANSCRIPT_MELODY,
+} from "@/constants/routes-link.constants";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Tooltip } from "@material-ui/core";
 import {
   TITLE_MODULE_TRANSCRIPT_MELODY,
   TITLE_MODULE_LIST_MELODY,
-  TITLE_MODULE_RECORD_MELODY,
   TITLE_MODULE_GENERATE_MELODY,
 } from "@/constants/title.constants";
-import { FormatListBulleted, GraphicEq, Memory, Spellcheck } from "@mui/icons-material";
+import { FormatListBulleted, Memory, Spellcheck } from "@mui/icons-material";
 
 export const ListItems = () => {
   const router = useRouter();
@@ -42,18 +44,6 @@ export const ListItems = () => {
             <Spellcheck />
           </ListItemIcon>
           <ListItemText primary={TITLE_MODULE_TRANSCRIPT_MELODY} />
-        </ListItemButton>
-      </Tooltip>
-      <Tooltip title={TITLE_MODULE_RECORD_MELODY}>
-        <ListItemButton
-          selected={router.pathname === ROUTER_MODULE_RECORD_MELODY}
-          component={Link}
-          href={ROUTER_MODULE_RECORD_MELODY}
-        >
-          <ListItemIcon>
-            <GraphicEq />
-          </ListItemIcon>
-          <ListItemText primary={TITLE_MODULE_RECORD_MELODY} />
         </ListItemButton>
       </Tooltip>
       <Tooltip title={TITLE_MODULE_GENERATE_MELODY}>

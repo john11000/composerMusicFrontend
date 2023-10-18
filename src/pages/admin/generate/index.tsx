@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setAppBarTitle } from "@/redux/slices/app.slice";
-import ReferencesContainer from "@/features/reference/containers/ReferencesContainer";
 import { TITLE_MODULE_GENERATE_MELODY } from "@/constants/title.constants";
+import GenerateContainer from "@/features/generate/containers/GenerateContainer";
 
 export default function GeneratePage() {
   const dispatcher = useDispatch();
@@ -17,7 +17,7 @@ export default function GeneratePage() {
     <AdminLayout>
       <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <ReferencesContainer />
+          <GenerateContainer />
         </Grid>
       </Grid>
     </AdminLayout>

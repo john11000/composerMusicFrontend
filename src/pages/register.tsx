@@ -1,8 +1,8 @@
 import { Container, Box } from "@mui/material";
 import MainLayout from "@/features/commons/main-layout/MainLayout";
 import {
-  LoginFormState,
   LoginResponse,
+  RegisterFormState,
 } from "@/features/login/models/login.type";
 import useFetchAndLoad from "@/hooks/useFetchAndLoad";
 import { doLogin } from "@/features/login/services/login.service";
@@ -15,6 +15,7 @@ import { ROUTER_LINK_DASHBOARD } from "@/constants/routes-link.constants";
 import { AxiosError, isAxiosError } from "axios";
 import RegisterForm from "@/features/register/components/RegisterForm";
 import RegisterFormHeader from "@/features/register/components/RegisterFormHeader";
+import { doRegister } from "@/features/login/services/register.service";
 
 export default function RegisterPage() {
   const { loading, callEndpoint } = useFetchAndLoad();
@@ -34,9 +35,9 @@ export default function RegisterPage() {
     router.push(ROUTER_LINK_DASHBOARD);
   };
 
-  const onSubmit = async (data: LoginFormState) => {
+  const onSubmit = async (data: RegisterFormState) => {
     try {
-      const response = await callEndpoint<LoginResponse>(doLogin(data));
+      const response = await callEndpoint<LoginResponse>(doRegister(data));
 
       setSesion(response.data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

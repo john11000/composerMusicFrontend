@@ -15,3 +15,4 @@ export const URL_API_FAULT_CAUSAL = `${URL_API_BASE}/failures`;
 export const URL_API_SERVICE_ORDERS = `${URL_API_BASE}/service-orders`;
 export const URL_API_REPORTS = `${URL_API_BASE}/reports`;
 export const URL_API_CITIES = `${URL_API_BASE}/departments`;
+export const URL_API_LIST = `${URL_API_BASE}/list`;

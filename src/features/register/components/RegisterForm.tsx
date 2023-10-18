@@ -18,12 +18,12 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { LoginFormState } from "../models/login.type";
+import { RegisterFormState } from "@/features/login/models/login.type";
 // import { ROUTE_LINK_RESET_PASSWORD } from '@/constants/routes-link.constants';
 // import Link from '@/features/commons/Link';
 
 interface Props {
-  onSubmit: (data: LoginFormState) => void;
+  onSubmit: (data: RegisterFormState) => void;
   loading: boolean;
 }
 
@@ -32,7 +32,7 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormState>();
+  } = useForm<RegisterFormState>();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -52,16 +52,17 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
             required
             fullWidth
             label="Nombre completo"
-            autoComplete="email"
-            {...register("email", {
-              required: { value: true, message: "Campo requerido" },
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Email no válido.",
+            autoComplete="name"
+            {...register("name", {
+              required: "Campo requerido",
+              maxLength: {
+                value: 50,
+                message:
+                  "El nombre completo debe tener un máximo de 50 caracteres",
               },
             })}
-            error={Boolean(errors.email?.message)}
-            helperText={errors.email?.message}
+            error={Boolean(errors.name)}
+            helperText={errors.name && errors.name.message}
           />
         </Grid>
         <Grid item xs={12}>
@@ -76,6 +77,11 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: "Email no válido.",
+              },
+              maxLength: {
+                value: 50,
+                message:
+                  "El correo completo debe tener un máximo de 50 caracteres",
               },
             })}
             error={Boolean(errors.email?.message)}
@@ -109,6 +115,11 @@ export default function RegisterForm({ onSubmit, loading }: Props) {
               label="Contraseña"
               {...register("password", {
                 required: { value: true, message: "Campo requerido" },
+                maxLength: {
+                  value: 20,
+                  message:
+                    "La contraseña debe tener un máximo de 20 caracteres",
+                },
               })}
             />
             <FormHelperText error>{errors.password?.message}</FormHelperText>

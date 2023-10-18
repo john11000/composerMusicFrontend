@@ -60,6 +60,11 @@ export default function LoginForm({ onSubmit, loading }: Props) {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: "Email no válido.",
               },
+              maxLength: {
+                value: 50,
+                message:
+                  "El correo completo debe tener un máximo de 50 caracteres",
+              },
             })}
             error={Boolean(errors.email?.message)}
             helperText={errors.email?.message}
@@ -92,6 +97,11 @@ export default function LoginForm({ onSubmit, loading }: Props) {
               label="Contraseña"
               {...register("password", {
                 required: { value: true, message: "Campo requerido" },
+                maxLength: {
+                  value: 20,
+                  message:
+                    "La contraseña debe tener un máximo de 20 caracteres",
+                },
               })}
             />
             <FormHelperText error>{errors.password?.message}</FormHelperText>

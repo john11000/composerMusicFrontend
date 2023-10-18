@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setAppBarTitle } from "@/redux/slices/app.slice";
-import ReferencesContainer from "@/features/reference/containers/ReferencesContainer";
 import { TITLE_MODULE_LIST_MELODY } from "@/constants/title.constants";
+import ListContainer from "@/features/list/containers/ListContainer";
 
 export default function ListPage() {
   const dispatcher = useDispatch();
@@ -17,7 +17,7 @@ export default function ListPage() {
     <AdminLayout>
       <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <ReferencesContainer />
+          <ListContainer />
         </Grid>
       </Grid>
     </AdminLayout>
