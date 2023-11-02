@@ -20,9 +20,9 @@ export function GenerateFormComponent() {
 
   const submitGenerate = (data: any) => {
     createGroup(data);
-    toastsManager.showToast('success', 'Molodia generada exitosamente!');
+    toastsManager.showToast("success", "Molodia generada exitosamente!");
     router.push(ROUTER_MODULE_LIST_MELODY);
-  }
+  };
 
   return (
     <Container
@@ -76,7 +76,11 @@ export function GenerateFormComponent() {
             </FormControl>
           </Grid>
           <Grid item xs={12} md={6}>
-            <FormControl fullWidth size="small" {...register('pauses', { required: true })}>
+            <FormControl
+              fullWidth
+              size="small"
+              {...register("pauses", { required: true })}
+            >
               <InputLabel id="demo-simple-select-pauses">
                 Introduccir pausas
               </InputLabel>
@@ -153,7 +157,7 @@ export function GenerateFormComponent() {
                 label="Tonalidad"
                 defaultValue={true}
                 // onChange={handleChange}
-                {...register('key',{ required: true })}
+                {...register("key", { required: true })}
               >
                 <MenuItem value={"C"}>C</MenuItem>
                 <MenuItem value={"C#"}>C#</MenuItem>
@@ -184,8 +188,7 @@ export function GenerateFormComponent() {
                 label="Escala"
                 defaultValue={true}
                 // onChange={handleChange}
-                {...register('scale', { required: true })}
-
+                {...register("scale", { required: true })}
               >
                 <MenuItem value={"major"}>Major</MenuItem>
                 <MenuItem value={"minorM"}>MinorM</MenuItem>

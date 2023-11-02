@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { URL_API_BASE } from "@/constants/url-apis.constants";
 import axios from "axios";
@@ -26,7 +25,6 @@ const AxiosInterceptor = ({ children }: Props) => {
       return response;
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const errInterceptor = (error: any) => {
       if (error.response) {
         if (error.response.status === 401) {

@@ -7,8 +7,8 @@ import { ILists } from "../models/List.type";
 import { FIELD_REQUIRED_MESSAGE } from "@/constants/app.constants";
 
 type props = {
-  register: UseFormRegister<ILists>;
-  errors: FieldErrors<ILists>;
+  register: UseFormRegister<any>;
+  errors: FieldErrors<any>;
 };
 
 export const ListsFormEdit: React.FC<props> = ({ register, errors }) => {
@@ -28,10 +28,9 @@ export const ListsFormEdit: React.FC<props> = ({ register, errors }) => {
               InputProps={{
                 readOnly: true,
               }}
-              defaultValue={ListToEdit?.abbreviation}
               variant="outlined"
               size="small"
-              label="Código Grupo"
+              label="Nombre"
               {...register("abbreviation")}
             />
           </FormControl>
@@ -42,11 +41,10 @@ export const ListsFormEdit: React.FC<props> = ({ register, errors }) => {
             <TextField
               required
               error={!!errors.name}
-              defaultValue={ListToEdit?.name}
               helperText={
                 errors.name?.type === "required" && FIELD_REQUIRED_MESSAGE
               }
-              label="Nombre Grupo"
+              label="Código"
               variant="outlined"
               size="small"
               {...register("name", { required: true })}

@@ -5,7 +5,7 @@ export default function useGetLists() {
   const { request, loading } = useFetch();
 
   const getLists = () => {
-    return request<any>({ url: URL_API_LIST + '/token' });
+    return request<any>({ url: URL_API_LIST + "/token" });
   };
 
   return {

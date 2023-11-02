@@ -19,7 +19,6 @@ export const authSlice = createSlice({
       };
       return newState;
     },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     resetCredentials: () => {},
   },
 });

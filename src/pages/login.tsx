@@ -39,7 +39,6 @@ export default function LoginPage() {
       const response = await callEndpoint<LoginResponse>(doLogin(data));
 
       setSesion(response.data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (isAxiosError(error)) {
         const err = error as AxiosError<{ message: string }>;

@@ -10,7 +10,6 @@ export default function useFetch() {
   const authState = useSelector((state: AppStore) => state.authState);
   const { callEndpoint, loading } = useFetchAndLoad();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const request = <T>(config: AxiosRequestConfig<any>) => {
     axios.defaults.headers.common[
       "Authorization"

@@ -15,7 +15,7 @@ declare global {
     atob(str: string): string;
   }
 }
-import * as base64 from 'base64-js';
+import * as base64 from "base64-js";
 import { URL_API_BASE } from "@/constants/url-apis.constants";
 
 interface Props {
@@ -24,15 +24,15 @@ interface Props {
 }
 
 export default function ListsTable({ Lists, loading }: Props) {
-  const { setListToEdit, openEditListDialog, setTitleListDialog, setIsEdit } = useListsContext();
+  const { setListToEdit, openEditListDialog, setTitleListDialog, setIsEdit } =
+    useListsContext();
 
   const handleEditList = (Lists: ILists) => {
     setListToEdit(Lists);
   };
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
-    searchPlaceholder:
-      "Buscar melodias generadas",
+    searchPlaceholder: "Buscar melodias generadas",
   };
   const handleEditClick = (dataTable: MUIDataTableMeta<unknown>) => {
     setIsEdit(true);
@@ -45,21 +45,21 @@ export default function ListsTable({ Lists, loading }: Props) {
     const urlDownload = `${URL_API_BASE}/public/${midi_data_url}`;
     window.open(urlDownload);
   };
-  
+
   const columns: MUIDataTableColumnDef[] = [
     { name: "id", options: { display: false } },
-    { name: "", options: {
-      customBodyRender: (_, dataTable) => {
-        return (
-          <Button
-            endIcon={<PlayCircle />}
-            variant="contained"
-          >
-            Play
-          </Button>
-        );
+    {
+      name: "",
+      options: {
+        customBodyRender: (_, dataTable) => {
+          return (
+            <Button endIcon={<PlayCircle />} variant="contained">
+              Play
+            </Button>
+          );
+        },
       },
-     } },
+    },
     {
       name: "filename",
       label: "Código",
@@ -67,22 +67,28 @@ export default function ListsTable({ Lists, loading }: Props) {
         customBodyRender: (_, dataTable) => {
           return (
             <Typography
-              sx={{ cursor: "pointer", textDecoration: "underline", color: "blue" }}
+              sx={{
+                cursor: "pointer",
+                textDecoration: "underline",
+                color: "blue",
+              }}
               onClick={() => handleEditClick(dataTable)}
-            >{`${dataTable.rowData[2].split('/')[0]}`}</Typography>
+            >{`${dataTable.rowData[2].split("/")[0]}`}</Typography>
           );
         },
       },
     },
-    { name: "filename", label: "Nombre",
-    options: {
-      customBodyRender: (_, dataTable) => {
-        return (
-          <Typography
-          >{`${dataTable.rowData[2].split('/')[1]}`}</Typography>
-        );
+    {
+      name: "filename",
+      label: "Nombre",
+      options: {
+        customBodyRender: (_, dataTable) => {
+          return (
+            <Typography>{`${dataTable.rowData[2].split("/")[1]}`}</Typography>
+          );
+        },
       },
-    }, },
+    },
     { name: "key", label: "Tonalidad" },
     {
       name: "midi_data",
@@ -105,7 +111,15 @@ export default function ListsTable({ Lists, loading }: Props) {
 
   return (
     <MUIDataTable
-      title={loading ? <Typography>Cargando... <CircularProgress size={20} /></Typography> : "Lista de melodias"}
+      title={
+        loading ? (
+          <Typography>
+            Cargando... <CircularProgress size={20} />
+          </Typography>
+        ) : (
+          "Lista de melodias"
+        )
+      }
       data={Lists}
       columns={columns}
       options={options}

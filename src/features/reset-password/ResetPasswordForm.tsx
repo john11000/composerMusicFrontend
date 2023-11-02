@@ -27,7 +27,6 @@ export default function ResetPasswordForm() {
       );
       reset();
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const err = error as any;
       ToastsManager.showToast("error", err.message);
     }

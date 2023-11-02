@@ -44,7 +44,6 @@ export default function ListsEditDialog({ getLists }: Props) {
         text = "Creado";
         res = await createList({
           ...data,
-          abbreviation: ListToEdit?.abbreviation || "",
         });
       }
 

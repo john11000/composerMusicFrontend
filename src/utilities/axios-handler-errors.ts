@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import axios from "axios";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function httpErrorHandler(error: any) {
   if (error === null) throw new Error("Unrecoverable error!! Error is null!");
   if (axios.isAxiosError(error)) {
