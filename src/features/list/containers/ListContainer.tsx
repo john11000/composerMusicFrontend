@@ -13,9 +13,9 @@ const ListContainer = () => {
   const getLists = async () => {
     try {
       const res = await getListsFromApi();
-
       if (res.data) {
-        setLists(res.data);
+        console.log(res.data.data);
+        setLists(res.data.data);
       }
     } catch (error) {
       console.error(error);

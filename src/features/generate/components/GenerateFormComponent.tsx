@@ -2,7 +2,28 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Button, Container, Grid, MenuItem, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import useCreateGroup from "../hooks/useCreateGroups";
+import { toastsManager } from "@/utilities";
+import { useRouter } from "next/router";
+import { ROUTER_MODULE_LIST_MELODY } from "@/constants/routes-link.constants";
 export function GenerateFormComponent() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<any>();
+
+  const { createGroup } = useCreateGroup();
+
+  const router = useRouter();
+
+  const submitGenerate = (data: any) => {
+    createGroup(data);
+    toastsManager.showToast('success', 'Molodia generada exitosamente!');
+    router.push(ROUTER_MODULE_LIST_MELODY);
+  }
+
   return (
     <Container
       sx={{
@@ -12,19 +33,18 @@ export function GenerateFormComponent() {
         borderRadius: 2,
       }}
     >
-      <form>
+      <form onSubmit={handleSubmit(submitGenerate)} noValidate>
         <Grid container spacing={2} xs={12}>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 required
-                //   error={!!errors.name}
-                //   defaultValue={groupToEdit?.name}
+                error={!!errors.num_bars}
                 label="Número de barras (1,32)"
                 variant="outlined"
                 size="small"
                 type="number"
-                //   {...register("name", { required: true })}
+                {...register("num_bars", { required: true })}
               />
             </FormControl>
           </Grid>
@@ -33,13 +53,12 @@ export function GenerateFormComponent() {
             <FormControl fullWidth>
               <TextField
                 required
-                //   error={!!errors.name}
-                //   defaultValue={groupToEdit?.name}
+                error={!!errors.num_notes}
                 label="Notas por barra (1,8)"
                 variant="outlined"
                 size="small"
                 type="number"
-                //   {...register("name", { required: true })}
+                {...register("num_notes", { required: true })}
               />
             </FormControl>
           </Grid>
@@ -47,18 +66,17 @@ export function GenerateFormComponent() {
             <FormControl fullWidth>
               <TextField
                 required
-                //   error={!!errors.name}
-                //   defaultValue={groupToEdit?.name}
+                error={!!errors.num_steps}
                 label="Número de pasos (1,3)"
                 variant="outlined"
                 size="small"
                 type="number"
-                //   {...register("name", { required: true })}
+                {...register("num_steps", { required: true })}
               />
             </FormControl>
           </Grid>
           <Grid item xs={12} md={6}>
-            <FormControl fullWidth size="small">
+            <FormControl fullWidth size="small" {...register('pauses', { required: true })}>
               <InputLabel id="demo-simple-select-pauses">
                 Introduccir pausas
               </InputLabel>
@@ -78,13 +96,12 @@ export function GenerateFormComponent() {
             <FormControl fullWidth>
               <TextField
                 required
-                //   error={!!errors.name}
-                //   defaultValue={groupToEdit?.name}
+                error={!!errors.name}
                 label="Registro de octava (1,8)"
                 variant="outlined"
                 size="small"
                 type="number"
-                //   {...register("name", { required: true })}
+                {...register("name", { required: true })}
               />
             </FormControl>
           </Grid>
@@ -92,13 +109,12 @@ export function GenerateFormComponent() {
             <FormControl fullWidth>
               <TextField
                 required
-                //   error={!!errors.name}
-                //   defaultValue={groupToEdit?.name}
+                error={!!errors.cm}
                 label="Cantidad de melodias (1,5)"
                 variant="outlined"
                 size="small"
                 type="number"
-                //   {...register("name", { required: true })}
+                {...register("cm", { required: true })}
               />
             </FormControl>
           </Grid>
@@ -106,13 +122,12 @@ export function GenerateFormComponent() {
             <FormControl fullWidth>
               <TextField
                 required
-                //   error={!!errors.name}
-                //   defaultValue={groupToEdit?.name}
+                error={!!errors.nm}
                 label="Número de mutaciones (1, 4)"
                 variant="outlined"
                 size="small"
                 type="number"
-                //   {...register("name", { required: true })}
+                {...register("nm", { required: true })}
               />
             </FormControl>
           </Grid>
@@ -120,13 +135,12 @@ export function GenerateFormComponent() {
             <FormControl fullWidth>
               <TextField
                 required
-                //   error={!!errors.name}
-                //   defaultValue={groupToEdit?.name}
+                error={!!errors.pm}
                 label="Probabilidad de mutación (0,1)"
                 variant="outlined"
                 size="small"
                 type="number"
-                //   {...register("name", { required: true })}
+                {...register("pm", { required: true })}
               />
             </FormControl>
           </Grid>
@@ -139,6 +153,7 @@ export function GenerateFormComponent() {
                 label="Tonalidad"
                 defaultValue={true}
                 // onChange={handleChange}
+                {...register('key',{ required: true })}
               >
                 <MenuItem value={"C"}>C</MenuItem>
                 <MenuItem value={"C#"}>C#</MenuItem>
@@ -169,6 +184,8 @@ export function GenerateFormComponent() {
                 label="Escala"
                 defaultValue={true}
                 // onChange={handleChange}
+                {...register('scale', { required: true })}
+
               >
                 <MenuItem value={"major"}>Major</MenuItem>
                 <MenuItem value={"minorM"}>MinorM</MenuItem>
@@ -194,6 +211,7 @@ export function GenerateFormComponent() {
                 margin: "auto",
                 width: "40%",
               }}
+              type="submit"
             >
               Generar
             </Button>

@@ -2,8 +2,9 @@ import { Dispatch, SetStateAction } from "react";
 
 export interface ILists {
   id: number;
-  name: string;
-  abbreviation: string;
+  code: string;
+  filename: string;
+  midi_data: string;
 }
 
 export interface IListsContext {

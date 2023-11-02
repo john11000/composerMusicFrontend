@@ -33,6 +33,7 @@
     "@mui/x-date-pickers": "^6.0.1",
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.3.4",
+    "base64-js": "^1.5.1",
     "date-fns": "^2.29.3",
     "mui-datatables": "^4.3.0",
     "mui-file-input": "^2.0.0",

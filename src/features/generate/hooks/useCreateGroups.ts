@@ -5,7 +5,7 @@ import { IGroups } from "../models/Groups.type";
 export default function useCreateGroup() {
   const { request, loading } = useFetch();
 
-  const createGroup = (data: IGroups) => {
+  const createGroup = (data: any) => {
     return request({ method: "POST", url: URL_API_GROUPS, data });
   };
 
