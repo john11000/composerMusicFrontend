@@ -30,6 +30,7 @@ export default function ResetPasswordForm() {
       const err = error as any;
       ToastsManager.showToast("error", err.message);
     }
+
     setLoading(false);
   };
 

@@ -1,5 +1,5 @@
 import { AdminLayout } from "@/features/commons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Button,
   CircularProgress,
@@ -21,7 +21,7 @@ import MUIDataTable, {
 } from "mui-datatables";
 import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
 import { Container } from "@mui/system";
-import { Cancel, Download, PlayCircle, Stop } from "@mui/icons-material";
+import { Download, PlayCircle, Stop } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 export default function TranscriptPage() {
@@ -36,6 +36,8 @@ export default function TranscriptPage() {
     searchPlaceholder:
       "Buscar grupo por nombre del grupo o nombre de referencia",
   };
+
+  const fileRef = useRef<any>(null);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -226,10 +228,14 @@ export default function TranscriptPage() {
             width: "250px",
           }}
         >
+          <input ref={fileRef} type="file" style={{ display: "none" }} />
           <Button
             variant="contained"
             sx={{
               width: "250px",
+            }}
+            onClick={() => {
+              fileRef?.current?.click(); // eslint-disable-line
             }}
           >
             Subir audio

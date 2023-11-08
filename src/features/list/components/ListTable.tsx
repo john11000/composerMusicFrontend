@@ -3,12 +3,24 @@ import MUIDataTable, {
   MUIDataTableMeta,
   MUIDataTableOptions,
 } from "mui-datatables";
-import { Typography, CircularProgress } from "@mui/material";
+import {
+  Typography,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { useListsContext } from "../context/List.context";
 import { ILists } from "../models/List.type";
 import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
 import { Download, PlayCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { useState } from "react";
+
 // Type declaration for the `base64-js` package// Type declaration for the `base64-js` package
 declare global {
   interface Base64 {
@@ -17,6 +29,8 @@ declare global {
 }
 import * as base64 from "base64-js";
 import { URL_API_BASE } from "@/constants/url-apis.constants";
+import * as Tone from "tone";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
   Lists: ILists[];
@@ -26,6 +40,31 @@ interface Props {
 export default function ListsTable({ Lists, loading }: Props) {
   const { setListToEdit, openEditListDialog, setTitleListDialog, setIsEdit } =
     useListsContext();
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [mid, setMid] = useState<string>(
+    "TVRoZAAAAAYAAQACA8BNVHJrAAAACwD/UQMHJw4A/y8ATVRyawAAADgA/wMMU2FtcGxlIFRyYWNrAJAzf4dAgDN/AJAof4dAgCh/AJA1f4dAgDV/AJAQf4dAgBB/AP8vAA=="
+  );
+  const audioContext = new (window.AudioContext || window.AudioContext)();
+  let audioBuffer: any = null;
+  const audioSource = audioContext.createBufferSource();
+
+  const playMidi = () => {
+    if (audioBuffer) {
+      audioSource.buffer = audioBuffer;
+      audioSource.connect(audioContext.destination);
+      audioSource.start(0);
+      setIsPlaying(true);
+    }
+  };
+
+  const stopMidi = () => {
+    if (isPlaying) {
+      audioSource.stop();
+      setIsPlaying(false);
+    }
+  };
 
   const handleEditList = (Lists: ILists) => {
     setListToEdit(Lists);
@@ -46,14 +85,31 @@ export default function ListsTable({ Lists, loading }: Props) {
     window.open(urlDownload);
   };
 
+  const handlePlayButton = (midi_data_url: string) => {
+    const urlAudio = `${URL_API_BASE}/public/${midi_data_url}.wav`;
+    debugger;
+    const player = new Tone.Player(urlAudio).toDestination();
+    Tone.loaded().then(() => {
+      player.start();
+    });
+  };
+
   const columns: MUIDataTableColumnDef[] = [
     { name: "id", options: { display: false } },
     {
-      name: "",
+      name: "midi_data",
+      label: " ",
       options: {
-        customBodyRender: (_, dataTable) => {
+        customBodyRender: (midi_data, dataTable) => {
           return (
-            <Button endIcon={<PlayCircle />} variant="contained">
+            <Button
+              onClick={() => {
+                setMid(midi_data);
+                setOpen(true);
+              }}
+              endIcon={<PlayCircle />}
+              variant="contained"
+            >
               Play
             </Button>
           );
@@ -66,14 +122,7 @@ export default function ListsTable({ Lists, loading }: Props) {
       options: {
         customBodyRender: (_, dataTable) => {
           return (
-            <Typography
-              sx={{
-                cursor: "pointer",
-                textDecoration: "underline",
-                color: "blue",
-              }}
-              onClick={() => handleEditClick(dataTable)}
-            >{`${dataTable.rowData[2].split("/")[0]}`}</Typography>
+            <Typography>{`${dataTable.rowData[2].split("/")[0]}`}</Typography>
           );
         },
       },
@@ -110,19 +159,52 @@ export default function ListsTable({ Lists, loading }: Props) {
   ];
 
   return (
-    <MUIDataTable
-      title={
-        loading ? (
-          <Typography>
-            Cargando... <CircularProgress size={20} />
-          </Typography>
-        ) : (
-          "Lista de melodias"
-        )
-      }
-      data={Lists}
-      columns={columns}
-      options={options}
-    ></MUIDataTable>
+    <>
+      <Dialog open={open} onClose={close} fullWidth maxWidth="md">
+        <form noValidate onSubmit={() => {}}>
+          <DialogTitle></DialogTitle>
+          <DialogContent>
+            <Grid
+              container
+              xs={12}
+              sx={{
+                textAlign: "center",
+                marginTop: 3,
+              }}
+            >
+              <iframe
+                style={{
+                  width: "100%",
+                }}
+                src={"https://midi-player-one.vercel.app?mid=" + mid}
+              ></iframe>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="inherit"
+              onClick={() => setOpen(false)}
+            >
+              Cerrar
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+      <MUIDataTable
+        title={
+          loading ? (
+            <Typography>
+              Cargando... <CircularProgress size={20} />
+            </Typography>
+          ) : (
+            "Lista de melodias"
+          )
+        }
+        data={Lists}
+        columns={columns}
+        options={options}
+      ></MUIDataTable>
+    </>
   );
 }

@@ -15,7 +15,7 @@ export default function useFetch() {
       "Authorization"
     ] = `Bearer ${authState.accessToken}`;
 
-    axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
+    axios.defaults.headers.common["ngrok-skip-browser-warning"] = true;
     return callEndpoint<T>({
       call: axios<T>({ ...config }),
       controller,
