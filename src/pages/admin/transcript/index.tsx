@@ -1,5 +1,6 @@
 import { AdminLayout } from "@/features/commons";
 import React, { useEffect, useState, useRef } from "react";
+
 import {
   Button,
   CircularProgress,
@@ -23,6 +24,8 @@ import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
 import { Container } from "@mui/system";
 import { Download, PlayCircle, Stop } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
+import { URL_API_BASE } from "@/constants/url-apis.constants";
+import axios from "axios";
 
 export default function TranscriptPage() {
   const dispatcher = useDispatch();
@@ -40,6 +43,24 @@ export default function TranscriptPage() {
   const fileRef = useRef<any>(null);
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const uploadFile = (event: any) => {
+    console.log(event)
+    const selectedFile = event.target.files[0];
+    const formData = new FormData();
+    formData.append('audio', selectedFile);
+
+    // Utiliza Axios para enviar la solicitud POST al endpoint /transcribe
+    axios.post(`${URL_API_BASE}/transcribe`, formData)
+      .then(response => {
+        console.log('Respuesta del servidor:', response.data);
+        // Manejar la respuesta del servidor según tus necesidades
+      })
+      .catch(error => {
+        console.error('Error al enviar el archivo:', error);
+        // Manejar el error según tus necesidades
+      });
+  }
 
   const [startButton, setStartButton] = useState<boolean>(true);
   const [stopButton, setStopButton] = useState<boolean>(false);
@@ -125,77 +146,6 @@ export default function TranscriptPage() {
                   marginTop: 3,
                 }}
               >
-                <Grid item xs={12}>
-                  <FormControl
-                    fullWidth
-                    sx={{
-                      visibility:
-                        !stopButton && !startButton ? "visible" : "collapse",
-                    }}
-                  >
-                    <TextField
-                      required
-                      //   error={!!errors.name}
-                      //   defaultValue={groupToEdit?.name}
-                      label="Nombre del audio"
-                      variant="outlined"
-                      size="small"
-                      //   {...register("name", { required: true })}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    marginTop: 3,
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    endIcon={<PlayCircle />}
-                    onClick={startRecorder}
-                    sx={{
-                      width: 150,
-                      display: startButton ? "inline" : "none",
-                    }}
-                  >
-                    Grabar
-                  </Button>
-                </Grid>
-
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    marginTop: 3,
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    endIcon={<Stop />}
-                    onClick={stopRecorder}
-                    sx={{
-                      width: 150,
-                      display: stopButton ? "inline" : "none",
-                    }}
-                  >
-                    Detener
-                  </Button>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <img
-                    src="/img/gifs-de-ondas-de-audio-3.gif"
-                    alt="Grabando sonido ondas"
-                    width={250}
-                    height={50}
-                    style={{
-                      marginTop: 3,
-                      display: stopButton ? "inline" : "none",
-                    }}
-                  ></img>
-                </Grid>
               </Grid>
             </DialogContent>
             <DialogActions>
@@ -228,14 +178,14 @@ export default function TranscriptPage() {
             width: "250px",
           }}
         >
-          <input ref={fileRef} type="file" style={{ display: "none" }} />
+          <input ref={fileRef} accept="audio/mp3, audio/wav" onChange={uploadFile} type="file" style={{ display: 'none' }} />
           <Button
             variant="contained"
             sx={{
               width: "250px",
             }}
             onClick={() => {
-              fileRef?.current?.click(); // eslint-disable-line
+              fileRef?.current?.click() // eslint-disable-line
             }}
           >
             Subir audio
@@ -261,7 +211,7 @@ export default function TranscriptPage() {
             sx={{
               width: "250px",
             }}
-            onClick={() => setOpen(true)}
+            onClick={() => window.open('https://midi-player-one.vercel.app/speech.html')}
           >
             Grabar Audio
           </Button>
