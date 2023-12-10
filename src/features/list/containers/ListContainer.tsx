@@ -30,7 +30,7 @@ const ListContainer = () => {
   return (
     <ListsProvider>
       <ListsSettings />
-      <ListsTable Lists={Lists} loading={loading} />
+      <ListsTable Lists={Lists} loading={loading} getLists={getLists} />
       <ListsEditDialog getLists={getLists} />
     </ListsProvider>
   );

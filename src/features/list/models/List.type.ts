@@ -5,6 +5,9 @@ export interface ILists {
   code: string;
   filename: string;
   midi_data: string;
+  isFavorite: boolean;
+  key: string;
+  scale: string;
 }
 
 export interface IListsContext {

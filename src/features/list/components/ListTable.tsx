@@ -10,14 +10,12 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   Grid,
-  TextField,
 } from "@mui/material";
 import { useListsContext } from "../context/List.context";
 import { ILists } from "../models/List.type";
 import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
-import { Download, PlayCircle } from "@mui/icons-material";
+import { Download, Favorite, FavoriteBorder, PlayCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState } from "react";
 
@@ -31,16 +29,20 @@ import * as base64 from "base64-js";
 import { URL_API_BASE } from "@/constants/url-apis.constants";
 import * as Tone from "tone";
 import { LoadingButton } from "@mui/lab";
+import usePutList from "../hooks/usePutList";
+import ToastsManager from "@/utilities/toasts.manager";
 
 interface Props {
   Lists: ILists[];
   loading: boolean;
+  getLists: () => Promise<void>;
+  isFiltered?: boolean;
 }
 
-export default function ListsTable({ Lists, loading }: Props) {
+export default function ListsTable({ Lists, loading, getLists, isFiltered }: Props) {
   const { setListToEdit, openEditListDialog, setTitleListDialog, setIsEdit } =
     useListsContext();
-
+  const { toogleFavorite } = usePutList();
   const [isPlaying, setIsPlaying] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
   const [mid, setMid] = useState<string>(
@@ -65,6 +67,20 @@ export default function ListsTable({ Lists, loading }: Props) {
       setIsPlaying(false);
     }
   };
+
+  const toggleFavoriteMelody = async (isFavorite: boolean, id: string) => {
+    const isStateChange = await toogleFavorite(isFavorite, id);
+    let message = 'Melodia removida de favoritas exitosamente.'
+    if (isFavorite) {
+      message = 'Melodia añadida a favoritas exitosamente'
+    }
+    ToastsManager.showToast('success', message);
+    isFiltered
+    if (getLists) {
+      await getLists();
+    }
+    return isStateChange
+  }
 
   const handleEditList = (Lists: ILists) => {
     setListToEdit(Lists);
@@ -151,6 +167,25 @@ export default function ListsTable({ Lists, loading }: Props) {
               endIcon={<Download />}
             >
               Descargar
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "isFavorite",
+      label: "Favorita",
+      options: {
+        customBodyRender: (isFavorite, dataTable) => {
+          return (
+            <Button
+              sx={{ cursor: "pointer", width: 10 }}
+              onClick={() => {
+                toggleFavoriteMelody(!isFavorite, dataTable.rowData[2])
+                Lists[dataTable.rowIndex].isFavorite = !isFavorite
+              }}
+            >
+              {isFavorite ? <Favorite /> : <FavoriteBorder />}
             </Button>
           );
         },

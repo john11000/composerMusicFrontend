@@ -183,6 +183,7 @@ export default function TranscriptPage() {
             variant="contained"
             sx={{
               width: "250px",
+              display: 'none',
             }}
             onClick={() => {
               fileRef?.current?.click() // eslint-disable-line
