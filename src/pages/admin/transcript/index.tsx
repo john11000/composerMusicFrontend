@@ -8,12 +8,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   Grid,
-  TextField,
+  Paper,
   Typography,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAppBarTitle } from "@/redux/slices/app.slice";
 import { TITLE_MODULE_TRANSCRIPT_MELODY } from "@/constants/title.constants";
 import MUIDataTable, {
@@ -22,14 +21,23 @@ import MUIDataTable, {
 } from "mui-datatables";
 import { MUIDataTableDefaultOptions } from "@/constants/muidatatable.constants";
 import { Container } from "@mui/system";
-import { Download, PlayCircle, Stop } from "@mui/icons-material";
+import { Download } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { URL_API_BASE } from "@/constants/url-apis.constants";
 import axios from "axios";
-
+import { AppStore } from "@/redux/store";
+import useGetTranscriptList from "@/features/transcript/hooks/useGetTrasncriptsList";
+import { Daum } from "@/features/transcript/models/transcript.models";
+import { usePDF } from 'react-to-pdf';
+const urlMidiEditor = 'http://127.0.0.1:5500/speech.html';
 export default function TranscriptPage() {
   const dispatcher = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [trasncriptList, setTranscriptList] = useState<Daum[]>([]);
+  const sessionState = useSelector((state: AppStore) => state.authState);
+  const { toPDF, targetRef } = usePDF({filename: new Date() + '.pdf'});
+  const [textToPrint, setTextToPrint] = useState('');
+  const { getTranscriptList } = useGetTranscriptList();
   useEffect(() => {
     dispatcher(setAppBarTitle(TITLE_MODULE_TRANSCRIPT_MELODY));
   }, [dispatcher]);
@@ -37,12 +45,20 @@ export default function TranscriptPage() {
   const options: MUIDataTableOptions = {
     ...MUIDataTableDefaultOptions,
     searchPlaceholder:
-      "Buscar grupo por nombre del grupo o nombre de referencia",
+      "Buscar código",
   };
 
   const fileRef = useRef<any>(null);
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const getTranscriptListApi = async () => {
+    const transcriptList = await getTranscriptList();
+    if (transcriptList) {
+      const lista: Daum[] = transcriptList?.data?.data
+      setTranscriptList(lista)
+    }
+  }
 
   const uploadFile = (event: any) => {
     console.log(event)
@@ -62,16 +78,26 @@ export default function TranscriptPage() {
       });
   }
 
+  const handleDonwload = (text: string) => {
+    setTextToPrint(text);
+    toPDF();
+  }
+
   const [startButton, setStartButton] = useState<boolean>(true);
   const [stopButton, setStopButton] = useState<boolean>(false);
 
+  
+  useEffect(() => {
+    getTranscriptListApi();
+  }, [])
+
   const columns: MUIDataTableColumnDef[] = [
-    { name: "id", options: { display: false } },
+    { name: "uuid", options: { display: false } },
     {
-      name: "abbreviation",
+      name: "uuid",
       label: "Código",
       options: {
-        customBodyRender: (_, dataTable) => {
+        customBodyRender: (uuid, dataTable) => {
           return (
             <Typography
               sx={{
@@ -79,27 +105,37 @@ export default function TranscriptPage() {
                 textDecoration: "underline",
                 color: "blue",
               }}
-              // onClick={() => handleEditClick(dataTable)}
+               onClick={() => window.open(urlMidiEditor +'?token=' + sessionState.accessToken + '&file=' + uuid,  "mozillaWindow", "popup")}
             >{`${dataTable.rowData[1]}`}</Typography>
           );
         },
       },
+    }, {
+      name: 'text',
+      label: 'Descripción',
+      options: {
+        customBodyRender: (text) => {
+          return (
+              <Typography>
+                {text.substring(0, 50) + (text.length > 50 ? '...' : '')}
+              </Typography>
+          )
+        },
+      }
     },
     {
-      name: "name",
-      label: "Nombre",
-    },
-    {
-      name: "descargar",
+      name: "text",
       label: "Descargar",
       options: {
-        customBodyRender: (_, dataTable) => {
+        customBodyRender: (text, dataTable) => {
           return (
             <Button
               sx={{
                 cursor: "pointer",
               }}
-              // onClick={() => handleEditClick(dataTable)}
+              onClick={() => {
+                handleDonwload(text)
+              }}
               endIcon={<Download />}
             >
               Descargar PDF
@@ -212,7 +248,7 @@ export default function TranscriptPage() {
             sx={{
               width: "250px",
             }}
-            onClick={() => window.open('https://midi-player-one.vercel.app/speech.html')}
+            onClick={() => window.open(urlMidiEditor +'?token=' + sessionState.accessToken,  "mozillaWindow", "popup")}
           >
             Grabar Audio
           </Button>
@@ -231,14 +267,26 @@ export default function TranscriptPage() {
                 <CircularProgress size={20} />
               </Typography>
             ) : (
-              "Lista de partituras transcriptas"
+              "Lista de transcripciones"
             )
           }
-          data={[]}
+          data={trasncriptList}
           columns={columns}
           options={options}
         ></MUIDataTable>
       </Container>
+      {textToPrint.length > 0 && <Container sx={{
+        marginTop: 3,
+      }}>
+      <Typography textAlign="center" variant="h6">
+        Imprimiendo
+      </Typography>
+        <Paper ref={targetRef} id="textToPrint" sx={{ padding: 3}}>
+            {textToPrint}
+        </Paper>
+      </Container>
+}
+      
     </AdminLayout>
   );
 }

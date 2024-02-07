@@ -61,6 +61,10 @@ export default function ListsTable({ Lists, loading, getLists, isFiltered }: Pro
     }
   };
 
+  const changeMidi = (midi: string) => {
+    setMid(midi)
+  }
+
   const stopMidi = () => {
     if (isPlaying) {
       audioSource.stop();
@@ -113,14 +117,14 @@ export default function ListsTable({ Lists, loading, getLists, isFiltered }: Pro
   const columns: MUIDataTableColumnDef[] = [
     { name: "id", options: { display: false } },
     {
-      name: "midi_data",
+      name: "uuid",
       label: " ",
       options: {
-        customBodyRender: (midi_data, dataTable) => {
+        customBodyRender: (uuid, dataTable) => {
           return (
             <Button
               onClick={() => {
-                setMid(midi_data);
+                changeMidi(uuid);
                 setOpen(true);
               }}
               endIcon={<PlayCircle />}

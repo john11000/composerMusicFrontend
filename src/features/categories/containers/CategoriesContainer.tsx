@@ -11,9 +11,9 @@ export default function CategoriesContainer () {
     }
     return(
         <Container>
-            <Typography variant="h5" color="primary" fontWeight="bold" sx={StyleSubtitles}>Categoría por Tonalidad</Typography>
+            <Typography variant="h5" color="primary" fontWeight="bold" sx={StyleSubtitles}>Categoría por Escala</Typography>
             <CategoryList categories={categories} type="tonalidad" />
-            <Typography variant="h5" color="primary" fontWeight="bold" sx={StyleSubtitles}>Categoría por Nota</Typography>
+            <Typography variant="h5" color="primary" fontWeight="bold" sx={StyleSubtitles}>Categoría por Tonalidad</Typography>
             <CategoryList categories={categoriesPer} type="nota" />
         </Container>
     )

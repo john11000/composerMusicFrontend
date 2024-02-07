@@ -6,9 +6,13 @@ import ListsEditDialog from "../components/ListEditDialog";
 import useGetLists from "../hooks/useGetList";
 import { ILists } from "../models/List.type";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { AppStore } from "@/redux/store";
 
 const ListContainerFavorites = () => {
   const { getLists: getListsFromApi, loading } = useGetLists();
+  const sessionState = useSelector((app: AppStore) => app.authState);
+
   const [Lists, setLists] = useState<ILists[]>([]);
 
   const router = useRouter();
@@ -18,7 +22,7 @@ const ListContainerFavorites = () => {
 
   const getLists = async () => {
     try {
-      const res = await getListsFromApi();
+      const res = await getListsFromApi(sessionState.accessToken);
       let listFavorites: ILists[] = [];
       if (res.data) {
         if (paramFromCategoryType && paramFromCategory) {

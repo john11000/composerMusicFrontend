@@ -4,8 +4,8 @@ import { URL_API_LIST } from "@/constants/url-apis.constants";
 export default function useGetLists() {
   const { request, loading } = useFetch();
 
-  const getLists = () => {
-    return request<any>({ url: URL_API_LIST + "/token" });
+  const getLists = (token: string) => {
+    return request<any>({ url: URL_API_LIST + "/" + token });
   };
 
   return {

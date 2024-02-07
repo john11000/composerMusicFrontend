@@ -5,14 +5,17 @@ import ListsSettings from "../components/ListSettings";
 import ListsEditDialog from "../components/ListEditDialog";
 import useGetLists from "../hooks/useGetList";
 import { ILists } from "../models/List.type";
+import { AppStore } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 const ListContainer = () => {
+  const sessionState = useSelector((app: AppStore) => app.authState);
   const { getLists: getListsFromApi, loading } = useGetLists();
   const [Lists, setLists] = useState<ILists[]>([]);
 
   const getLists = async () => {
     try {
-      const res = await getListsFromApi();
+      const res = await getListsFromApi(sessionState.accessToken);
       if (res.data) {
         console.log(res.data.data);
         setLists(res.data.data);

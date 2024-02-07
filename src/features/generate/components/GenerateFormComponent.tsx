@@ -7,19 +7,22 @@ import useCreateGroup from "../hooks/useCreateGroups";
 import { toastsManager } from "@/utilities";
 import { useRouter } from "next/router";
 import { ROUTER_MODULE_LIST_MELODY } from "@/constants/routes-link.constants";
+import { useSelector } from "react-redux";
+import { AppStore } from "@/redux/store";
 export function GenerateFormComponent() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<any>();
+  const sessionState = useSelector((state: AppStore) => state.authState);
 
   const { createGroup } = useCreateGroup();
 
   const router = useRouter();
 
   const submitGenerate = (data: any) => {
-    createGroup(data);
+    createGroup(data, sessionState.accessToken);
     toastsManager.showToast("success", "Molodia generada exitosamente!");
     router.push(ROUTER_MODULE_LIST_MELODY);
   };
@@ -40,26 +43,35 @@ export function GenerateFormComponent() {
               <TextField
                 required
                 error={!!errors.num_bars}
-                label="Número de barras (1,32)"
+                label="Número de barras (8,30)"
                 variant="outlined"
                 size="small"
                 type="number"
-                {...register("num_bars", { required: true })}
+                {...register("num_bars", { required: true, min: 8, max:30 })}
               />
             </FormControl>
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                error={!!errors.num_notes}
-                label="Notas por barra (1,8)"
-                variant="outlined"
-                size="small"
-                type="number"
-                {...register("num_notes", { required: true })}
-              />
+            <FormControl
+              fullWidth
+              size="small"
+              {...register("num_notes", { required: true })}
+            >
+              <InputLabel id="demo-simple-select-npb">
+                  Notas por barra (2,4,6,8)
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-npb"
+                id="demo-simple-select-npb"
+                label="Notas por barra (2,4,6,8)"
+                defaultValue={2}
+              >
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+              </Select>
             </FormControl>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -67,11 +79,11 @@ export function GenerateFormComponent() {
               <TextField
                 required
                 error={!!errors.num_steps}
-                label="Número de pasos (1,3)"
+                label="Número de pasos (1,2)"
                 variant="outlined"
                 size="small"
                 type="number"
-                {...register("num_steps", { required: true })}
+                {...register("num_steps", { required: true, min: 1, max: 2 })}
               />
             </FormControl>
           </Grid>
@@ -101,11 +113,11 @@ export function GenerateFormComponent() {
               <TextField
                 required
                 error={!!errors.name}
-                label="Registro de octava (1,8)"
+                label="Registro de octava (4,6)"
                 variant="outlined"
                 size="small"
                 type="number"
-                {...register("name", { required: true })}
+                {...register("name", { required: true, min: 4, max: 6 })}
               />
             </FormControl>
           </Grid>
@@ -114,11 +126,11 @@ export function GenerateFormComponent() {
               <TextField
                 required
                 error={!!errors.cm}
-                label="Cantidad de melodias (1,5)"
+                label="Cantidad de melodias (1,3)"
                 variant="outlined"
                 size="small"
                 type="number"
-                {...register("cm", { required: true })}
+                {...register("cm", { required: true, min: 1, max: 3  })}
               />
             </FormControl>
           </Grid>
@@ -131,7 +143,7 @@ export function GenerateFormComponent() {
                 variant="outlined"
                 size="small"
                 type="number"
-                {...register("nm", { required: true })}
+                {...register("nm", { required: true, min: 1, max: 4  })}
               />
             </FormControl>
           </Grid>
@@ -144,7 +156,7 @@ export function GenerateFormComponent() {
                 variant="outlined"
                 size="small"
                 type="number"
-                {...register("pm", { required: true })}
+                {...register("pm", { required: true, min: 0, max: 1  })}
               />
             </FormControl>
           </Grid>
@@ -155,7 +167,7 @@ export function GenerateFormComponent() {
                 labelId="demo-simple-select-key"
                 id="demo-simple-select"
                 label="Tonalidad"
-                defaultValue={true}
+                defaultValue={"C"}
                 // onChange={handleChange}
                 {...register("key", { required: true })}
               >
@@ -186,7 +198,7 @@ export function GenerateFormComponent() {
                 labelId="demo-simple-select-Escala"
                 id="demo-simple-select"
                 label="Escala"
-                defaultValue={true}
+                defaultValue={"major"}
                 // onChange={handleChange}
                 {...register("scale", { required: true })}
               >
